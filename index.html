@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Bow Shoot Score Card</title>
+</head>
+<body>
+    <main>
+        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par">
+            <div class="new-round__container">
+                <img src="./images/new.png" alt="" width="250">
+                <h1 id="new-round-header">New Round</h1>
+                <p id="new-round-par">Add the players that will be participating in the new round.</p>
+                <table>
+                    <caption>
+                        Players
+                    </caption>
+                    <tbody>
+                        <tr class="add-player">
+                            <td></td>
+                            <td>Add player</td>
+                            <td>                
+                                <button class="add-player__button">                                        
+                                    <span>&#43</span>
+                                </button>                            
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                <button type="button" class="new-round__start-round">Start Round</button>
+            </div>
+        </section>
+        <section class="score-card" hidden></section>
+        <section class="round-summary" hidden></section>
+    </main>
+</body>
+</html>

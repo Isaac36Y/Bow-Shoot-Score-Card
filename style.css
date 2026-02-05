@@ -1,0 +1,155 @@
+:root {
+    --tan100: rgb(223, 193, 153);
+    --green100: rgb(11, 136, 140);
+    --green500: rgb(98, 191, 100);
+    --blue600: rgb(0, 59, 83);
+    --blue600op: rgba(0, 59, 83, 0.5);
+
+    --ff-primary: 'Winky Sans', Helvetica, Arial, sans-serif
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Winky Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./design/winky-sans-v3-latin/winky-sans-v3-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Winky Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./design/winky-sans-v3-latin/winky-sans-v3-latin-700.woff2') format('woff2');
+}
+
+/* reset */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+*:not(dialog) {
+  margin: 0;
+  padding: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--ff-primary);
+  background-color: var(--green100);
+  background: linear-gradient(to bottom, rgb(14, 160, 165), rgb(9, 100, 104));
+  color: var(--tan100);
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/* new round */
+
+.new-round {
+  height: 100vh
+}
+
+.new-round__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0 0;
+  gap: 1rem;
+}
+
+.new-round__container p {
+  text-align: center;
+}
+
+table {
+  border: 1px solid var(--blue600);
+  width: 90%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+table td,
+table th {
+  vertical-align: middle;
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius: 0.3rem;
+}
+
+tr:last-child td:last-child {
+  border-bottom-right-radius: 0.3rem;
+}
+
+tr td:first-child {
+  border-right: 1px solid var(--blue600);
+  text-align: center;
+  padding-inline: 0.5rem;
+}
+
+tr td:nth-child(2) {
+  padding: 0rem 1rem;
+}
+
+tr td:nth-child(3) {
+  text-align: end;
+  padding: 0.4rem 1rem;
+
+}
+
+.add-player__button {
+  background-color: var(--green500);
+  border: 1px solid transparent;
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 5rem;
+  line-height: 0;
+  font-size: 1.2rem;
+  padding-block-end: 0.2rem;
+  color: white;
+}
+
+
+table tr:nth-last-of-type(2n + 1) {
+  background-color: var(--blue600op);
+  background: linear-gradient(to bottom, rgba(0, 77, 107, 0.339), rgba(0, 59, 83, 0.827));
+}
+
+table caption {
+  background-color: var(--blue600);
+  background: linear-gradient(to bottom, rgb(0, 76, 107), rgb(0, 59, 83));
+  text-align: left;
+  padding: 0.3rem 2rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+  font-size: 1.2rem;
+}
