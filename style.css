@@ -59,6 +59,11 @@ input, button, textarea, select {
   font: inherit;
 }
 
+button {
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
@@ -90,17 +95,15 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
+/* table style */
+
 table {
   border: 1px solid var(--blue600);
   width: 90%;
   border-collapse: separate;
   border-spacing: 0;
   border-radius: 0 0 0.5rem 0.5rem;
-}
-
-table td,
-table th {
-  vertical-align: middle;
+ 
 }
 
 tr:last-child td:first-child {
@@ -114,31 +117,65 @@ tr:last-child td:last-child {
 tr td:first-child {
   border-right: 1px solid var(--blue600);
   text-align: center;
-  padding-inline: 0.5rem;
+  width: 2.5rem
 }
 
 tr td:nth-child(2) {
-  padding: 0rem 1rem;
+  padding-inline: 1rem;
 }
 
 tr td:nth-child(3) {
-  text-align: end;
-  padding: 0.4rem 1rem;
-
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-.add-player__button {
+/* add player row style */
+
+.add-player td:nth-child(3) {
+  padding: 0.4rem 1rem;
+}
+
+.add-player button {
   background-color: var(--green500);
   border: 1px solid transparent;
-  height: 1.3rem;
-  width: 1.3rem;
+  height: 1.5rem;
+  width: 1.5rem;
   border-radius: 5rem;
   line-height: 0;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  display: flex;    /* text inside button wont center on its own? have to use padding to get it centered */
+  align-items: center;
+  justify-content: center;
   padding-block-end: 0.2rem;
   color: white;
 }
 
+/* added players style */
+
+tr td:has(.added-player__custom) {
+  padding-inline: 0.4rem;
+}
+
+.added-player__custom {
+  padding-inline: 0.5rem;
+  
+}
+
+.added-player td:nth-child(2) {
+  font-size: 1.2rem;
+}
+
+.added-player td:nth-child(3) {
+  padding: 0.7rem 1.1rem 0.7rem 0;
+  gap: 1rem;
+  font-size: 1.5rem;
+  line-height: 0;
+}
+
+.added-player td:nth-child(3) button { 
+  color: var(--green500);
+}
 
 table tr:nth-last-of-type(2n + 1) {
   background-color: var(--blue600op);
