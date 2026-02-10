@@ -97,92 +97,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* table style */
 
-table {
-  border: 1px solid var(--blue600);
-  width: 90%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 0 0 0.5rem 0.5rem;
- 
+.new-round__table-container {
+  width: 85%;
 }
 
-tr:last-child td:first-child {
-  border-bottom-left-radius: 0.3rem;
-}
-
-tr:last-child td:last-child {
-  border-bottom-right-radius: 0.3rem;
-}
-
-tr td:first-child {
-  border-right: 1px solid var(--blue600);
-  text-align: center;
-  width: 2.5rem
-}
-
-tr td:nth-child(2) {
-  padding-inline: 1rem;
-}
-
-tr td:nth-child(3) {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-/* add player row style */
-
-.add-player td:nth-child(3) {
-  padding: 0.4rem 1rem;
-}
-
-.add-player button {
-  background-color: var(--green500);
-  border: 1px solid transparent;
-  height: 1.5rem;
-  width: 1.5rem;
-  border-radius: 5rem;
-  line-height: 0;
-  font-size: 1.5rem;
-  display: flex;    /* text inside button wont center on its own? have to use padding to get it centered */
-  align-items: center;
-  justify-content: center;
-  padding-block-end: 0.2rem;
-  color: white;
-}
-
-/* added players style */
-
-tr td:has(.added-player__custom) {
-  padding-inline: 0.4rem;
-}
-
-.added-player__custom {
-  padding-inline: 0.5rem;
-  
-}
-
-.added-player td:nth-child(2) {
-  font-size: 1.2rem;
-}
-
-.added-player td:nth-child(3) {
-  padding: 0.7rem 1.1rem 0.7rem 0;
-  gap: 1rem;
-  font-size: 1.5rem;
-  line-height: 0;
-}
-
-.added-player td:nth-child(3) button { 
-  color: var(--green500);
-}
-
-table tr:nth-last-of-type(2n + 1) {
-  background-color: var(--blue600op);
-  background: linear-gradient(to bottom, rgba(0, 77, 107, 0.339), rgba(0, 59, 83, 0.827));
-}
-
-table caption {
+.new-round__table-header {
   background-color: var(--blue600);
   background: linear-gradient(to bottom, rgb(0, 76, 107), rgb(0, 59, 83));
   text-align: left;
@@ -190,3 +109,58 @@ table caption {
   border-radius: 0.5rem 0.5rem 0 0;
   font-size: 1.2rem;
 }
+
+.new-round__table-body {
+  border: 1px solid var(--blue600);
+  border-radius: 0 0 0.5rem 0.5rem;
+  overflow: hidden;
+}
+
+.new-round__table-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 4fr 2fr;
+  padding-block: 0.4rem;
+  align-items: center;
+}
+
+.id-cell {
+  text-align: center;
+}
+
+.button-cell{ 
+  padding-inline-end: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.add-player {
+  font-size: 1.2rem;
+  letter-spacing: 0.2rem;
+}
+
+.button-cell.add-player button {
+  background-color: var(--green500);
+  border: 1px solid transparent;
+  height: 1.6rem;
+  width: 1.6rem;
+  border-radius: 5rem;
+  font-size: 1.5rem;
+  line-height: 0;
+  padding-block-end: 0.25rem;
+  color: white;
+}
+
+.new-round__table-row:nth-last-of-type(2n + 1) {
+  background-color: var(--blue600op);
+  background: linear-gradient(to bottom, rgba(0, 77, 107, 0.339), rgba(0, 59, 83, 0.827));
+}
+
+.confirm-player-button {
+  font-size: 1.5rem;
+  line-height: 0;
+  color: var(--green500)
+}
+

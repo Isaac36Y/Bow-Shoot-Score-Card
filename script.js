@@ -1,7 +1,7 @@
 /* New Round */
 
 const table = document.querySelector('#new-round-table');
-const addPlayerRow = document.querySelector('.add-player')
+const addPlayerRow = document.querySelector('.new-round__table-row .add-player')
 
 
 
@@ -14,14 +14,14 @@ const players = [];
 
 const addsPlayerOption = () => {
     const newPlayer = `
-    <tr class="added-player">
-        <td class="id"></td>
-        <td class="name-cell"><input class="added-player__custom" type="text" name="name" placeholder="Name"></td>
-        <td class="buttons">
-            <button type="button" class="delete-player-button"><img src="./images/delete.png" alt="trash can" width="20"></button>
+    <div class="new-round__table-row">
+        <p class="id-cell"></p>
+        <div class="name-cell"><input class="added-player__custom" type="text" name="name" placeholder="Name"></div>
+        <div class="button-cell">
+            <button type="button" class="delete-player-button" onclick="deletePlayer(this)"><img src="./images/delete.png" alt="trash can" width="20"></button>
             <button type="button" class="confirm-player-button" onclick="savePlayer(this)">&#x2713</button>
-        </td>
-    </tr>
+        </div>
+    </div>
     `
 
     addPlayerRow.insertAdjacentHTML('beforebegin', newPlayer)
@@ -31,10 +31,10 @@ const addsPlayerOption = () => {
     
     
 const updatePlayerNumber = () => {
-    const addedPlayers = document.querySelectorAll('.added-player');
+    const addedPlayers = document.querySelectorAll('.new-round__table-row');
     addedPlayers.forEach((player, index) => {
         id = player.querySelector('.id');
-        id.textContent = index + 1
+        id.textContent = index
 
     })
 }

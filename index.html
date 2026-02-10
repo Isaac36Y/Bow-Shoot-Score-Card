@@ -13,23 +13,30 @@
                 <img src="./images/new.png" alt="" width="250">
                 <h1 id="new-round-header">New Round</h1>
                 <p id="new-round-par">Add the players that will be participating in the new round.</p>
-                <table id="new-round-table">
-                    <caption>
+                <div class="new-round__table-container" id="new-round-table">
+                    <h2 class="new-round__table-header">
                         Players
-                    </caption>
-                    <tbody>
-                        <tr class="add-player">
-                            <td></td>
-                            <td>Add player</td>
-                            <td>                
+                    </h2>
+                    <div class="new-round__table-body">
+                        <div class="new-round__table-row">
+                            <p class="id-cell">1</p>
+                            <div class="name-cell"><input class="added-player__custom" type="text" name="name" placeholder="Name"></div>
+                            <div class="button-cell">
+                                <button type="button" class="delete-player-button" onclick="deletePlayer(this)"><img src="./images/delete.png" alt="trash can" width="20"></button>
+                                <button type="button" class="confirm-player-button" onclick="savePlayer(this)">&#x2713</button>
+                            </div>
+                        </div>
+                        <div class="new-round__table-row add-player">
+                            <div class="id-cell add-player"></div>
+                            <div class="name-cell add-player">Add player</div>
+                            <div class="button-cell add-player">                
                                 <button type="button" id="add-player-button">                                        
-                                    <span>&#43</span>
+                                    <span class="add-player-span">&#43</span>
                                 </button>                            
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <button type="button" class="new-round__start-round">Start Round</button>
             </div>
         </section>
