@@ -10,7 +10,7 @@
     <main>
         <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par">
             <div class="new-round__container">
-                <img src="./images/new.png" alt="" width="250">
+                <img class="new-round__hero-img" src="./images/new.png" alt="" width="250">
                 <h1 id="new-round-header">New Round</h1>
                 <p id="new-round-par">Add the players that will be participating in the new round.</p>
                 <div class="new-round__table-container" id="new-round-table">
@@ -18,16 +18,8 @@
                         Players
                     </h2>
                     <div class="new-round__table-body">
-                        <div class="new-round__table-row">
-                            <p class="id-cell">1</p>
-                            <div class="name-cell"><input class="added-player__custom" type="text" name="name" placeholder="Name"></div>
-                            <div class="button-cell">
-                                <button type="button" class="delete-player-button" onclick="deletePlayer(this)"><img src="./images/delete.png" alt="trash can" width="20"></button>
-                                <button type="button" class="confirm-player-button" onclick="savePlayer(this)">&#x2713</button>
-                            </div>
-                        </div>
-                        <div class="new-round__table-row add-player">
-                            <div class="id-cell add-player"></div>
+                        <div class="new-round__table-row add-player" id="add-player-row">
+                            <div></div>
                             <div class="name-cell add-player">Add player</div>
                             <div class="button-cell add-player">                
                                 <button type="button" id="add-player-button">                                        
