@@ -41,16 +41,14 @@
   }
 }
 
-html, body {
-  background-color: var(--green100);
-  background: linear-gradient(to bottom, rgb(14, 160, 165), rgb(9, 100, 104));
-}
-
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   font-family: var(--ff-primary);
+  background-color: var(--green100);
+  background: linear-gradient(to bottom, rgb(14, 160, 165), rgb(9, 100, 104));
   color: var(--tan100);
+  overflow: hidden;
 }
 
 img, picture, video, canvas, svg {
