@@ -333,6 +333,11 @@ h1, h2, h3, h4, h5, h6 {
   width: 90%;
   margin: 2rem auto;
   border-radius: 0.5rem;
+  
+}
+
+.in-game__score-setter,
+.in-game__target-score-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -478,4 +483,68 @@ h1, h2, h3, h4, h5, h6 {
 }
 .in-game__end-game p {
   padding-inline: 0.2rem;
+}
+
+/* scorecard display */
+
+.in-game__scorecard-container {
+  width: 90%;
+  top: 7rem;
+  padding: 0;
+  overflow: auto;
+
+}
+
+.in-game__scorecard-row-target, 
+.in-game__scorecard-row-distance, 
+.in-game__scorecard-row-player {
+  display: flex;
+  min-width: 100%;
+  width: max-content;
+}
+.in-game__scorecard-row-target, .in-game__scorecard-row-distance {
+  padding-block: 0.5rem
+}
+.in-game__scorecard-row-player, .in-game__scorecard-number-total {
+  padding-block: 1rem;
+}
+.in-game__scorecard-container .row:nth-last-of-type(2n + 1) {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.in-game__scorecard-name-target, .in-game__scorecard-name-distance, .in-game__scorecard-name-player {
+  padding-inline: 0.5rem;
+  width: 4.9rem;
+}
+
+.in-game__scorecard-number-target, .in-game__scorecard-number-distance, .in-game__scorecard-number-player {
+  text-align: center;
+  width: 3.8rem;
+}
+
+.in-game__scorecard-name-target,
+.in-game__scorecard-name-distance,
+.in-game__scorecard-name-player,
+.in-game__scorecard-number-target,
+.in-game__scorecard-number-distance,
+.in-game__scorecard-number-player {
+  flex: none; 
+
+}
+
+.in-game__scorecard-total {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgb(77, 77, 77);
+  color: white;
+  z-index: 100;
+}
+
+.in-game__scorecard-name-total {
+  padding: 1.75rem 1rem;
+}
+
+.in-game__scorecard-number-total {
+  text-align: center;
 }

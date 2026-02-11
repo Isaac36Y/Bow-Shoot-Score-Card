@@ -35,9 +35,12 @@ const savesPlayer = (el) => {
     const input = row.querySelector('.name-cell input')
     const name = input.value.trim();
     const buttons = row.querySelector('.button-cell')
-
     const nameCell = row.querySelector('.name-cell');
-    if (name.length > 0) {
+
+    if (players[+id.textContent - 1]) {
+        nameCell.textContent = name
+        buttons.innerHTML = '<button type="button" id="edit-player-button" onclick="editPlayer(this)"><img src="./images/edit.png" alt="trash can" width="20"></button>'
+    }else if (name.length > 0) {
         nameCell.textContent = name
         players.push({ id: +id.textContent, name: name})
         buttons.innerHTML = '<button type="button" id="edit-player-button" onclick="editPlayer(this)"><img src="./images/edit.png" alt="trash can" width="20"></button>'
@@ -45,7 +48,9 @@ const savesPlayer = (el) => {
         console.log('no name')
         /* and error effect when name isnt filled out */
     }
+    console.log(players)
 }
+
 
 const editPlayer = (el) => {
     const row = el.closest('.new-round__table-row');
@@ -92,6 +97,33 @@ const updatePlayerNumber = () => {
 
 addPlayerButton.addEventListener('click', () => {
     addsPlayer()
+})
+
+/* start round functions */
+
+const startRoundButton = document.querySelector('#start-round-btn');
+const scoreSetterBox = document.querySelector('#score-setter-container');
+
+
+const populateScoreSetterBox = () => {
+    players.forEach(player => {
+        scoreSetterBox.innerHTML += `
+            <div class="in-game__target-score-row" id="target-score-row-${player.id}">
+                <p class="in-game__target-score-id">${player.id}</p>
+                <p class="in-game__target-score-player">${player.name}</p>
+                <div class="in-game__target-score-buttons">
+                    <button type="button" class="in-game__target-score" value="10">10</button>
+                    <button type="button" class="in-game__target-score" value="8">8</button>
+                    <button type="button" class="in-game__target-score" value="5">5</button>
+                    <button type="button" class="in-game__target-score" value="0">0</button>
+                </div>
+            </div>
+        `
+    })
+}
+
+startRoundButton.addEventListener('click', () => {
+    populateScoreSetterBox()
 })
 
 /* score card */

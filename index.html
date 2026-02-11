@@ -8,7 +8,7 @@
 </head>
 <body>
     <main>
-        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par" hidden>
+        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par">
             <div class="new-round__container">
                 <img class="new-round__hero-img" src="./images/new.png" alt="" width="250">
                 <h1 id="new-round-header">New Round</h1>
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="new-round__start-round">Start Round</button>
+                <button type="button" class="new-round__start-round" id="start-round-btn">Start Round</button>
             </div>
         </section>
         <section class="in-game" >
@@ -60,54 +60,93 @@
                     <div class="in-game__yardage-input"><input type="number"id="yard-input"><label for="yard-input">Yards</label></div>
                 </div>
                 
-                <div class="in-game__target-score-container">
+                <div class="in-game__target-score-container" >
                     <div class="in-game__target-score-row caption">
                         <p class="in-game__target-score-id caption">#</p>
                         <p class="in-game__target-score-player caption">Player</p>
                         <p class="in-game__target-score-score caption">Score</p>
                     </div>
-                    <div class="in-game__target-score-row">
-                        <p class="in-game__target-score-id">1</p>
-                        <p class="in-game__target-score-player">Isaac</p>
-                        <div class="in-game__target-score-buttons">
-                            <button type="button" class="in-game__target-score" value="10">10</button>
-                            <button type="button" class="in-game__target-score" value="8">8</button>
-                            <button type="button" class="in-game__target-score" value="5">5</button>
-                            <button type="button" class="in-game__target-score selected" value="0">0</button>
+                    <div class="in-game__score-setter" id="score-setter-container">
+                        <!-- <div class="in-game__target-score-row">
+                            <p class="in-game__target-score-id">1</p>
+                            <p class="in-game__target-score-player">Isaac</p>
+                            <div class="in-game__target-score-buttons">
+                                <button type="button" class="in-game__target-score" value="10">10</button>
+                                <button type="button" class="in-game__target-score" value="8">8</button>
+                                <button type="button" class="in-game__target-score" value="5">5</button>
+                                <button type="button" class="in-game__target-score selected" value="0">0</button>
+                            </div>
                         </div>
-                    </div> 
-                    <div class="in-game__target-score-row">
-                        <p class="in-game__target-score-id">1</p>
-                        <p class="in-game__target-score-player">Isaac</p>
-                        <div class="in-game__target-score-buttons">
-                            <button type="button" class="in-game__target-score selected" value="10">10</button>
-                            <button type="button" class="in-game__target-score" value="8">8</button>
-                            <button type="button" class="in-game__target-score" value="5">5</button>
-                            <button type="button" class="in-game__target-score" value="0">0</button>
+                        <div class="in-game__target-score-row">
+                            <p class="in-game__target-score-id">1</p>
+                            <p class="in-game__target-score-player">Isaac</p>
+                            <div class="in-game__target-score-buttons">
+                                <button type="button" class="in-game__target-score selected" value="10">10</button>
+                                <button type="button" class="in-game__target-score" value="8">8</button>
+                                <button type="button" class="in-game__target-score" value="5">5</button>
+                                <button type="button" class="in-game__target-score" value="0">0</button>
+                            </div>
                         </div>
-                    </div>  
-                    <div class="in-game__target-score-row">
-                        <p class="in-game__target-score-id">1</p>
-                        <p class="in-game__target-score-player">Isaac</p>
-                        <div class="in-game__target-score-buttons">
-                            <button type="button" class="in-game__target-score" value="10">10</button>
-                            <button type="button" class="in-game__target-score selected" value="8">8</button>
-                            <button type="button" class="in-game__target-score" value="5">5</button>
-                            <button type="button" class="in-game__target-score" value="0">0</button>
+                        <div class="in-game__target-score-row">
+                            <p class="in-game__target-score-id">1</p>
+                            <p class="in-game__target-score-player">Isaac</p>
+                            <div class="in-game__target-score-buttons">
+                                <button type="button" class="in-game__target-score" value="10">10</button>
+                                <button type="button" class="in-game__target-score selected" value="8">8</button>
+                                <button type="button" class="in-game__target-score" value="5">5</button>
+                                <button type="button" class="in-game__target-score" value="0">0</button>
+                            </div>
                         </div>
-                    </div> 
-                    <div class="in-game__target-score-row">
-                        <p class="in-game__target-score-id">1</p>
-                        <p class="in-game__target-score-player">Isaac</p>
-                        <div class="in-game__target-score-buttons">
-                            <button type="button" class="in-game__target-score" value="10">10</button>
-                            <button type="button" class="in-game__target-score" value="8">8</button>
-                            <button type="button" class="in-game__target-score selected" value="5">5</button>
-                            <button type="button" class="in-game__target-score" value="0">0</button>
-                        </div>
-                    </div> 
+                        <div class="in-game__target-score-row">
+                            <p class="in-game__target-score-id">1</p>
+                            <p class="in-game__target-score-player">Isaac</p>
+                            <div class="in-game__target-score-buttons">
+                                <button type="button" class="in-game__target-score" value="10">10</button>
+                                <button type="button" class="in-game__target-score" value="8">8</button>
+                                <button type="button" class="in-game__target-score selected" value="5">5</button>
+                                <button type="button" class="in-game__target-score" value="0">0</button>
+                            </div>
+                        </div> -->
+                    </div>
                     <div class="in-game__target-score-row closer"></div>
                 </div>
+
+                <dialog class="in-game__scorecard-container">
+                    <!-- different than how I did it on the tagret-score caption to see which way might work better in the future -->
+                    <div class="in-game__scorecard-row-target row">
+                        <p class="in-game__scorecard-name-target">Target</p>
+                        <p class="in-game__scorecard-number-target">#1</p>
+                        <p class="in-game__scorecard-number-target">#2</p>
+                        <p class="in-game__scorecard-number-target">#3</p>
+                        
+
+                    </div>
+                    <div class="in-game__scorecard-row-distance row">
+                        <p class="in-game__scorecard-name-distance">Distance</p>
+                        <p class="in-game__scorecard-number-distance">34yrds</p>
+                        <p class="in-game__scorecard-number-distance">34yrds</p>
+                        <p class="in-game__scorecard-number-distance">34yrds</p>
+                        
+
+                    </div>
+                    <div class="in-game__scorecard-row-player row">
+                        <p class="in-game__scorecard-name-player">Isaac</p>
+                        <p class="in-game__scorecard-number-player">10</p>
+                        <p class="in-game__scorecard-number-player">10</p>
+                        <p class="in-game__scorecard-number-player">10</p>
+                    </div>
+                    <div class="in-game__scorecard-row-player row">
+                        <p class="in-game__scorecard-name-player">Isaac</p>
+                        <p class="in-game__scorecard-number-player">10</p>
+                        <p class="in-game__scorecard-number-player">10</p>
+                        <p class="in-game__scorecard-number-player">10</p>
+                    </div>
+                    <div class="in-game__scorecard-total">
+                        <p class="in-game__scorecard-name-total">Total</p>
+                        <p class="in-game__scorecard-number-total">30</p>
+                        
+                    </div>
+                </dialog>
 
                 <div class="in-game__footer-container">
                     <button type="button" class="in-game__previous-target">
