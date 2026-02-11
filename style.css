@@ -384,6 +384,8 @@ h1, h2, h3, h4, h5, h6 {
 .in-game__target-score {
   width: 2rem;
   border-radius: 5rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.306);
 }
 
 .in-game__target-score.selected[value="10"] {
@@ -406,13 +408,14 @@ h1, h2, h3, h4, h5, h6 {
 .in-game__target-score.selected[value="0"] {
   background-color: white;
   border: 1px solid white;
+  color: black;
 }
 
 /* in game footer bar */
 
 .in-game__footer-container {
   width: 100%;
-  position: absolute;
+  position: sticky;
   bottom: 0;
   left: 0;
   display: grid;
@@ -432,6 +435,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .in-game__previous-target, .in-game__next-target {
   background-color: rgba(255, 255, 255, 0.5);
+  color: black;
   font-size: 1rem;
   line-height: 1;
   position: relative;
@@ -465,6 +469,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .in-game__scorecard-toggle p{
   line-height: 0.5;
+  color: black;
 }
 
 .in-game__end-game {
