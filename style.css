@@ -415,7 +415,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .in-game__footer-container {
   width: 100%;
-  position: sticky;
+  position: fixed;
   bottom: 0;
   left: 0;
   display: grid;
@@ -475,4 +475,7 @@ h1, h2, h3, h4, h5, h6 {
 .in-game__end-game {
   background-color: rgb(151, 0, 0);
   color: var(--tan100);
+}
+.in-game__end-game p {
+  padding-inline: 0.2rem;
 }
