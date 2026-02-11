@@ -93,3 +93,23 @@ const updatePlayerNumber = () => {
 addPlayerButton.addEventListener('click', () => {
     addsPlayer()
 })
+
+/* score card */
+
+const targetExpandButton = document.querySelector('#target-expand-btn');
+const targetsContainer = document.querySelector('.in-game__target-container')
+const targetsList = document.querySelector('.in-game__target-select-ol')
+
+targetExpandButton.addEventListener('click', () => {
+    let open = targetsContainer.classList.contains('open');
+    if (open) {
+        targetsContainer.classList.remove('open');
+        setTimeout(() => {
+          targetsList.style.display = "none"  
+        }, 500)
+        
+    }else {
+        targetsContainer.classList.add('open')
+        targetsList.style.display = "flex"
+    }
+})

@@ -1,9 +1,11 @@
 :root {
-    --tan100: rgb(223, 193, 153);
+    --tan100: #dfc199;
     --green100: rgb(11, 136, 140);
     --green500: rgb(98, 191, 100);
     --blue600: rgb(0, 59, 83);
     --blue600op: rgba(0, 59, 83, 0.5);
+    --blue800: rgb(0, 49, 68);
+    --orange500: #ff9654;
 
     --ff-primary: 'Winky Sans', Helvetica, Arial, sans-serif
 }
@@ -82,7 +84,7 @@ h1, h2, h3, h4, h5, h6 {
 /* new round */
 
 .new-round {
-  height: 100vh
+  height: 100vh;
 }
 
 .new-round__container {
@@ -220,3 +222,252 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* in game */
+
+.in-game {
+  height: 100vh;
+}
+
+.in-game__container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* target selection */
+
+.in-game__target-container {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  height: 5.5rem;
+  transition: height 0.5s ease-in-out;
+  background-color: var(--blue600);
+  box-shadow: 0 0.5rem 2rem 0.1rem var(--blue800);
+}
+
+.highlighter {
+  width: 90%;
+  height: 0;
+  box-shadow: 0 1rem 5rem 0.5rem var(--orange500);
+}
+
+.in-game__target-container.open {
+  height: 12rem;
+}
+
+.in-game__target-number-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+}
+
+.in-game__target-expand-button {
+  color: var(--tan100);
+  font-size: 3rem;
+}
+
+.in-game__target-number {
+  padding-block: 0.8rem;
+  font-size: 2.5rem;
+}
+
+.in-game__target-select-ol {
+  list-style: none;
+  font-size: 3rem;
+  font-weight: 700;
+  display: none;
+  align-items: center;
+  gap: 3rem;
+  width: 90%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  background-color: transparent;
+}
+.in-game__target-select-ol::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}
+
+.in-game__target-select {
+  color: rgba(255, 255, 255, 0.25)
+}
+
+.in-game__target-select.selected {
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.9);
+  
+}
+
+/* yardage input */
+
+.in-game__yardage-container {
+  margin-block-start: 9rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.in-game__yardage-label {
+  font-size: 1.3rem;
+}
+
+.in-game__yardage-input input {
+  text-align: end;
+  padding-inline-end: 3.2rem;
+  width: 6.5rem;
+}
+
+.in-game__yardage-input label { 
+  margin-inline-start: -3rem;
+  color: black;
+  
+}
+
+/* score inputs */
+
+.in-game__target-score-container {
+  width: 90%;
+  margin: 2rem auto;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.in-game__target-score-row.caption {
+  background-color: var(--blue600);
+  background: linear-gradient(to bottom, rgb(1, 87, 121), rgb(0, 59, 83));
+  border-radius: 0.5rem 0.5rem 0 0;
+
+}
+.in-game__target-score-row.closer {
+  background-color: var(--blue600);
+  background: linear-gradient(to top, rgb(1, 87, 121), rgb(0, 59, 83));
+  border-radius: 0 0 0.5rem 0.5rem;
+  height: 1.5rem;
+}
+
+.in-game__target-score-row:not(.caption, .closer) {
+  border: 1px solid var(--blue600);
+  border-radius: 0.5rem;
+
+}
+
+.in-game__target-score-row {
+  display: grid;
+  grid-template-columns: 1fr 3fr 3fr;
+  align-items: center;
+  text-align: center;
+  padding-block: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.in-game__target-score-player:not(.caption) {
+  border-left: 1px solid var(--blue600);
+  border-right: 1px solid var(--blue600);
+  /* fixed height so border can go all the way up since rows have a padding */
+  height: calc(100% + 1rem); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.in-game__target-score-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.in-game__target-score {
+  width: 2rem;
+  border-radius: 5rem;
+}
+
+.in-game__target-score.selected[value="10"] {
+  background-color: var(--green500);
+  background-image: linear-gradient(to bottom, rgb(225, 243, 225), rgb(98, 191, 100) 30%);
+  border: 1px solid var(--green500);
+  color: white;
+}
+.in-game__target-score.selected[value="8"] {
+  background-color: rgb(255, 225, 105);
+  background-image: linear-gradient(to bottom, rgb(255, 241, 185), rgb(255, 225, 105) 30%);
+  border: 1px solid rgb(255, 225, 105);
+}
+.in-game__target-score.selected[value="5"] {
+  background-color: rgb(219, 0, 0);
+  background-image: linear-gradient(to bottom, rgb(212, 156, 156), rgb(184, 19, 19) 30%);
+  border: 1px solid rgb(184, 19, 19);
+  color: white;
+}
+.in-game__target-score.selected[value="0"] {
+  background-color: white;
+  border: 1px solid white;
+}
+
+/* in game footer bar */
+
+.in-game__footer-container {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background-color: rgb(148, 155, 164);
+}
+
+.in-game__previous-target, .in-game__next-target, .in-game__scorecard-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* next and previous target buttons */
+
+.in-game__previous-target, .in-game__next-target {
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 1rem;
+  line-height: 1;
+  position: relative;
+  height: 4.5rem
+}
+.in-game__previous-target {
+  border-radius: 0.5rem 0 0 0;
+}
+.in-game__previous-target img {
+  position: absolute;
+  top: -1rem
+}
+.in-game__previous-target p {
+  position: absolute;
+  top: 2rem;
+}
+.in-game__next-target {
+  border-radius: 0 0.5rem 0 0;
+}
+.in-game__next-target img {
+  position: absolute;
+  top: -1rem
+}
+.in-game__next-target p {
+  position: absolute;
+  top: 2rem;
+  width: 80%;
+}
+
+/* scorecard and end game button */
+
+.in-game__scorecard-toggle p{
+  line-height: 0.5;
+}
+
+.in-game__end-game {
+  background-color: rgb(151, 0, 0);
+  color: var(--tan100);
+}

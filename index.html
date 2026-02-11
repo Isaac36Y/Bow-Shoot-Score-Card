@@ -8,7 +8,7 @@
 </head>
 <body>
     <main>
-        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par">
+        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par" hidden>
             <div class="new-round__container">
                 <img class="new-round__hero-img" src="./images/new.png" alt="" width="250">
                 <h1 id="new-round-header">New Round</h1>
@@ -32,7 +32,102 @@
                 <button type="button" class="new-round__start-round">Start Round</button>
             </div>
         </section>
-        <section class="score-card" hidden></section>
+        <section class="in-game" >
+
+            <div class="in-game__container">
+                <div class="in-game__target-container">
+                    <div class="highlighter"></div>
+                    <div class="in-game__target-number-container">
+                        
+                        <h1 class="in-game__target-number">Target # <span class="target#">1</span></h1>
+                        <button type="button" class="in-game__target-expand-button" id="target-expand-btn"><img src="./images/down-arrow-6402.png" alt="" width="16"></button>
+                    </div>
+                    <ol class="in-game__target-select-ol">
+                        <li class="in-game__target-select">1</li>
+                        <li class="in-game__target-select">2</li>
+                        <li class="in-game__target-select selected">3</li>
+                        <li class="in-game__target-select">4</li>
+                        <li class="in-game__target-select">5</li>
+                        <li class="in-game__target-select">6</li>
+                        <li class="in-game__target-select">7</li>
+                        <li class="in-game__target-select">8</li>
+                    </ol>
+                    
+                </div>
+
+                <div class="in-game__yardage-container">
+                    <label class="in-game__yardage-label" for="yard-input">Distance to target:</label>
+                    <div class="in-game__yardage-input"><input type="number"id="yard-input"><label for="yard-input">Yards</label></div>
+                </div>
+                
+                <div class="in-game__target-score-container">
+                    <div class="in-game__target-score-row caption">
+                        <p class="in-game__target-score-id caption">#</p>
+                        <p class="in-game__target-score-player caption">Player</p>
+                        <p class="in-game__target-score-score caption">Score</p>
+                    </div>
+                    <div class="in-game__target-score-row">
+                        <p class="in-game__target-score-id">1</p>
+                        <p class="in-game__target-score-player">Isaac</p>
+                        <div class="in-game__target-score-buttons">
+                            <button type="button" class="in-game__target-score" value="10">10</button>
+                            <button type="button" class="in-game__target-score" value="8">8</button>
+                            <button type="button" class="in-game__target-score" value="5">5</button>
+                            <button type="button" class="in-game__target-score selected" value="0">0</button>
+                        </div>
+                    </div> 
+                    <div class="in-game__target-score-row">
+                        <p class="in-game__target-score-id">1</p>
+                        <p class="in-game__target-score-player">Isaac</p>
+                        <div class="in-game__target-score-buttons">
+                            <button type="button" class="in-game__target-score selected" value="10">10</button>
+                            <button type="button" class="in-game__target-score" value="8">8</button>
+                            <button type="button" class="in-game__target-score" value="5">5</button>
+                            <button type="button" class="in-game__target-score" value="0">0</button>
+                        </div>
+                    </div>  
+                    <div class="in-game__target-score-row">
+                        <p class="in-game__target-score-id">1</p>
+                        <p class="in-game__target-score-player">Isaac</p>
+                        <div class="in-game__target-score-buttons">
+                            <button type="button" class="in-game__target-score" value="10">10</button>
+                            <button type="button" class="in-game__target-score selected" value="8">8</button>
+                            <button type="button" class="in-game__target-score" value="5">5</button>
+                            <button type="button" class="in-game__target-score" value="0">0</button>
+                        </div>
+                    </div> 
+                    <div class="in-game__target-score-row">
+                        <p class="in-game__target-score-id">1</p>
+                        <p class="in-game__target-score-player">Isaac</p>
+                        <div class="in-game__target-score-buttons">
+                            <button type="button" class="in-game__target-score" value="10">10</button>
+                            <button type="button" class="in-game__target-score" value="8">8</button>
+                            <button type="button" class="in-game__target-score selected" value="5">5</button>
+                            <button type="button" class="in-game__target-score" value="0">0</button>
+                        </div>
+                    </div> 
+                    <div class="in-game__target-score-row closer"></div>
+                </div>
+
+                <div class="in-game__footer-container">
+                    <button type="button" class="in-game__previous-target">
+                        <img src="./images/previous-arrow.png" alt="">
+                        <p>Previous Target</p>
+                    </button>
+                    <button type="button" class="in-game__scorecard-toggle">
+                        <img src="./images/score (1).png" alt="" width="50">
+                        <p>Scorecard</p>
+                    </button>
+                    <button type="button" class="in-game__end-game">
+                        <p>END ROUND</p>
+                    </button>
+                    <button type="button" class="in-game__next-target">
+                        <img src="./images/next-arrow.png" alt="">
+                        <p>Next Target</p>
+                    </button>
+                </div>
+            </div>
+        </section>
         <section class="round-summary" hidden></section>
     </main>
     <script src="script.js"></script>
