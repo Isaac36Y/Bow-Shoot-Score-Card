@@ -1,5 +1,5 @@
 /* New Round */
-
+const newRound = document.querySelector('#new-round');
 const table = document.querySelector('#new-round-table');
 const addPlayerRow = document.querySelector('#add-player-row')
 
@@ -42,7 +42,7 @@ const savesPlayer = (el) => {
         buttons.innerHTML = '<button type="button" id="edit-player-button" onclick="editPlayer(this)"><img src="./images/edit.png" alt="trash can" width="20"></button>'
     }else if (name.length > 0) {
         nameCell.textContent = name
-        players.push({ id: +id.textContent, name: name})
+        players.push({ id: +id.textContent, name: name, scores: {}})
         buttons.innerHTML = '<button type="button" id="edit-player-button" onclick="editPlayer(this)"><img src="./images/edit.png" alt="trash can" width="20"></button>'
     }else {
         console.log('no name')
@@ -97,18 +97,27 @@ const updatePlayerNumber = () => {
 
 addPlayerButton.addEventListener('click', () => {
     addsPlayer()
+    
 })
 
 /* start round functions */
 
+const inGame = document.querySelector('#in-game')
 const startRoundButton = document.querySelector('#start-round-btn');
 const scoreSetterBox = document.querySelector('#score-setter-container');
+const targetList = document.querySelector('#target-list');
+const targetListItems = document.querySelectorAll('.in-game__target-select');
+const currentTarget = document.querySelector('#target-number-span');
+const nextTargetButton = document.querySelector('#next-target-btn');
+const previousTargetButton = document.querySelector('#previous-target-btn');
 
+
+let targets = 0;
 
 const populateScoreSetterBox = () => {
     players.forEach(player => {
         scoreSetterBox.innerHTML += `
-            <div class="in-game__target-score-row" id="target-score-row-${player.id}">
+            <div class="in-game__target-score-row" id="player-${player.id}">
                 <p class="in-game__target-score-id">${player.id}</p>
                 <p class="in-game__target-score-player">${player.name}</p>
                 <div class="in-game__target-score-buttons">
@@ -122,11 +131,112 @@ const populateScoreSetterBox = () => {
     })
 }
 
-startRoundButton.addEventListener('click', () => {
-    populateScoreSetterBox()
+/* add/changes targets */
+
+const addTarget = () => {
+    targets++
+    currentTarget.textContent = targets;
+    const li = document.createElement('li');
+    li.className = 'in-game__target-select';
+    li.textContent = targets;
+    targetList.appendChild(li)
+    selectTarget(li)
+    createsScore()
+}
+
+const selectTarget = (el) => {
+    let items = targetList.querySelectorAll('.in-game__target-select');
+    items.forEach(item => item.classList.remove('selected'))
+    el.classList.add('selected');
+    currentTarget.textContent = el.textContent
+    updateScoreByTarget(el)
+}
+
+const selectsNextTarget = () => {
+    let items = Array.from(targetList.querySelectorAll('.in-game__target-select'))
+    let indexOfSelected = items.findIndex(item => item.classList.contains('selected'))
+    /* const buttons = document.querySelectorAll('.in-game__target-score'); */
+    if (items.length === indexOfSelected + 1) {
+        addTarget()
+        /* buttons.forEach(button => button.classList.remove('selected')) */
+    }else {
+        selectTarget(items[indexOfSelected + 1])
+    }
+}
+/* try to make these into one function in the future */
+const selectsPreviousTarget = () => {
+    let items = Array.from(targetList.querySelectorAll('.in-game__target-select'))
+    let indexOfSelected = items.findIndex(item => item.classList.contains('selected'))
+    if (indexOfSelected === 0) {
+        return 
+    }else {
+        selectTarget(items[indexOfSelected - 1])
+    }
+}
+
+/* controls scoring system */
+
+/* createScore just initializes a new {target: score}. May be able to combine createScore and updateScore into one function */
+const createsScore = () => {
+    players.forEach(player => {
+        player.scores[targets] = 0
+    })
+}
+/* updateScoreByTarget is important to pull the data and show it if a player needs to go back to a previous target to change the score */
+const updateScoreByTarget = (el) => {
+    const target = +el.textContent
+    const buttons = document.querySelectorAll('.in-game__target-score');
+    players.forEach(player => {
+        if (!player.scores[target]) {
+            buttons.forEach(button => button.classList.remove('selected'))
+            return
+           
+        }
+        const playerRow = scoreSetterBox.querySelector(`#player-${player.id}`)
+        const playersScoreButton = playerRow.querySelector(`[value="${player.scores[target]}"]`)
+        highlightSelectedScore(playersScoreButton)
+    })
+}
+
+const updateScore = (btn) => {
+    const player = btn.closest('.in-game__target-score-row')
+    const id = player.getAttribute('id').split("").slice(7, 8).join('')
+    players[+id - 1].scores[+currentTarget.textContent] = btn.value
+}
+
+const highlightSelectedScore = (btn) => {
+    const buttonsContainer = btn.closest('.in-game__target-score-buttons')
+    const buttons = buttonsContainer.querySelectorAll('.in-game__target-score');
+    buttons.forEach(button => {
+        button.classList.remove('selected')
+    })
+    btn.classList.add('selected')
+}
+
+/* players for each in select target to find if the player has a value for that specific target */
+
+scoreSetterBox.addEventListener('click', (e) => {
+    const button = e.target.closest('.in-game__target-score')
+    if (!button) return
+    updateScore(button)
+    highlightSelectedScore(button)
+    console.log(players)
 })
 
-/* score card */
+startRoundButton.addEventListener('click', () => {
+    populateScoreSetterBox()
+    addTarget()
+    newRound.setAttribute('hidden', '')
+    inGame.removeAttribute('hidden')
+})
+
+targetList.addEventListener('click', (e) => {
+    const li = e.target.closest('.in-game__target-select')
+    if (!li || !targetList.contains(li)) return
+    selectTarget(li)
+})
+
+/* expand target list */
 
 const targetExpandButton = document.querySelector('#target-expand-btn');
 const targetsContainer = document.querySelector('.in-game__target-container')
