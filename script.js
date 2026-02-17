@@ -4,30 +4,24 @@ const table = document.querySelector('#new-round-table');
 const addPlayerRow = document.querySelector('#add-player-row')
 
 
-
 const confirmPlayerButton = document.querySelector('.confirm-player-button');
 const deletePlayerButton = document.querySelector('.delete-player-button');
 const editPlayerButton = document.querySelector('#edit-player-button');
 const addPlayerButton = document.querySelector('#add-player-button');
 
-const players = [];
-
-
-const addsPlayer = () => {
-    const newPlayer = `
-    <div class="new-round__table-row">
-        <p class="id-cell"></p>
-        <div class="name-cell"><input class="added-player__custom" type="text" name="name" placeholder="Name"></div>
-        <div class="button-cell">
-            <button type="button" class="delete-player-button" onclick="deletePlayer(this)"><img src="./images/delete.png" alt="trash can" width="20"></button>
-            <button type="button" class="confirm-player-button" onclick="savesPlayer(this)">&#x2713</button>
-        </div>
-    </div>
-    `
-
-    addPlayerRow.insertAdjacentHTML('beforebegin', newPlayer)
-    updatePlayerNumber()
-}
+const players = [
+    /* {
+        id: 1,
+        name: "Isaac",
+        scores: {
+            1: "10",
+            2: "8",
+            3: "8",
+            4: "0",
+            5: "10"
+        }
+    } */
+];
 
 const savesPlayer = (el) => {
     const row = el.closest('.new-round__table-row');
@@ -48,9 +42,7 @@ const savesPlayer = (el) => {
         console.log('no name')
         /* and error effect when name isnt filled out */
     }
-    console.log(players)
 }
-
 
 const editPlayer = (el) => {
     const row = el.closest('.new-round__table-row');
@@ -63,6 +55,38 @@ const editPlayer = (el) => {
         <button type="button" class="delete-player-button" onclick="deletePlayer(this)"><img src="./images/delete.png" alt="trash can" width="20"></button>
         <button type="button" class="confirm-player-button" onclick="savesPlayer(this)">&#x2713</button>
         `
+}
+
+const updatePlayerId = () => {
+    players.forEach((player, index) => player.id = index + 1)
+}
+
+const updatePlayerNumber = () => {
+    const addedPlayers = document.querySelectorAll('.new-round__table-row');
+    addedPlayers.forEach((player, index) => {
+        id = player.querySelector('.id-cell');
+        if (id) {
+            id.textContent = index + 1
+        }
+
+    })
+    updatePlayerId()
+}
+
+const addsPlayer = () => {
+    const newPlayer = `
+    <div class="new-round__table-row">
+        <p class="id-cell"></p>
+        <div class="name-cell"><input class="added-player__custom" type="text" name="name" placeholder="Name"></div>
+        <div class="button-cell">
+            <button type="button" class="delete-player-button" onclick="deletePlayer(this)"><img src="./images/delete.png" alt="trash can" width="20"></button>
+            <button type="button" class="confirm-player-button" onclick="savesPlayer(this)">&#x2713</button>
+        </div>
+    </div>
+    `
+
+    addPlayerRow.insertAdjacentHTML('beforebegin', newPlayer)
+    updatePlayerNumber()
 }
 
 const deletePlayer = (el) => {
@@ -78,22 +102,6 @@ const deletePlayer = (el) => {
     updatePlayerNumber()
 }
 
-const updatePlayerId = () => {
-    players.forEach((player, index) => player.id = index + 1)
-}
-     
-const updatePlayerNumber = () => {
-    const addedPlayers = document.querySelectorAll('.new-round__table-row');
-    addedPlayers.forEach((player, index) => {
-        id = player.querySelector('.id-cell');
-        if (id) {
-            id.textContent = index + 1
-        }
-
-    })
-    updatePlayerId()
-}
-
 
 addPlayerButton.addEventListener('click', () => {
     addsPlayer()
@@ -104,15 +112,29 @@ addPlayerButton.addEventListener('click', () => {
 
 const inGame = document.querySelector('#in-game')
 const startRoundButton = document.querySelector('#start-round-btn');
-const scoreSetterBox = document.querySelector('#score-setter-container');
+
 const targetList = document.querySelector('#target-list');
 const targetListItems = document.querySelectorAll('.in-game__target-select');
 const currentTarget = document.querySelector('#target-number-span');
+const targetExpandButton = document.querySelector('#target-expand-btn');
+const targetsContainer = document.querySelector('.in-game__target-container');
+const targetsList = document.querySelector('.in-game__target-select-ol');
+
+const distanceInput = document.querySelector('#yard-input')
+const scoreSetterBox = document.querySelector('#score-setter-container');
+
 const nextTargetButton = document.querySelector('#next-target-btn');
 const previousTargetButton = document.querySelector('#previous-target-btn');
+const scorecardButton = document.querySelector('#scorecard-btn')
+
+const scorecard = document.querySelector('#scorecard');
+const scorecardTotalColumn = document.querySelector('#scorecard-total');
+const scorecardPlayerContainer = document.querySelector('#scorecard-player-container')
 
 
-let targets = 0;
+let target = 0;
+const distances = {}
+
 
 const populateScoreSetterBox = () => {
     players.forEach(player => {
@@ -129,27 +151,185 @@ const populateScoreSetterBox = () => {
             </div>
         `
     })
+
+}
+
+const addPlayerToScorecard = () => {
+    players.forEach(player => {
+        const playerDiv = document.createElement('div');
+        playerDiv.className = 'in-game__scorecard-row-player'
+        playerDiv.id = `${player.name}`;
+        playerDiv.innerHTML = `<p class="in-game__scorecard-name-player">${player.name}</p>`
+        scorecardPlayerContainer.appendChild(playerDiv)
+
+        const totalPar = document.createElement('p');
+        const newName = String(player.name).split(/\s+/).join('-')
+        totalPar.className = 'in-game__scorecard-number-total'
+        totalPar.id = `${newName}-total`
+        totalPar.textContent = '0'
+        scorecardTotalColumn.appendChild(totalPar)
+    })
+}
+
+/* expand target list */
+
+const showTargetListToggle = () => {
+    let open = targetsContainer.classList.contains('open');
+    if (open) {
+        targetsContainer.classList.remove('open');
+        setTimeout(() => {
+          targetsList.style.display = "none"  
+        }, 500)
+        
+    }else {
+        targetsContainer.classList.add('open')
+        targetsList.style.display = "flex"
+    }
+}
+
+/* scorecard toggle */
+
+const toggleScorecard = () => {
+    const open = scorecard.hasAttribute('open');
+    if (!open) {
+        scorecard.setAttribute('open', '')
+    }else {
+        scorecard.removeAttribute('open')
+    }
+}
+
+/* controls scoring system */
+
+/* create functions just initializes a new {target: score}. May be able to combine createScore and updateScore into one function. */
+const createsScore = () => {
+    players.forEach(player => {
+        player.scores[target] = 0
+    })
+}
+
+const createDistance = () => {
+    distances[target] = 0
+} 
+/* update functions update the data inside the object every time a new value is given on that target to each score/distance */
+const updateScore = (btn) => {
+    const player = btn.closest('.in-game__target-score-row')
+    const id = player.getAttribute('id').split("").slice(7, 8).join('')
+    players[+id - 1].scores[+currentTarget.textContent] = +btn.value
+}
+
+const updateDistance = () => {
+    distances[+currentTarget.textContent] = +distanceInput.value
+}
+
+const highlightSelectedScore = (btn) => {
+    const buttonsContainer = btn.closest('.in-game__target-score-buttons')
+    const buttons = buttonsContainer.querySelectorAll('.in-game__target-score');
+    buttons.forEach(button => {
+        button.classList.remove('selected')
+    })
+    btn.classList.add('selected')
+}
+/* too long? should I break it up into smaller functions? */
+const addColumnsToScorecard = () => {
+    const targetRow = scorecard.querySelector('#scorecard-target-row');
+    const distanceRow = scorecard.querySelector('#scorecard-distance-row');
+    const playersRows = scorecard.querySelectorAll('.in-game__scorecard-row-player')
+
+    const targetCol = document.createElement('p');
+    targetCol.className = 'in-game__scorecard-number-target';
+    targetCol.textContent = `#${target}`;
+    targetRow.appendChild(targetCol);
+    
+    const distanceCol = document.createElement('p');
+    distanceCol.className = 'in-game__scorecard-number-distance';
+    distanceCol.id = `distance-column-${target}`
+    distanceRow.appendChild(distanceCol)
+
+    playersRows.forEach(player => {
+        const playerCol = document.createElement('p');
+        playerCol.className = 'in-game__scorecard-number-player';
+        playerCol.id = `player-column-${target}`
+        player.appendChild(playerCol)
+        
+    })
+}
+
+const updateDistanceToScorecard = () => {
+    const currentTarg = currentTarget.textContent;
+    const distanceColumns = scorecard.querySelectorAll('.in-game__scorecard-number-distance')
+
+    distanceColumns.forEach(column => {
+        const columnId = column.getAttribute('id').split("").slice(16, 17).join('')
+        
+        if (currentTarg === columnId) {
+            column.textContent = `${distanceInput.value}yrds`
+        }
+    })
+}
+
+const updatePlayerScoreToScorecard = (btn) => {
+    const currentTarg = currentTarget.textContent;
+    const player = btn.closest('.in-game__target-score-row');
+    const playerName = player.querySelector('.in-game__target-score-player').textContent
+    const scorecardPlayer = scorecard.querySelector(`#${playerName}`)
+    const scorecardPlayerCol = scorecardPlayer.querySelectorAll('.in-game__scorecard-number-player')
+    
+    scorecardPlayerCol.forEach(column => {
+        const columnId = column.getAttribute('id').split("").slice(14, 15).join('')
+
+        if (currentTarg === columnId) {
+            column.textContent = btn.value
+        }
+    })
+
+}
+
+/* updateByTarget functions bring show the current score in the UI based off data from the objects. create/update/updateByTarget functions may be able to get combine in the
+future but for now they work good alone and might work best alone. */
+const updateDistanceByTarget = () => {
+    if (!distances[target]) {
+        distanceInput.value = ''
+    }else {
+        distanceInput.value = distances[target]
+    }
+}
+
+/* I am proud of this one */
+const updateScoreByTarget = () => {
+    const buttons = document.querySelectorAll('.in-game__target-score');
+    players.forEach(player => {
+        if (!player.scores[target]) {
+            buttons.forEach(button => button.classList.remove('selected'))
+            return
+        }
+        const playerRow = scoreSetterBox.querySelector(`#player-${player.id}`)
+        const playersScoreButton = playerRow.querySelector(`[value="${player.scores[target]}"]`)
+        highlightSelectedScore(playersScoreButton)
+    })
 }
 
 /* add/changes targets */
-
-const addTarget = () => {
-    targets++
-    currentTarget.textContent = targets;
-    const li = document.createElement('li');
-    li.className = 'in-game__target-select';
-    li.textContent = targets;
-    targetList.appendChild(li)
-    selectTarget(li)
-    createsScore()
-}
 
 const selectTarget = (el) => {
     let items = targetList.querySelectorAll('.in-game__target-select');
     items.forEach(item => item.classList.remove('selected'))
     el.classList.add('selected');
     currentTarget.textContent = el.textContent
-    updateScoreByTarget(el)
+    updateScoreByTarget()
+    updateDistanceByTarget()
+}
+
+const addTarget = () => {
+    target++
+    currentTarget.textContent = target;
+    const li = document.createElement('li');
+    li.className = 'in-game__target-select';
+    li.textContent = target;
+    targetList.appendChild(li)
+    selectTarget(li)
+    createsScore()
+    createDistance()
+    addColumnsToScorecard()
 }
 
 const selectsNextTarget = () => {
@@ -174,58 +354,27 @@ const selectsPreviousTarget = () => {
     }
 }
 
-/* controls scoring system */
 
-/* createScore just initializes a new {target: score}. May be able to combine createScore and updateScore into one function */
-const createsScore = () => {
-    players.forEach(player => {
-        player.scores[targets] = 0
-    })
-}
-/* updateScoreByTarget is important to pull the data and show it if a player needs to go back to a previous target to change the score */
-const updateScoreByTarget = (el) => {
-    const target = +el.textContent
-    const buttons = document.querySelectorAll('.in-game__target-score');
-    players.forEach(player => {
-        if (!player.scores[target]) {
-            buttons.forEach(button => button.classList.remove('selected'))
-            return
-           
-        }
-        const playerRow = scoreSetterBox.querySelector(`#player-${player.id}`)
-        const playersScoreButton = playerRow.querySelector(`[value="${player.scores[target]}"]`)
-        highlightSelectedScore(playersScoreButton)
-    })
-}
+distanceInput.addEventListener('change', () => {
+    updateDistance()
+    updateDistanceToScorecard()
 
-const updateScore = (btn) => {
-    const player = btn.closest('.in-game__target-score-row')
-    const id = player.getAttribute('id').split("").slice(7, 8).join('')
-    players[+id - 1].scores[+currentTarget.textContent] = btn.value
-}
-
-const highlightSelectedScore = (btn) => {
-    const buttonsContainer = btn.closest('.in-game__target-score-buttons')
-    const buttons = buttonsContainer.querySelectorAll('.in-game__target-score');
-    buttons.forEach(button => {
-        button.classList.remove('selected')
-    })
-    btn.classList.add('selected')
-}
-
-/* players for each in select target to find if the player has a value for that specific target */
+})
 
 scoreSetterBox.addEventListener('click', (e) => {
     const button = e.target.closest('.in-game__target-score')
     if (!button) return
     updateScore(button)
     highlightSelectedScore(button)
-    console.log(players)
+    updatePlayerScoreToScorecard(button)
+
 })
 
 startRoundButton.addEventListener('click', () => {
     populateScoreSetterBox()
+    addPlayerToScorecard()
     addTarget()
+    
     newRound.setAttribute('hidden', '')
     inGame.removeAttribute('hidden')
 })
@@ -233,25 +382,14 @@ startRoundButton.addEventListener('click', () => {
 targetList.addEventListener('click', (e) => {
     const li = e.target.closest('.in-game__target-select')
     if (!li || !targetList.contains(li)) return
+    target = +li.textContent
     selectTarget(li)
 })
 
-/* expand target list */
-
-const targetExpandButton = document.querySelector('#target-expand-btn');
-const targetsContainer = document.querySelector('.in-game__target-container')
-const targetsList = document.querySelector('.in-game__target-select-ol')
-
 targetExpandButton.addEventListener('click', () => {
-    let open = targetsContainer.classList.contains('open');
-    if (open) {
-        targetsContainer.classList.remove('open');
-        setTimeout(() => {
-          targetsList.style.display = "none"  
-        }, 500)
-        
-    }else {
-        targetsContainer.classList.add('open')
-        targetsList.style.display = "flex"
-    }
+    showTargetListToggle()
+})
+
+scorecardButton.addEventListener('click', () => {
+    toggleScorecard()
 })

@@ -43,13 +43,18 @@
                         <button type="button" class="in-game__target-expand-button" id="target-expand-btn"><img src="./images/down-arrow-6402.png" alt="" width="16"></button>
                     </div>
                     <ol class="in-game__target-select-ol" id="target-list">
+                        <!-- <li class="in-game__target-select selected">1</li>
+                        <li class="in-game__target-select">2</li>
+                        <li class="in-game__target-select">3</li>
+                        <li class="in-game__target-select">4</li>
+                        <li class="in-game__target-select">5</li> -->
                     </ol>
                     
                 </div>
 
                 <div class="in-game__yardage-container">
-                    <label class="in-game__yardage-label" for="yard-input">Distance to target:</label>
-                    <div class="in-game__yardage-input"><input type="number"id="yard-input"><label for="yard-input">Yards</label></div>
+                    <label class="in-game__yardage-label" for="yard-input" >Distance to target:</label>
+                    <div class="in-game__yardage-input"><input type="number" id="yard-input"><label for="yard-input">Yards</label></div>
                 </div>
                 
                 <div class="in-game__target-score-container" >
@@ -59,43 +64,31 @@
                         <p class="in-game__target-score-score caption">Score</p>
                     </div>
                     <div class="in-game__score-setter" id="score-setter-container">
+                        <!-- <div class="in-game__target-score-row" id="player-1">
+                            <p class="in-game__target-score-id">1</p>
+                            <p class="in-game__target-score-player">Isaac</p>
+                            <div class="in-game__target-score-buttons">
+                                <button type="button" class="in-game__target-score" value="10">10</button>
+                                <button type="button" class="in-game__target-score" value="8">8</button>
+                                <button type="button" class="in-game__target-score" value="5">5</button>
+                                <button type="button" class="in-game__target-score" value="0">0</button>
+                            </div>
+                        </div> -->
                     </div>
                     <div class="in-game__target-score-row closer"></div>
                 </div>
 
-                <dialog class="in-game__scorecard-container">
+                <dialog class="in-game__scorecard-container" id="scorecard">
                     <!-- different than how I did it on the tagret-score caption to see which way might work better in the future -->
-                    <div class="in-game__scorecard-row-target row">
+                    <div class="in-game__scorecard-row-target row" id="scorecard-target-row">
                         <p class="in-game__scorecard-name-target">Target</p>
-                        <p class="in-game__scorecard-number-target">#1</p>
-                        <p class="in-game__scorecard-number-target">#2</p>
-                        <p class="in-game__scorecard-number-target">#3</p>
-                        
-
                     </div>
-                    <div class="in-game__scorecard-row-distance row">
+                    <div class="in-game__scorecard-row-distance row" id="scorecard-distance-row">
                         <p class="in-game__scorecard-name-distance">Distance</p>
-                        <p class="in-game__scorecard-number-distance">34yrds</p>
-                        <p class="in-game__scorecard-number-distance">34yrds</p>
-                        <p class="in-game__scorecard-number-distance">34yrds</p>
-                        
-
                     </div>
-                    <div class="in-game__scorecard-row-player row">
-                        <p class="in-game__scorecard-name-player">Isaac</p>
-                        <p class="in-game__scorecard-number-player">10</p>
-                        <p class="in-game__scorecard-number-player">10</p>
-                    </div>
-                    <div class="in-game__scorecard-row-player row">
-                        <p class="in-game__scorecard-name-player">Isaac</p>
-                        <p class="in-game__scorecard-number-player">10</p>
-                        <p class="in-game__scorecard-number-player">10</p>
-                        <p class="in-game__scorecard-number-player">10</p>
-                    </div>
-                    <div class="in-game__scorecard-total">
+                    <div class="in-game__scorecard-player-container" id="scorecard-player-container"></div>
+                    <div class="in-game__scorecard-total" id="scorecard-total">
                         <p class="in-game__scorecard-name-total">Total</p>
-                        <p class="in-game__scorecard-number-total">30</p>
-                        
                     </div>
                 </dialog>
 
@@ -104,7 +97,7 @@
                         <img src="./images/previous-arrow.png" alt="">
                         <p>Previous Target</p>
                     </button>
-                    <button type="button" class="in-game__scorecard-toggle">
+                    <button type="button" class="in-game__scorecard-toggle" id="scorecard-btn">
                         <img src="./images/score (1).png" alt="" width="50">
                         <p>Scorecard</p>
                     </button>
