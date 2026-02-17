@@ -2,6 +2,7 @@
 const newRound = document.querySelector('#new-round');
 const table = document.querySelector('#new-round-table');
 const addPlayerRow = document.querySelector('#add-player-row')
+const addPlayerTable = document.querySelector('#add-player-table')
 
 
 const confirmPlayerButton = document.querySelector('.confirm-player-button');
@@ -134,6 +135,15 @@ const scorecardPlayerContainer = document.querySelector('#scorecard-player-conta
 
 let target = 0;
 const distances = {}
+
+const changesScreenToStartRound = () => {
+    const inGameHidden = inGame.hasAttribute('hidden')
+    
+    if (inGameHidden) {
+        newRound.setAttribute('hidden', '')
+        inGame.removeAttribute('hidden')
+    }
+}
 
 
 const populateScoreSetterBox = () => {
@@ -353,6 +363,9 @@ const selectsNextTarget = () => {
         /* buttons.forEach(button => button.classList.remove('selected')) */
     }else {
         selectTarget(items[indexOfSelected + 1])
+        target++
+        updateScoreByTarget()
+        updateDistanceByTarget()
     }
 }
 /* try to make these into one function in the future */
@@ -363,6 +376,9 @@ const selectsPreviousTarget = () => {
         return 
     }else {
         selectTarget(items[indexOfSelected - 1])
+        target--
+        updateScoreByTarget()
+        updateDistanceByTarget()
     }
 }
 
@@ -384,12 +400,19 @@ scoreSetterBox.addEventListener('click', (e) => {
 })
 
 startRoundButton.addEventListener('click', () => {
-    populateScoreSetterBox()
-    addPlayerToScorecard()
-    addTarget()
+    const childrenOfAddPlayerTable = addPlayerTable.children;
+    const numberOfPlayersAdded = childrenOfAddPlayerTable.length - 1
     
-    newRound.setAttribute('hidden', '')
-    inGame.removeAttribute('hidden')
+    if (numberOfPlayersAdded !== players.length) {
+        console.log("add players")
+        return
+    }else {
+        populateScoreSetterBox()
+        addPlayerToScorecard()
+        addTarget() 
+        changesScreenToStartRound()
+    }
+    
 })
 
 targetList.addEventListener('click', (e) => {
@@ -405,4 +428,8 @@ targetExpandButton.addEventListener('click', () => {
 
 scorecardButton.addEventListener('click', () => {
     toggleScorecard()
+})
+
+document.addEventListener('click', () => {
+    console.log(target)
 })

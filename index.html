@@ -17,9 +17,9 @@
                     <h2 class="new-round__table-header">
                         Players
                     </h2>
-                    <div class="new-round__table-body">
+                    <div class="new-round__table-body" id="add-player-table">
                         <div class="new-round__table-row add-player" id="add-player-row">
-                            <div></div>
+                            <div><!-- placeholder for id cells --></div>
                             <div class="name-cell add-player">Add player</div>
                             <div class="button-cell add-player">                
                                 <button type="button" id="add-player-button">                                        
@@ -54,7 +54,7 @@
 
                 <div class="in-game__yardage-container">
                     <label class="in-game__yardage-label" for="yard-input" >Distance to target:</label>
-                    <div class="in-game__yardage-input"><input type="number" id="yard-input"><label for="yard-input">Yards</label></div>
+                    <div class="in-game__yardage-input"><input type="text" inputmode="numeric" pattern="[0-9]*" name="yard-input" id="yard-input"><label for="yard-input">Yards</label></div>
                 </div>
                 
                 <div class="in-game__target-score-container" >
