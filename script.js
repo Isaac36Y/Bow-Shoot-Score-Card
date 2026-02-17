@@ -156,14 +156,15 @@ const populateScoreSetterBox = () => {
 
 const addPlayerToScorecard = () => {
     players.forEach(player => {
+        const newName = String(player.name).split(/\s+/).join('-')
+
         const playerDiv = document.createElement('div');
         playerDiv.className = 'in-game__scorecard-row-player'
-        playerDiv.id = `${player.name}`;
+        playerDiv.id = `${newName}`;
         playerDiv.innerHTML = `<p class="in-game__scorecard-name-player">${player.name}</p>`
         scorecardPlayerContainer.appendChild(playerDiv)
 
         const totalPar = document.createElement('p');
-        const newName = String(player.name).split(/\s+/).join('-')
         totalPar.className = 'in-game__scorecard-number-total'
         totalPar.id = `${newName}-total`
         totalPar.textContent = '0'
@@ -271,15 +272,26 @@ const updatePlayerScoreToScorecard = (btn) => {
     const currentTarg = currentTarget.textContent;
     const player = btn.closest('.in-game__target-score-row');
     const playerName = player.querySelector('.in-game__target-score-player').textContent
-    const scorecardPlayer = scorecard.querySelector(`#${playerName}`)
+    const scorecardPlayer = scorecardPlayerContainer.querySelector(`#${playerName.replace(' ', '-')}`)
     const scorecardPlayerCol = scorecardPlayer.querySelectorAll('.in-game__scorecard-number-player')
-    
     scorecardPlayerCol.forEach(column => {
         const columnId = column.getAttribute('id').split("").slice(14, 15).join('')
 
         if (currentTarg === columnId) {
             column.textContent = btn.value
         }
+    })
+}
+
+const updateTotalScorecardScores = () => {
+    const totalRows = scorecardTotalColumn.querySelectorAll('.in-game__scorecard-number-total')
+    
+    totalRows.forEach(row => { 
+        const rowName = row.getAttribute('id').split('').slice(0, -6).join('').replace('-', ' ')
+        console.log(rowName)
+        const playersData = players.filter(player => player.name === rowName)
+
+        row.textContent = Object.values(playersData[0].scores).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     })
 
 }
@@ -367,6 +379,7 @@ scoreSetterBox.addEventListener('click', (e) => {
     updateScore(button)
     highlightSelectedScore(button)
     updatePlayerScoreToScorecard(button)
+    updateTotalScorecardScores()
 
 })
 
