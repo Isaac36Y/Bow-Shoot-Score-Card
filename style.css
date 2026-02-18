@@ -315,6 +315,10 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.3rem;
 }
 
+.in-game__yardage-input {
+  position: relative;
+}
+
 .in-game__yardage-input input {
   text-align: end;
   padding-inline-end: 3.2rem;
@@ -322,7 +326,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .in-game__yardage-input label { 
-  margin-inline-start: -3rem;
+  position: absolute;
+  left: 3.5rem;
+  top: 0.2rem;
   color: black;
   
 }
