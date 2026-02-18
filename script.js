@@ -13,19 +13,48 @@ const distanceMode = document.querySelector('#distance-mode-checkbox')
 
 const players = [
     /* {
-        id: 1,
+        id: 1, 
         name: "Isaac",
         scores: {
-            1: "10",
-            2: "8",
-            3: "8",
-            4: "0",
-            5: "10"
-        }
+            1: 10,
+            2: 5, 
+            3: 8
+        },
+        total: 0
+    },
+    {
+        id: 2, 
+        name: "Greg",
+        scores: {
+            1: 9,
+            2: 4, 
+            3: 7
+        },
+        total: 0
+    },
+    {
+        id: 3, 
+        name: "Jacob",
+        scores: {
+            1: 8,
+            2: 3, 
+            3: 6
+        },
+        total: 0
+    },
+    {
+        id: 4, 
+        name: "Jack",
+        scores: {
+            1: 7,
+            2: 2, 
+            3: 5
+        },
+        total: 0
     } */
 ];
 
-let multiplierOn = true
+let multiplierOn;
 
 const savesPlayer = (el) => {
     const row = el.closest('.new-round__table-row');
@@ -361,8 +390,10 @@ const updateTotalScorecardScores = () => {
     netTotalRows.forEach(row => { 
         const rowName = row.getAttribute('id').split('').slice(0, -6).join('').replace('-', ' ').trim()
         const playersData = players.filter(player => player.name === rowName)
-
-        row.textContent = Object.values(playersData[0].scores).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        const totals = Object.values(playersData[0].scores).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        /* changed to see if adding a total in players makes things easier */
+        row.textContent = totals
+        players.total = totals
     })
 
     if (multiplierOn) {
@@ -489,8 +520,8 @@ startRoundButton.addEventListener('click', () => {
     const numberOfPlayersAdded = childrenOfAddPlayerTable.length - 1
 
     distanceMode.checked ? multiplierOn = true : multiplierOn = false
-    
-    if (numberOfPlayersAdded !== players.length || players.length === 0) {
+
+    if (numberOfPlayersAdded !== players.length /* || players.length === 0 */) {
         console.log("add players")
         return
     }else {
@@ -519,6 +550,8 @@ scorecardButton.addEventListener('click', () => {
     toggleScorecard()
 })
 
-document.addEventListener('click', () => {
-    console.log(multiplierOn)
-})
+/* Round Summary */
+
+/* const populatePodium = () => {
+    const topThree = players.filter
+} */

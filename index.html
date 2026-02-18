@@ -8,7 +8,7 @@
 </head>
 <body>
     <main>
-        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par" id="new-round">
+        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par" id="new-round" hidden>
             <div class="new-round__container">
                 <img class="new-round__hero-img" src="./images/new.png" alt="" width="250">
                 <h1 id="new-round-header">New Round</h1>
@@ -132,7 +132,64 @@
                 </div>
             </div>
         </section>
-        <section class="round-summary" hidden></section>
+        <section class="round-summary">
+            <div class="round-summary__container">
+                <div class="round-summary__results">
+                    <h2 class="round-summary__results-header">Round Results</h2>
+                    <div class="round-summary__podium-container">
+                        <div class="round-summary__podium" id="podium-2">
+                            <p class="round-summary__podium-name">Greg</p>
+                            <div class="round-summary__podium-step">2nd</div>
+                        </div>
+                        <div class="round-summary__podium" id="podium-1">
+                            <p class="round-summary__podium-name">Isaac</p>
+                            <div class="round-summary__podium-step">1st</div>
+                        </div>
+                        <div class="round-summary__podium" id="podium-3">
+                            <p class="round-summary__podium-name">Jacob</p>
+                            <div class="round-summary__podium-step">3rd</div>
+                        </div>
+                    </div>
+                    <div class="round-summary__results-table">
+                        <div class="round-summary__results-row 1">
+                            <p class="round-summary__results-place">1st</p>
+                            <p class="round-summary__results-name">Isaac</p>
+                            <p class="round-summary__results-score">215</p>
+                        </div>
+                        <div class="round-summary__results-row 2">
+                            <p class="round-summary__results-place">2nd</p>
+                            <p class="round-summary__results-name">Greg</p>
+                            <p class="round-summary__results-score">206</p>
+                        </div>
+                        <div class="round-summary__results-row 3">
+                            <p class="round-summary__results-place">3rd</p>
+                            <p class="round-summary__results-name">Jacob</p>
+                            <p class="round-summary__results-score">199</p>
+                        </div>
+                        <div class="round-summary__results-row 4">
+                            <p class="round-summary__results-place">4th</p>
+                            <p class="round-summary__results-name">Jack</p>
+                            <p class="round-summary__results-score">198</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="round-summary__highlights">
+                    <h2 class="round-summary__highlights-header">Highlights</h2>
+                    <div class="round-summary__highlights-most-tens">
+                        <p>Most 10s in the round: <span>Isaac</span> with <span>6</span></p>
+                    </div>
+                    <div class="round-summary__highlights-most-zeros">
+                        <p>Most 0s in the round: <span>Isaac</span> with <span>6</span></p>
+                    </div>
+                    <div class="round-summary__highlights-longest-shot">
+                        <p>Longest shot of the round: <span>Isaac</span> got a <span>10</span> at <span>69yrds</span></p>
+                    </div>
+                    <div class="round-summary__highlights-comeback">
+                        <p>Comeback kid: <span>Isaac</span> was down by <span>15pts</span> after <span>22 targets</span> then came back to win it all</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
     <script src="script.js"></script>
 </body>

@@ -55,6 +55,10 @@ body {
   color: var(--tan100);
 }
 
+section {
+  height: 100vh;
+}
+
 img, picture, video, canvas, svg {
   display: block;
   max-width: 100%;
@@ -82,10 +86,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* new round */
-
-.new-round {
-  height: 100vh;
-}
 
 .new-round__container {
   display: flex;
@@ -288,10 +288,6 @@ input:checked + .slider:before {
 }
 
 /* in game */
-
-.in-game {
-  height: 100vh;
-}
 
 .in-game__container {
   display: flex;
@@ -679,5 +675,103 @@ input:checked + .slider:before {
 }
 
 .in-game__scorecard-number-total {
+  text-align: center;
+}
+
+/* round summary */
+
+.round-summary__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.round-summary__results, .round-summary__highlights {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.round-summary__results-header, .round-summary__highlights-header {
+  margin-block-start: 2rem;
+}
+
+.round-summary__podium-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 80%;
+  align-items: end;
+}
+
+/* podium */
+
+.round-summary__podium {
+  text-align: center;
+}
+
+.round-summary__podium-step {
+    background-color: rgba(247, 237, 227, 0.614);
+    color: black;
+}
+.round-summary__podium-name {
+  width: 100%;
+  height: 0;
+  border-bottom: 2rem solid rgb(85, 85, 85, 0.4); 
+  font-size: 2rem;
+  padding-bottom: 1.5rem
+}
+
+.round-summary__podium#podium-1 .round-summary__podium-step {
+  height: 6rem;
+  font-size: 2rem;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+.round-summary__podium#podium-1 .round-summary__podium-name {
+  border-left: 0.5rem solid transparent; 
+  border-right: 0.5rem solid transparent;
+}
+
+.round-summary__podium#podium-2 .round-summary__podium-step {
+  height: 3.8rem;
+  font-size: 1.5rem;
+}
+.round-summary__podium#podium-2 .round-summary__podium-name {
+  border-left: 1rem solid transparent; 
+  padding-right: 1rem;
+}
+
+.round-summary__podium#podium-3 .round-summary__podium-step {
+  height: 2.5rem;
+  font-size: 1rem;
+}
+.round-summary__podium#podium-3 .round-summary__podium-name {
+  border-right: 1rem solid transparent; 
+  padding-left: 1rem;
+}
+
+/* table */
+
+.round-summary__results-table {
+  width: 70%;
+}
+
+.round-summary__results-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  border-bottom: 1px solid black;
+  padding-block: 0.5rem;
+}
+
+.round-summary__results-name {
+  text-align: center;
+}
+
+.round-summary__results-score {
+  text-align: end;
+}
+
+.round-summary__highlights div p {
   text-align: center;
 }
