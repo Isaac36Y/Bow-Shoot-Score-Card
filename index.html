@@ -29,10 +29,15 @@
                         </div>
                     </div>
                 </div>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider"></span>
-                </label>
+                <div class="new-round__mode-change-container">
+                    <p class="new-round__mode-change-par">Distance Multiplier</p>
+                    <div class="switch-container">
+                        <label class="switch">
+                            <input type="checkbox" id="distance-mode-checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
                 <button type="button" class="new-round__start-round" id="start-round-btn">Start Round</button>
             </div>
         </section>
@@ -59,6 +64,10 @@
                 <div class="in-game__yardage-container">
                     <label class="in-game__yardage-label" for="yard-input" >Distance to target:</label>
                     <div class="in-game__yardage-input"><input type="text" inputmode="numeric" name="yard-input" id="yard-input"><label for="yard-input">Yards</label></div>
+                    <div class="in-game__yardage-error" id="yardage-error-msg">
+                        <p class="in-game__yardage-error-msg">Please enter a distance for this target
+                        </p>
+                    </div>
                 </div>
                 
                 <div class="in-game__target-score-container" >

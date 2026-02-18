@@ -9,6 +9,7 @@ const confirmPlayerButton = document.querySelector('.confirm-player-button');
 const deletePlayerButton = document.querySelector('.delete-player-button');
 const editPlayerButton = document.querySelector('#edit-player-button');
 const addPlayerButton = document.querySelector('#add-player-button');
+const distanceMode = document.querySelector('#distance-mode-checkbox')
 
 const players = [
     /* {
@@ -23,7 +24,8 @@ const players = [
         }
     } */
 ];
-const multiplierOn = true;
+
+let multiplierOn = true
 
 const savesPlayer = (el) => {
     const row = el.closest('.new-round__table-row');
@@ -107,7 +109,6 @@ const deletePlayer = (el) => {
 
 addPlayerButton.addEventListener('click', () => {
     addsPlayer()
-    
 })
 
 /* start round functions */
@@ -124,6 +125,7 @@ const targetsList = document.querySelector('.in-game__target-select-ol');
 
 const distanceInput = document.querySelector('#yard-input')
 const scoreSetterBox = document.querySelector('#score-setter-container');
+const distanceErroeMessage = document.querySelector('#yardage-error-msg')
 
 const nextTargetButton = document.querySelector('#next-target-btn');
 const previousTargetButton = document.querySelector('#previous-target-btn');
@@ -206,13 +208,22 @@ const addPlayerToScorecard = () => {
     })
 }
 
-const handlesIfMultiplierIsOn = () => {
+const handlesIfMultiplierMode = () => {
+    const scorecarTotalsContainer = document.querySelector('.in-game__scorecard-total')
+    const scorecardNotTotalsContainer = document.querySelector('.in-game__scorecard-not-total')
+
     if (multiplierOn) {
         players.forEach(player => {
             player.multipliedScores = {}
         })
     }
 
+    if (!multiplierOn) {
+        scorecardMultipliedColumn.style.display = 'none'
+        scorecarTotalsContainer.style.gridTemplateColumns = '1fr'
+        scorecarTotalsContainer.style.width = '20%'
+        scorecardNotTotalsContainer.style.width = '80%'
+    }
 }
 
 /* expand target list */
@@ -241,6 +252,12 @@ const toggleScorecard = () => {
         scorecard.removeAttribute('open')
     }
 }
+
+const noDistanceError = (error) => {
+    error ? distanceErroeMessage.style.display = 'block' : distanceErroeMessage.style.display = 'none'
+}
+
+
 
 /* controls scoring system */
 
@@ -409,23 +426,34 @@ const addTarget = () => {
 const selectsNextTarget = () => {
     let items = Array.from(targetList.querySelectorAll('.in-game__target-select'))
     let indexOfSelected = items.findIndex(item => item.classList.contains('selected'))
-    /* const buttons = document.querySelectorAll('.in-game__target-score'); */
+
+    if (multiplierOn && distances[target] === 0) {
+        noDistanceError(true)
+        return
+    }
+
     if (items.length === indexOfSelected + 1) {
         addTarget()
-        /* buttons.forEach(button => button.classList.remove('selected')) */
     }else {
         selectTarget(items[indexOfSelected + 1])
         target++
         updateScoreByTarget()
         updateDistanceByTarget()
     }
+
+    
 }
 /* try to make these into one function in the future */
 const selectsPreviousTarget = () => {
     let items = Array.from(targetList.querySelectorAll('.in-game__target-select'))
     let indexOfSelected = items.findIndex(item => item.classList.contains('selected'))
+
+
     if (indexOfSelected === 0) {
         return 
+    }else if (multiplierOn && distances[target] === 0) {
+            noDistanceError(true)
+            return
     }else {
         selectTarget(items[indexOfSelected - 1])
         target--
@@ -443,6 +471,7 @@ distanceInput.addEventListener('change', () => {
         updateScore(button)
     })
     updateTotalScorecardScores()
+    noDistanceError(false)
 })
 
 scoreSetterBox.addEventListener('click', (e) => {
@@ -458,12 +487,14 @@ scoreSetterBox.addEventListener('click', (e) => {
 startRoundButton.addEventListener('click', () => {
     const childrenOfAddPlayerTable = addPlayerTable.children;
     const numberOfPlayersAdded = childrenOfAddPlayerTable.length - 1
+
+    distanceMode.checked ? multiplierOn = true : multiplierOn = false
     
-    if (numberOfPlayersAdded !== players.length) {
+    if (numberOfPlayersAdded !== players.length || players.length === 0) {
         console.log("add players")
         return
     }else {
-        handlesIfMultiplierIsOn()
+        handlesIfMultiplierMode()
         populateScoreSetterBox()
         addPlayerToScorecard()
         addTarget() 
@@ -488,6 +519,6 @@ scorecardButton.addEventListener('click', () => {
     toggleScorecard()
 })
 
-/* document.addEventListener('click', () => {
-    console.log(target)
-}) */
+document.addEventListener('click', () => {
+    console.log(multiplierOn)
+})
