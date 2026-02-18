@@ -323,7 +323,7 @@ h1, h2, h3, h4, h5, h6 {
   text-align: end;
   padding-inline-end: 3.2rem;
   width: 6.5rem;
-  vertical-align: middle;
+  vertical-align: bottom;
 }
 
 .in-game__yardage-input label { 
