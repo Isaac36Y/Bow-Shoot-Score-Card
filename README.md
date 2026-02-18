@@ -1,0 +1,1 @@
+<!-- how can I avoid checking if multiplierOn is true for every function? -->
