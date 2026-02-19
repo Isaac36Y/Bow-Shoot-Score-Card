@@ -12,7 +12,7 @@ const addPlayerButton = document.querySelector('#add-player-button');
 const distanceMode = document.querySelector('#distance-mode-checkbox')
 
 const players = [];
-
+let playersInOrder
 
 let multiplierOn;
 
@@ -133,6 +133,7 @@ const distances = {}
 
 
 
+
 const changesScreenToStartRound = () => {
     const inGameHidden = inGame.hasAttribute('hidden')
     
@@ -153,7 +154,6 @@ const adjustsGapOfScoreBox = (num) => {
         scoreContainer.style.margin = '1rem auto';
     }
 }
-
 
 const populateScoreSetterBox = () => {
     players.forEach(player => {
@@ -284,6 +284,8 @@ const updateScore = (btn) => {
     }
 }
 
+const putsPlayersInOrder = () =>  playersInOrder = [...players].sort((a, b) => b.total - a.total);
+
 const highlightSelectedScore = (btn) => {
     const buttonsContainer = btn.closest('.in-game__target-score-buttons')
     const buttons = buttonsContainer.querySelectorAll('.in-game__target-score');
@@ -348,7 +350,7 @@ const updatePlayerScoreToScorecard = (btn) => {
 const updateTotalScorecardScores = () => {
     const netTotalRows = scorecardTotalColumn.querySelectorAll('.in-game__scorecard-number-total');
     const multipliedTotalRows = scorecardMultipliedColumn.querySelectorAll('.in-game__scorecard-multiplied-total')
-    
+    /* TRY: add total from players data and use that to update each  */
     netTotalRows.forEach(row => { 
         const rowName = row.getAttribute('id').split('').slice(0, -6).join('').replace('-', ' ').trim()
         const playersData = players.filter(player => player.name === rowName)
@@ -474,6 +476,8 @@ scoreSetterBox.addEventListener('click', (e) => {
     highlightSelectedScore(button)
     updatePlayerScoreToScorecard(button)
     updateTotalScorecardScores()
+    putsPlayersInOrder()
+    console.log(playersInOrder)
 
 })
 
@@ -537,8 +541,6 @@ const halfWayPoint = () => {
 
 
 const populatePodium = () => {
-    const playersInOrder = [...players].sort((a, b) => b.total - a.total);
-
     const podium1 = document.querySelector('#podium-1 p');
     const podium2 = document.querySelector('#podium-2 p');
     const podium3 = document.querySelector('#podium-3 p');
@@ -552,6 +554,7 @@ const populatePodium = () => {
     if (spliceLength === 2) {
         podium2.textContent = topThree[1].name;
     }else if (spliceLength == 3) {
+        podium2.textContent = topThree[1].name;
         podium3.textContent = topThree[2].name;
     }
 }
@@ -559,8 +562,6 @@ const populatePodium = () => {
 
 const populateResultsTable = () => {
     const resultsTable = document.querySelector('#results-table');
-    const playersInOrder = [...players].sort((a, b) => b.total - a.total);
-
 
     playersInOrder.forEach(player => {
         const amountOfDivs = document.querySelectorAll('.round-summary__results-row').length
@@ -624,7 +625,6 @@ const findsAndPopulatesLongestShot = () => {
     scoresFromLongest.sort((a, b) => b.score - a.score)
     const highestScore = scoresFromLongest[0].score
     const ifTie = scoresFromLongest.filter(each => each.score === highestScore)
-    console.log(ifTie)
     if (players.length === 1) {
         longestShotText.textContent = `Your longest shot of the day was ${longestDistance}yrds and you scored a ${scoresFromLongest.score}`
     }else if (ifTie.length > 1) {
@@ -645,7 +645,6 @@ const isComebackKid = () => {
 }
 
 const populateComebackKid = () => {
-    const playersInOrder = [...players].sort((a, b) => b.total - a.total);
     const comebackKidText = document.querySelector('#comeback-kid p')
     const winner = playersInOrder[0]
     const orderedHalfWayTotals = [...isComebackKid()].sort((a, b) => b.score - a.score)
@@ -669,6 +668,6 @@ endRound.addEventListener('click', () => {
     roundSummary.removeAttribute('hidden')
 })
 
-/* playerInOrder called multiple time
+/* 
     end round pop up style
     podium long name fix */
