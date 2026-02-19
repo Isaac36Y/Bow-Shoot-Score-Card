@@ -670,4 +670,4 @@ endRound.addEventListener('click', () => {
 
 /* 
     end round pop up style
-    podium long name fix */
+ */
