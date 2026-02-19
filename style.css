@@ -26,6 +26,14 @@
   src: url('./design/winky-sans-v3-latin/playfair-display-v40-latin/playfair-display-v40-latin-700.woff2') format('woff2');
 }
 
+@font-face {
+  font-display: swap;
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 900;
+  src: url('./design/winky-sans-v3-latin/playfair-display-v40-latin/playfair-display-v40-latin-900.woff2') format('woff2');
+}
+
 /* reset */
 
 *, *::before, *::after {
@@ -44,15 +52,15 @@
 }
 
 html, body {
-  background-color: rgb(9, 100, 104);
+  background: #577344;
+  background: linear-gradient(180deg,rgba(87, 115, 68, 1) 0%, rgba(47, 69, 33, 1) 14%, rgba(37, 57, 24, 1) 31%, rgba(29, 47, 16, 1) 48%, rgba(19, 36, 7, 1) 100%);
 }
 
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   font-family: var(--ff-primary);
-  font-weight: 700;
-  background: linear-gradient(to bottom, rgb(14, 160, 165), rgb(9, 100, 104));
+  font-variant-numeric: tabular-nums lining-nums;
   color: var(--tan100);
 }
 
@@ -104,6 +112,7 @@ h1, h2, h3, h4, h5, h6 {
 .new-round-header {
   font-size: 2.2rem;
   transform: scaleY(1.5);
+  font-weight: 900;
 }
 
 .new-round__container p {
