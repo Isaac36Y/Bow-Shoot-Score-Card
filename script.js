@@ -12,46 +12,37 @@ const addPlayerButton = document.querySelector('#add-player-button');
 const distanceMode = document.querySelector('#distance-mode-checkbox')
 
 const players = [
-    /* {
+    {
         id: 1, 
         name: "Isaac",
         scores: {
-            1: 10,
-            2: 5, 
-            3: 8
+            1: 0,
+            2: 0, 
+            3: 0,
+            4: 0,
+            5: 10,
+            6: 10, 
+            7: 10,
+            8: 10
+
         },
-        total: 0
+        total: 23
     },
     {
         id: 2, 
         name: "Greg",
         scores: {
-            1: 9,
-            2: 4, 
-            3: 7
+            1: 10,
+            2: 10, 
+            3: 10,
+            4: 0,
+            5: 0,
+            6: 0, 
+            7: 0,
+            8: 0
         },
-        total: 0
-    },
-    {
-        id: 3, 
-        name: "Jacob",
-        scores: {
-            1: 8,
-            2: 3, 
-            3: 6
-        },
-        total: 0
-    },
-    {
-        id: 4, 
-        name: "Jack",
-        scores: {
-            1: 7,
-            2: 2, 
-            3: 5
-        },
-        total: 0
-    } */
+        total: 11
+    }
 ];
 
 let multiplierOn;
@@ -167,7 +158,11 @@ const scorecardPlayerContainer = document.querySelector('#scorecard-player-conta
 
 
 let target = 0;
-const distances = {}
+const distances = {
+    1: 45,
+    2: 23,
+    3: 69
+}
 
 
 
@@ -393,7 +388,7 @@ const updateTotalScorecardScores = () => {
         const totals = Object.values(playersData[0].scores).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
         /* changed to see if adding a total in players makes things easier */
         row.textContent = totals
-        players.total = totals
+        playersData[0].total = totals
     })
 
     if (multiplierOn) {
@@ -552,6 +547,128 @@ scorecardButton.addEventListener('click', () => {
 
 /* Round Summary */
 
-/* const populatePodium = () => {
-    const topThree = players.filter
-} */
+const playersInOrder = [...players].sort((a, b) => b.total - a.total);
+const halfWayPoint = () => {
+    const totalAmountOfTargets = Object.keys(players[0].scores).length
+    return Math.floor(totalAmountOfTargets / 2)
+}
+
+const populatePodium = () => {
+    const podium1 = document.querySelector('#podium-1 p');
+    const podium2 = document.querySelector('#podium-2 p');
+    const podium3 = document.querySelector('#podium-3 p');
+    let spliceLength
+    (playersInOrder.length < 3) ? spliceLength = playersInOrder.length : spliceLength = 3
+
+    const topThree = [...playersInOrder].splice(0, spliceLength);
+    podium1.textContent = topThree[0].name;
+    if (spliceLength === 2) {
+        podium2.textContent = topThree[1].name;
+    }else if (spliceLength == 3) {
+        podium3.textContent = topThree[2].name;
+    }
+}
+
+const populateResultsTable = () => {
+    const resultsTable = document.querySelector('#results-table')
+
+
+    playersInOrder.forEach(player => {
+        const amountOfDivs = document.querySelectorAll('.round-summary__results-row').length
+        let place
+        if (amountOfDivs === 0) {
+            place = '1st'
+        }else if (amountOfDivs === 1) {
+            place = '2nd'
+        }else if (amountOfDivs === 2) {
+            place = '3rd'
+        }else place = `${amountOfDivs}th`
+
+        resultsTable.innerHTML += `
+            <div class="round-summary__results-row">
+                <p class="round-summary__results-place">${place}</p>
+                <p class="round-summary__results-name">${player.name}</p>
+                <p class="round-summary__results-score">${player.total}</p>
+            </div>
+        `
+        
+    })
+}
+
+const findsMosts = (num) => {
+
+    const playersTens = []
+    players.forEach(player => {
+        let tensCount = 0
+        Object.values(player.scores).map(score => {
+            if (score === num) {
+                tensCount++
+            }
+        })
+        playersTens.push({name: player.name, amount: tensCount})
+    })
+    return playersTens.sort((a, b) => b.amount - a.amount)[0]
+}
+
+const populateMosts = () => {
+    const mostTens = document.querySelector('#most-tens p')
+    const mostZeros = document.querySelector('#most-zeros p')
+    if (players.length === 1) {
+        mostTens.textContent = findsMosts(10).amount === 0 ? "You didn't get any tens" : `You got ${findsMosts(10).amount} 10s. Nice Job!`
+        mostZeros.textContent = findsMosts(0).amount ? "You didn't get a single 0! Well done" : `You got ${findsMosts(0).amount} 0s.`
+    }else {
+        mostTens.textContent = findsMosts(10).amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `Most 10s in the round: ${findsMosts(10).name} with ${findsMosts(10).amount}.`
+        mostZeros.textContent = findsMosts(0).amount === 0 ? "Most 0s in the round: Nobody! Nice shooting everyone" : `Most 0s in the round: ${findsMosts(0).name} with ${findsMosts(0).amount}.`
+    }
+}
+
+const findsAndPopulatesLongestShot = () => {
+    const longestShotText = document.querySelector('#longest-shot p')
+    const longestDistance = Math.max(...Object.values(distances))
+    const longestTarget = String(Object.values(distances).indexOf(longestDistance) + 1)
+    const scoresFromLongest = []
+    /* pulls all scores on the longest target */
+    players.forEach(player => {
+        scoresFromLongest.push({name: player.name, score: player.scores[longestTarget]})
+    })
+    /* sorts scores from highest to lowest, then checks if there are multiple people with the highest score on the longest target */
+    scoresFromLongest.sort((a, b) => b.score - a.score)
+    const highestScore = scoresFromLongest[0].score
+    const ifTie = scoresFromLongest.filter(each => each.score === highestScore)
+    console.log(ifTie)
+    if (players.length === 1) {
+        longestShotText.textContent = `Your longest shot of the day was ${longestDistance}yrds and you scored a ${scoresFromLongest.score}`
+    }else if (ifTie.length > 1) {
+        longestShotText.textContent = `Longest shot of the round: ${scoresFromLongest[0].name} and ${scoresFromLongest[1].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds` 
+    }else {
+        longestShotText.textContent = `Longest shot of the round: ${scoresFromLongest[0].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds` 
+    }
+}
+
+const isComebackKid = () => {
+    const halfWayTotals = []
+    players.forEach(player => {
+        const halfWayScore = Object.values(player.scores).slice(0, halfWayPoint()).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        halfWayTotals.push({name: player.name, score: halfWayScore})
+    })
+
+    return halfWayTotals
+}
+
+const populateComebackKid = () => {
+    const comebackKidText = document.querySelector('#comeback-kid p')
+    const winner = playersInOrder[0]
+    const orderedHalfWayTotals = [...isComebackKid()].sort((a, b) => b.score - a.score)
+    const winnerInHalfWayTotals = [...isComebackKid()].filter(obj => obj.name === winner.name)
+    const comebackKidDownBy = orderedHalfWayTotals[0].score - winnerInHalfWayTotals[0].score
+    
+    if (winner.name === isComebackKid().sort((a, b) => b.score - a.score)[0].name) {
+        return 
+    }else if (comebackKidDownBy > 15) {
+        comebackKidText.textContent = `Comeback Kid: ${winner.name} was down by ${comebackKidDownBy} after ${halfWayPoint()} targets, then came back to win it all`
+    }
+}
+
+document.addEventListener('click', () => {
+    populateComebackKid()
+})
