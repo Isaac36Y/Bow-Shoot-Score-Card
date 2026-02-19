@@ -8,7 +8,7 @@
 </head>
 <body>
     <main>
-        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par" id="new-round" hidden>
+        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par" id="new-round">
             <div class="new-round__container">
                 <img class="new-round__hero-img" src="./images/new.png" alt="" width="250">
                 <h1 id="new-round-header">New Round</h1>
@@ -113,9 +113,13 @@
                     </div>
                 </dialog>
 
-                <!-- <div class="in-game__confirm-end-game">
-                    <p class="in-game__confirm-end-message">Are you sure you want to end the game?</p>
-                </div> -->
+                <div class="in-game__confirm-end-container" id="end-confirm">
+                    <p class="in-game__confirm-end-message">Are you sure you want to end the round?</p>
+                    <div class="in-game__confirm-end-buttons">
+                        <button class="in-game__cornfirm-end-cancel" id="confirm-msg-cancel">Cancel</button>
+                        <button class="in-game__confirm-end-confirm" id="confirm-msg-confirm">End Round</button>
+                    </div>
+                </div>
                 <div class="in-game__footer-container">
                     <button type="button" class="in-game__previous-target" onclick="selectsPreviousTarget()">
                         <img src="./images/previous-arrow.png" alt="">
@@ -125,7 +129,7 @@
                         <img src="./images/score (1).png" alt="" width="50">
                         <p>Scorecard</p>
                     </button>
-                    <button type="button" class="in-game__end-game">
+                    <button type="button" class="in-game__end-game" id="end-round-btn">
                         <p>END ROUND</p>
                     </button>
                     <button type="button" class="in-game__next-target" onclick="selectsNextTarget()">
@@ -135,7 +139,7 @@
                 </div>
             </div>
         </section>
-        <section class="round-summary">
+        <section class="round-summary" id="round-summary" hidden>
             <div class="round-summary__container">
                 <div class="round-summary__results">
                     <h2 class="round-summary__results-header">Round Results</h2>

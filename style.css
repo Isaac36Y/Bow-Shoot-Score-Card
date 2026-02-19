@@ -292,6 +292,7 @@ input:checked + .slider:before {
 .in-game__container {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 /* target selection */
@@ -568,6 +569,40 @@ input:checked + .slider:before {
   position: absolute;
   top: 2rem;
   width: 80%;
+}
+
+/* confirm end ground pop up */
+
+.in-game__confirm-end-container {
+  position: absolute;
+  left: 50%;
+  bottom: 3rem;
+  transform: translateX(-50%);
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  width: 80%;
+  padding: 1rem 2rem;
+  text-align: center;
+  background-color: white;
+  color: black;
+  z-index: 10;
+}
+
+.in-game__confirm-end-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.in-game__confirm-end-buttons button {
+  padding: 0.5rem 1rem;
+}
+.in-game__cornfirm-end-cancel {
+  background-color: rgba(128, 128, 128, 0.84);
+}
+.in-game__confirm-end-confirm {
+  background-color: rgb(151, 0, 0);
+  color: rgb(253, 227, 227);
 }
 
 /* scorecard and end game button */

@@ -11,39 +11,8 @@ const editPlayerButton = document.querySelector('#edit-player-button');
 const addPlayerButton = document.querySelector('#add-player-button');
 const distanceMode = document.querySelector('#distance-mode-checkbox')
 
-const players = [
-    {
-        id: 1, 
-        name: "Isaac",
-        scores: {
-            1: 0,
-            2: 0, 
-            3: 0,
-            4: 0,
-            5: 10,
-            6: 10, 
-            7: 10,
-            8: 10
+const players = [];
 
-        },
-        total: 23
-    },
-    {
-        id: 2, 
-        name: "Greg",
-        scores: {
-            1: 10,
-            2: 10, 
-            3: 10,
-            4: 0,
-            5: 0,
-            6: 0, 
-            7: 0,
-            8: 0
-        },
-        total: 11
-    }
-];
 
 let multiplierOn;
 
@@ -149,7 +118,9 @@ const distanceErroeMessage = document.querySelector('#yardage-error-msg')
 
 const nextTargetButton = document.querySelector('#next-target-btn');
 const previousTargetButton = document.querySelector('#previous-target-btn');
-const scorecardButton = document.querySelector('#scorecard-btn')
+const firstEndRoundButton = document.querySelector('#end-round-btn')
+const cancelEndRoundButton = document.querySelector('#confirm-msg-cancel')
+const scorecardButton = document.querySelector('#scorecard-btn');
 
 const scorecard = document.querySelector('#scorecard');
 const scorecardTotalColumn = document.querySelector('#scorecard-net');
@@ -158,11 +129,7 @@ const scorecardPlayerContainer = document.querySelector('#scorecard-player-conta
 
 
 let target = 0;
-const distances = {
-    1: 45,
-    2: 23,
-    3: 69
-}
+const distances = {}
 
 
 
@@ -516,7 +483,7 @@ startRoundButton.addEventListener('click', () => {
 
     distanceMode.checked ? multiplierOn = true : multiplierOn = false
 
-    if (numberOfPlayersAdded !== players.length /* || players.length === 0 */) {
+    if (numberOfPlayersAdded !== players.length || players.length === 0) {
         console.log("add players")
         return
     }else {
@@ -545,22 +512,42 @@ scorecardButton.addEventListener('click', () => {
     toggleScorecard()
 })
 
+firstEndRoundButton.addEventListener('click', () => {
+    const confirmPopUp = document.querySelector('#end-confirm');
+    confirmPopUp.style.display = 'flex'
+})
+
+cancelEndRoundButton.addEventListener('click', () => {
+    const confirmPopUp = document.querySelector('#end-confirm');
+    confirmPopUp.style.display = 'none'
+})
+
 /* Round Summary */
 
-const playersInOrder = [...players].sort((a, b) => b.total - a.total);
+const roundSummary = document.querySelector('#round-summary')
+const endRound = document.querySelector('#confirm-msg-confirm');
+
+
+
 const halfWayPoint = () => {
     const totalAmountOfTargets = Object.keys(players[0].scores).length
     return Math.floor(totalAmountOfTargets / 2)
 }
 
+
+
 const populatePodium = () => {
+    const playersInOrder = [...players].sort((a, b) => b.total - a.total);
+
     const podium1 = document.querySelector('#podium-1 p');
     const podium2 = document.querySelector('#podium-2 p');
     const podium3 = document.querySelector('#podium-3 p');
     let spliceLength
+    
     (playersInOrder.length < 3) ? spliceLength = playersInOrder.length : spliceLength = 3
 
     const topThree = [...playersInOrder].splice(0, spliceLength);
+
     podium1.textContent = topThree[0].name;
     if (spliceLength === 2) {
         podium2.textContent = topThree[1].name;
@@ -569,8 +556,10 @@ const populatePodium = () => {
     }
 }
 
+
 const populateResultsTable = () => {
-    const resultsTable = document.querySelector('#results-table')
+    const resultsTable = document.querySelector('#results-table');
+    const playersInOrder = [...players].sort((a, b) => b.total - a.total);
 
 
     playersInOrder.forEach(player => {
@@ -656,6 +645,7 @@ const isComebackKid = () => {
 }
 
 const populateComebackKid = () => {
+    const playersInOrder = [...players].sort((a, b) => b.total - a.total);
     const comebackKidText = document.querySelector('#comeback-kid p')
     const winner = playersInOrder[0]
     const orderedHalfWayTotals = [...isComebackKid()].sort((a, b) => b.score - a.score)
@@ -669,6 +659,16 @@ const populateComebackKid = () => {
     }
 }
 
-document.addEventListener('click', () => {
+endRound.addEventListener('click', () => {
+    populatePodium()
+    populateResultsTable()
+    populateMosts()
+    findsAndPopulatesLongestShot()
     populateComebackKid()
+    inGame.setAttribute('hidden', '')
+    roundSummary.removeAttribute('hidden')
 })
+
+/* playerInOrder called multiple time
+    end round pop up style
+    podium long name fix */
