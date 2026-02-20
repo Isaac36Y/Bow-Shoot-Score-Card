@@ -1,7 +1,7 @@
 /* New Round */
 const newRound = document.querySelector('#new-round');
 const table = document.querySelector('#new-round-table');
-const addPlayerRow = document.querySelector('#add-player-row')
+const addPlayerRow = document.querySelector('#add-player')
 const addPlayerTable = document.querySelector('#add-player-table')
 
 
@@ -46,7 +46,7 @@ const editPlayer = (el) => {
     nameCell.innerHTML = `<input class="added-player__custom" type="text" name="name" placeholder="Name" value="${name}">`;
     buttons.innerHTML = `
         <button type="button" class="delete-player-button" onclick="deletePlayer(this)"><img src="./images/delete.png" alt="trash can" width="20"></button>
-        <button type="button" class="confirm-player-button" onclick="savesPlayer(this)">&#x2713</button>
+        <button type="button" class="confirm-player-button | prime-text" onclick="savesPlayer(this)">&#x2713</button>
         `
 }
 
@@ -68,7 +68,7 @@ const updatePlayerNumber = () => {
 
 const addsPlayer = () => {
     const newPlayer = `
-    <div class="new-round__table-row">
+    <div class="new-round__table-row | dark-text">
         <p class="id-cell"></p>
         <div class="name-cell"><input class="added-player__custom" type="text" name="name" placeholder="Name"></div>
         <div class="button-cell">
@@ -78,7 +78,7 @@ const addsPlayer = () => {
     </div>
     `
 
-    addPlayerRow.insertAdjacentHTML('beforebegin', newPlayer)
+    addPlayerTable.innerHTML += newPlayer
     updatePlayerNumber()
 }
 
@@ -483,11 +483,10 @@ scoreSetterBox.addEventListener('click', (e) => {
 
 startRoundButton.addEventListener('click', () => {
     const childrenOfAddPlayerTable = addPlayerTable.children;
-    const numberOfPlayersAdded = childrenOfAddPlayerTable.length - 1
 
     distanceMode.checked ? multiplierOn = true : multiplierOn = false
-
-    if (numberOfPlayersAdded !== players.length || players.length === 0) {
+    console.log(childrenOfAddPlayerTable)
+    if (childrenOfAddPlayerTable.length !== players.length || players.length === 0) {
         console.log("add players")
         return
     }else {

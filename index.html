@@ -11,26 +11,26 @@
         <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par" id="new-round" >
             <div class="new-round__container">
                 <div class="new-round__img">🏹</div>
-                <h1 class="new-round-header">BULLSEYE LEDGER</h1>
-                <p id="new-round-par"><span>Simple Scoring.</span><span>Instant Results.</span></p>
+                <h1 class="new-round-header | neutral-text">BULLSEYE LEDGER</h1>
+                <p id="new-round-par"><span class="neutral-text">Simple Scoring.</span><span class="neutral-text">Instant Results.</span></p>
                 <div class="new-round__table-container" id="new-round-table">
-                    <h2 class="new-round__table-header">
+                    <h2 class="new-round__table-header | dark-text">
                         Players
                     </h2>
                     <div class="new-round__table-body" id="add-player-table">
-                        <div class="new-round__table-row add-player" id="add-player-row">
+                    </div>
+                    <div class="new-round__add-player" id="add-player">
                             <div><!-- placeholder for id cells --></div>
-                            <div class="name-cell add-player">Add player</div>
+                            <div class="name-cell add-player | light-text">Add player</div>
                             <div class="button-cell add-player">                
                                 <button type="button" id="add-player-button">                                        
                                     <span class="add-player-span">&#43</span>
                                 </button>                            
                             </div>
                         </div>
-                    </div>
                 </div>
                 <div class="new-round__mode-change-container">
-                    <p class="new-round__mode-change-par">Distance Multiplier</p>
+                    <p class="new-round__mode-change-par | neutral-text">Distance Multiplier</p>
                     <div class="switch-container">
                         <label class="switch">
                             <input type="checkbox" id="distance-mode-checkbox" checked>
@@ -38,7 +38,7 @@
                         </label>
                     </div>
                 </div>
-                <button type="button" class="new-round__start-round" id="start-round-btn">Start Round</button>
+                <button type="button" class="new-round__start-round | dark-text" id="start-round-btn">Start Round</button>
             </div>
         </section>
         <section class="in-game" id="in-game" hidden>
