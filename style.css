@@ -1,12 +1,8 @@
 :root {
     --color-primary: rgb(98, 191, 100);
-     /* --color-primary: rgb(76, 175, 79); */
     --color-neutral: rgb(223, 193, 153);
     --color-neautral-dark: #132407;
     --color-neutral-light: #f4ebeb;
-    /* --blue600: rgb(0, 59, 83);
-    --blue600op: rgba(0, 59, 83, 0.5);
-    --blue800: rgb(0, 49, 68); */
     --orange500: rgb(255, 150, 84);
 
     --ff-primary: 'Playfair Display', Helvetica, Arial, sans-serif;
@@ -469,7 +465,7 @@ input:checked + .slider:before {
 .in-game__yardage-input label { 
   position: absolute;
   left: 3.5rem;
-  top: 0.2rem;
+  top: 0.1rem;
 }
 
 .in-game__yardage-error {
@@ -688,6 +684,7 @@ input:checked + .slider:before {
 }
 .in-game__cornfirm-end-cancel {
   background-color: rgba(128, 128, 128, 0.84);
+  color: black;
 }
 .in-game__confirm-end-confirm {
   background-color: rgb(151, 0, 0);
@@ -848,21 +845,28 @@ input:checked + .slider:before {
 
 .round-summary__podium {
   text-align: center;
+  position: relative;
 }
 
 .round-summary__podium-step {
-    background-color: rgba(247, 237, 227, 0.614);
-    color: black;
+  position: relative;
+  background-color: rgba(247, 237, 227, 0.614);
+  color: black;
+  z-index: 4;
 }
 
 .round-summary__podium-stand {
-    width: 100%;
-    background-color: rgba(79, 79, 79, 0.443); 
+  width: 100%;
+  background-color: rgba(79, 79, 79, 0.443); 
 }
 
 .round-summary__podium-name {
+  position: relative;
   font-size: 2rem;
   line-height: 1;
+  z-index: 5;
+  text-align: center;
+  margin-block-end: -0.8rem;
 }
 
 .round-summary__podium#podium-1 .round-summary__podium-step {
@@ -874,6 +878,9 @@ input:checked + .slider:before {
 .round-summary__podium#podium-1 .round-summary__podium-stand {
   clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
   height: 1.5rem;
+}
+.round-summary__podium#podium-1 .round-summary__podium-name {
+  font-size: 2.5rem;
 }
 
 .round-summary__podium#podium-2 .round-summary__podium-step {
@@ -897,7 +904,7 @@ input:checked + .slider:before {
 /* table */
 
 .round-summary__results-table {
-  width: 70%;
+  width: 75%;
 }
 
 .round-summary__results-row {

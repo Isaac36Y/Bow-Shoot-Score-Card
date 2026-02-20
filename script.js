@@ -625,7 +625,7 @@ const populateMosts = () => {
     const mostZeros = document.querySelector('#most-zeros p')
     if (players.length === 1) {
         mostTens.textContent = findsMosts(10).amount === 0 ? "You didn't get any tens" : `You got ${findsMosts(10).amount} ${findsMosts(10).amount <= 1 ? "10" : "10s"}. Nice Job!`
-        mostZeros.textContent = findsMosts(0).amount ? "You didn't get a single 0! Well done" : `You got ${findsMosts(0).amount} ${findsMosts(10).amount <= 1 ? "0" : "0s"}.`
+        mostZeros.textContent = findsMosts(0).amount === 0 ? "You didn't get a single 0! Well done" : `You got ${findsMosts(0).amount} ${findsMosts(10).amount <= 1 ? "0" : "0s"}.`
     }else {
         mostTens.innerHTML = findsMosts(10).amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `<span class="fw-700">Most 10s in the round:</span> ${findsMosts(10).name} with ${findsMosts(10).amount}.`
         mostZeros.innerHTML = findsMosts(0).amount === 0 ? "Most 0s in the round: Nobody! Nice shooting everyone" : `<span class="fw-700">Most 0s in the round:</span> ${findsMosts(0).name} with ${findsMosts(0).amount}.`
@@ -637,6 +637,7 @@ const findsAndPopulatesLongestShot = () => {
     const longestDistance = Math.max(...Object.values(distances))
     const longestTarget = String(Object.values(distances).indexOf(longestDistance) + 1)
     const scoresFromLongest = []
+    if (longestDistance < 20) return 
     /* pulls all scores on the longest target */
     players.forEach(player => {
         scoresFromLongest.push({name: player.name, score: player.scores[longestTarget]})
