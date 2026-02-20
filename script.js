@@ -119,6 +119,7 @@ const distanceErroeMessage = document.querySelector('#yardage-error-msg')
 const nextTargetButton = document.querySelector('#next-target-btn');
 const previousTargetButton = document.querySelector('#previous-target-btn');
 const confirmPopUp = document.querySelector('#end-confirm');
+const confirmBackdrop = document.querySelector('.in-game__backdrop.end-game');
 const firstEndRoundButton = document.querySelector('#end-round-btn')
 const cancelEndRoundButton = document.querySelector('#confirm-msg-cancel')
 const scorecardButton = document.querySelector('#scorecard-btn');
@@ -127,7 +128,7 @@ const scorecard = document.querySelector('#scorecard');
 const scorecardTotalColumn = document.querySelector('#scorecard-net');
 const scorecardMultipliedColumn = document.querySelector('#scorecard-multiplied')
 const scorecardPlayerContainer = document.querySelector('#scorecard-player-container')
-const backdrop = document.querySelector('.in-game__backdrop');
+const scorecardBackdrop = document.querySelector('.in-game__backdrop.scorecard');
 
 
 let target = 0;
@@ -222,9 +223,11 @@ const handlesIfMultiplierMode = () => {
 /* expand target list */
 
 const showTargetListToggle = () => {
+    const arrowToggle = document.querySelector('#target-arrow-toggle')
     let open = targetsContainer.classList.contains('open');
     if (open) {
         targetsContainer.classList.remove('open');
+        arrowToggle.src = "./images/arrow-down-3101_64.png"
         setTimeout(() => {
           targetsList.style.display = "none"  
         }, 500)
@@ -232,30 +235,32 @@ const showTargetListToggle = () => {
     }else {
         targetsContainer.classList.add('open')
         targetsList.style.display = "flex"
+        arrowToggle.src = "./images/arrow-up.png"
     }
 }
 
 /* popup toggles */
 
-const openBackdrop = () => {
-    if (scorecard.hasAttribute('open') || confirmPopUp.style.display === 'flex') {
-        backdrop.removeAttribute('hidden')
-    }
-}
 
 const togglesEndRoundPopUp = () => {
-    confirmPopUp.style.display === 'flex' ? confirmPopUp.style.display = 'none' : confirmPopUp.style.display = 'flex';
-    openBackdrop()
+    if (confirmPopUp.style.display === 'flex') {
+        confirmPopUp.style.display = 'none'
+        confirmBackdrop.setAttribute('hidden', '')
+    }else {
+        confirmPopUp.style.display = 'flex';
+        confirmBackdrop.removeAttribute('hidden')
+    }
 }
 
 const toggleScorecard = () => {
     const open = scorecard.hasAttribute('open');
     if (!open) {
         scorecard.setAttribute('open', '')
+        scorecardBackdrop.removeAttribute('hidden')
     }else {
         scorecard.removeAttribute('open')
+        scorecardBackdrop.setAttribute('hidden', '')
     }
-    openBackdrop()
 }
 
 const noDistanceError = (error) => {
@@ -529,20 +534,16 @@ scorecardButton.addEventListener('click', () => {
     toggleScorecard()
 })
 
+scorecardBackdrop.addEventListener('click', () => {
+    toggleScorecard()
+})
+
 firstEndRoundButton.addEventListener('click', () => {
     togglesEndRoundPopUp()
 })
 
 cancelEndRoundButton.addEventListener('click', () => {
     togglesEndRoundPopUp()
-})
-
-backdrop.addEventListener('click', () => {
-    if (scorecard.hasAttribute('open') || confirmPopUp.style.display === 'flex') {
-        scorecard.removeAttribute('open');
-        confirmPopUp.style.display = 'none'
-        backdrop.setAttribute('hidden', '')
-    }
 })
 
 /* Round Summary */
@@ -688,5 +689,5 @@ endRound.addEventListener('click', () => {
 })
 
 /* 
-    end round pop up style
+    make two seperate backdrops for scorecard and endGame 
  */

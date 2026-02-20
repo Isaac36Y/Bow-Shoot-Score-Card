@@ -8,7 +8,7 @@
 </head>
 <body>
     <main>
-        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par" id="new-round">
+        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par" id="new-round" hidden >
             <div class="new-round__container">
                 <div class="new-round__img">🏹</div>
                 <h1 class="new-round-header | neutral-text">BULLSEYE LEDGER</h1>
@@ -41,15 +41,16 @@
                 <button type="button" class="new-round__start-round | dark-text" id="start-round-btn">Start Round</button>
             </div>
         </section>
-        <section class="in-game" id="in-game" hidden>
+        <section class="in-game" id="in-game" >
 
             <div class="in-game__container">
-                <div class="in-game__backdrop" hidden></div>
+                <div class="in-game__backdrop scorecard" hidden></div>
+                <div class="in-game__backdrop end-game" hidden></div>
                 <div class="in-game__target-container">
                     <div class="in-game__target-number-container">
                         
                         <h1 class="in-game__target-number | dark-text">Target # <span class="target#" id="target-number-span"></span></h1>
-                        <button type="button" class="in-game__target-expand-button" id="target-expand-btn"><img src="./images/down-arrow-6402.png" alt="" width="16"></button>
+                        <button type="button" class="in-game__target-expand-button" id="target-expand-btn"><img src="./images/arrow-down-3101_64.png" alt="" id="target-arrow-toggle" width="16"></button>
                     </div>
                     <ol class="in-game__target-select-ol" id="target-list">
                         <!-- <li class="in-game__target-select selected">1</li>
@@ -113,18 +114,18 @@
                 <div class="in-game__footer-container">
                     <button type="button" class="in-game__previous-target" onclick="selectsPreviousTarget()">
                         <img src="./images/previous-arrow.png" alt="">
-                        <p>Previous Target</p>
+                        <p class="neutral-text">Previous Target</p>
                     </button>
                     <button type="button" class="in-game__scorecard-toggle" id="scorecard-btn">
-                        <img src="./images/score (1).png" alt="" width="50">
-                        <p>Scorecard</p>
+                        <img src="./images/scorecard_transparent.png" alt="" width="100">
+                        <!-- <p class="neutral-text">Scorecard</p> -->
                     </button>
                     <button type="button" class="in-game__end-game" id="end-round-btn">
-                        <p>END ROUND</p>
+                        <p class="neutral-text">END ROUND</p>
                     </button>
                     <button type="button" class="in-game__next-target" onclick="selectsNextTarget()">
                         <img src="./images/next-arrow.png" alt="">
-                        <p>Next Target</p>
+                        <p class="neutral-text">Next Target</p>
                     </button>
                 </div>
             </div>

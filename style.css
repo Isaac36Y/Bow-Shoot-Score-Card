@@ -78,9 +78,9 @@ body {
   font-variant-numeric: tabular-nums lining-nums;
 }
 
-section {
+/* section {
   height: 100vh;
-}
+} */
 
 img, picture, video, canvas, svg {
   display: block;
@@ -352,7 +352,7 @@ input:checked + .slider:before {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  height: 5.5rem;
+  height: 4.5rem;
   transition: height 0.5s ease-in-out;
   background-color: var(--color-neutral-light);
   box-shadow: 0 0.5rem 2rem 0.2rem rgba(0, 0, 0, 0.5);
@@ -360,13 +360,14 @@ input:checked + .slider:before {
 }
 
 .in-game__target-container.open {
-  height: 12rem;
+  height: 10rem;
 }
 
 .in-game__target-number-container {
   display: flex;
   align-items: center;
   gap: 1rem;
+  line-height: 3rem;
 }
 
 .in-game__target-expand-button {
@@ -427,10 +428,12 @@ input:checked + .slider:before {
 
 .in-game__yardage-input input {
   text-align: end;
-  padding-inline-end: 3.2rem;
+  padding-inline-end: 3.4rem;
   width: 6.5rem;
   vertical-align: bottom;
   border: 1px solid transparent;
+  border-radius: 0.3rem;
+  background-color: var(--color-neutral-light);
   box-shadow: 0 0.3rem 1rem 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -464,7 +467,7 @@ input:checked + .slider:before {
 
 .in-game__target-score-container {
   width: 90%;
-  margin: 3rem auto;
+  margin: 4rem auto;
   border-radius: 0.5rem;
   max-height: 23.5rem;
 }
@@ -569,12 +572,12 @@ input:checked + .slider:before {
   position: fixed;
   bottom: 0;
   left: 0;
+  border-top: 2px solid rgba(223, 193, 153, 0.478);
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr;
+  grid-template-columns: 3fr 5fr 5fr 3fr;
   border-radius: 0.5rem 0.5rem 0 0;
-  border: 3px solid var(--color-primary);
-  border-bottom: none;
-  background-color: rgb(148, 155, 164);
+  background-color: var(--color-neautral-dark);
+  background: linear-gradient(180deg,rgba(87, 115, 68, 1) 0%, rgba(47, 69, 33, 1) 14%, rgba(37, 57, 24, 1) 31%, rgba(29, 47, 16, 1) 48%, rgba(19, 36, 7, 1) 100%);
   z-index: 15
 }
 
@@ -588,7 +591,6 @@ input:checked + .slider:before {
 /* next and previous target buttons */
 
 .in-game__previous-target, .in-game__next-target {
-  background-color: rgba(255, 255, 255, 0.5);
   color: black;
   font-size: 1rem;
   line-height: 1;
@@ -596,7 +598,7 @@ input:checked + .slider:before {
   height: 4.5rem
 }
 .in-game__previous-target {
-  border-radius: 0.5rem 0 0 0;
+  border-radius: 0.4rem 0 0 0;
 }
 .in-game__previous-target img {
   position: absolute;
@@ -607,7 +609,7 @@ input:checked + .slider:before {
   top: 2rem;
 }
 .in-game__next-target {
-  border-radius: 0 0.5rem 0 0;
+  border-radius: 0 0.4rem 0 0;
 }
 .in-game__next-target img {
   position: absolute;
@@ -657,11 +659,16 @@ input:checked + .slider:before {
 
 .in-game__scorecard-toggle p{
   line-height: 0.5;
-  color: black;
+}
+.in-game__scorecard-toggle {
+  border-left: 2px solid rgba(223, 193, 153, 0.5);
+  
 }
 
 .in-game__end-game {
-  background-color: rgb(151, 0, 0);
+  border: 3px inset var(--color-neutral);
+  font-weight: 700;
+  padding-inline: 0.5rem
 }
 .in-game__end-game p {
   padding-inline: 0.2rem;
@@ -762,6 +769,10 @@ input:checked + .slider:before {
   left: 0;
   z-index: 11;
   background-color: rgba(0, 0, 0, 0.4);
+}
+
+.in-game__backdrop.end-game {
+  z-index: 19
 }
 
 /* round summary */
