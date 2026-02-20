@@ -499,6 +499,7 @@ input:checked + .slider:before {
   margin: 4rem auto;
   border-radius: 0.5rem;
   max-height: 23.5rem;
+  box-shadow: 0 0.5rem 1rem 0.1rem rgba(0, 0, 0, 0.5);
 }
 
 .in-game__score-setter,
@@ -519,7 +520,6 @@ input:checked + .slider:before {
 .in-game__target-score-row.caption {
   background-color: var(--color-neutral-light);
   border-radius: 0.5rem 0.5rem 0 0;
-
 }
 .in-game__target-score-row.closer {
   background-color: var(--color-neutral-light);
@@ -578,27 +578,31 @@ input:checked + .slider:before {
   background-color: rgba(98, 191, 100, 0.3);
   border: 2px solid var(--color-primary);
   color: var(--color-neutral-light);
+  box-shadow: 0 0 0.5rem 1px rgba(98, 191, 100, 0.5);
 }
 .in-game__target-score.selected[value="8"] {
   background-color: rgba(255, 225, 105, 0.3);
   border: 2px solid rgb(255, 225, 105);
   color: var(--color-neutral-light);
+  box-shadow: 0 0 0.5rem 1px rgba(255, 225, 105, 0.5);
 }
 .in-game__target-score.selected[value="5"] {
   background-color: rgba(18, 64, 181, 0.4);
   border: 2px solid rgb(18, 64, 181);
-  
   color: var(--color-neutral-light);
+  box-shadow: 0 0 0.5rem 1px rgba(18, 64, 181, 0.5);
 }
 .in-game__target-score.selected[value="3"] {
   background-color: rgb(219, 0, 0, 0.3);
   border: 2px solid rgb(184, 19, 19);
   color: var(--color-neutral-light);
+  box-shadow: 0 0 0.5rem 1px rgb(219, 0, 0, 0.5);
 }
 .in-game__target-score.selected[value="0"] {
   background-color: rgba(255, 255, 255, 0.3);
   border: 2px solid white;
   color: black;
+  box-shadow: 0 0 0.5rem 1px rgba(255, 255, 255, 0.5);
 }
 
 /* in game footer bar */
