@@ -69,8 +69,8 @@ const updatePlayerNumber = () => {
 const addsPlayer = () => {
     const newPlayer = `
     <div class="new-round__table-row | dark-text">
-        <p class="id-cell"></p>
-        <div class="name-cell"><input class="added-player__custom" type="text" name="name" placeholder="Name"></div>
+        <p class="id-cell montserrat"></p>
+        <div class="name-cell montserrat"><input class="added-player__custom" type="text" name="name" placeholder="Name"></div>
         <div class="button-cell">
             <button type="button" class="delete-player-button" onclick="deletePlayer(this)"><img src="./images/delete.png" alt="trash can" width="20"></button>
             <button type="button" class="confirm-player-button" onclick="savesPlayer(this)">&#x2713</button>
@@ -162,14 +162,14 @@ const populateScoreSetterBox = () => {
     players.forEach(player => {
         scoreSetterBox.innerHTML += `
             <div class="in-game__target-score-row neutral-text" id="player-${player.id}">
-                <p class="in-game__target-score-id">${player.id}</p>
-                <p class="in-game__target-score-player">${player.name}</p>
+                <p class="in-game__target-score-id montserrat">${player.id}</p>
+                <p class="in-game__target-score-player montserrat">${player.name}</p>
                 <div class="in-game__target-score-buttons">
-                    <button type="button" class="in-game__target-score neutral-text" value="10">10</button>
-                    <button type="button" class="in-game__target-score neutral-text" value="8">8</button>
-                    <button type="button" class="in-game__target-score neutral-text" value="5">5</button>
-                    <button type="button" class="in-game__target-score neutral-text" value="3">3</button>
-                    <button type="button" class="in-game__target-score neutral-text" value="0">0</button>
+                    <button type="button" class="in-game__target-score neutral-text montserrat" value="10">10</button>
+                    <button type="button" class="in-game__target-score neutral-text montserrat" value="8">8</button>
+                    <button type="button" class="in-game__target-score neutral-text montserrat" value="5">5</button>
+                    <button type="button" class="in-game__target-score neutral-text montserrat" value="3">3</button>
+                    <button type="button" class="in-game__target-score neutral-text montserrat" value="0">0</button>
                 </div>
             </div>
         `
