@@ -595,7 +595,7 @@ const populateResultsTable = () => {
         }else place = `${amountOfDivs}th`
 
         resultsTable.innerHTML += `
-            <div class="round-summary__results-row">
+            <div class="round-summary__results-row neutral-text">
                 <p class="round-summary__results-place">${place}</p>
                 <p class="round-summary__results-name">${player.name}</p>
                 <p class="round-summary__results-score">${player.total}</p>
@@ -624,11 +624,11 @@ const populateMosts = () => {
     const mostTens = document.querySelector('#most-tens p')
     const mostZeros = document.querySelector('#most-zeros p')
     if (players.length === 1) {
-        mostTens.textContent = findsMosts(10).amount === 0 ? "You didn't get any tens" : `You got ${findsMosts(10).amount} 10s. Nice Job!`
-        mostZeros.textContent = findsMosts(0).amount ? "You didn't get a single 0! Well done" : `You got ${findsMosts(0).amount} 0s.`
+        mostTens.textContent = findsMosts(10).amount === 0 ? "You didn't get any tens" : `You got ${findsMosts(10).amount} ${findsMosts(10).amount <= 1 ? "10" : "10s"}. Nice Job!`
+        mostZeros.textContent = findsMosts(0).amount ? "You didn't get a single 0! Well done" : `You got ${findsMosts(0).amount} ${findsMosts(10).amount <= 1 ? "0" : "0s"}.`
     }else {
-        mostTens.textContent = findsMosts(10).amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `Most 10s in the round: ${findsMosts(10).name} with ${findsMosts(10).amount}.`
-        mostZeros.textContent = findsMosts(0).amount === 0 ? "Most 0s in the round: Nobody! Nice shooting everyone" : `Most 0s in the round: ${findsMosts(0).name} with ${findsMosts(0).amount}.`
+        mostTens.innerHTML = findsMosts(10).amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `<span class="fw-700">Most 10s in the round:</span> ${findsMosts(10).name} with ${findsMosts(10).amount}.`
+        mostZeros.innerHTML = findsMosts(0).amount === 0 ? "Most 0s in the round: Nobody! Nice shooting everyone" : `<span class="fw-700">Most 0s in the round:</span> ${findsMosts(0).name} with ${findsMosts(0).amount}.`
     }
 }
 
@@ -648,9 +648,9 @@ const findsAndPopulatesLongestShot = () => {
     if (players.length === 1) {
         longestShotText.textContent = `Your longest shot of the day was ${longestDistance}yrds and you scored a ${scoresFromLongest.score}`
     }else if (ifTie.length > 1) {
-        longestShotText.textContent = `Longest shot of the round: ${scoresFromLongest[0].name} and ${scoresFromLongest[1].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds` 
+        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} and ${scoresFromLongest[1].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds` 
     }else {
-        longestShotText.textContent = `Longest shot of the round: ${scoresFromLongest[0].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds` 
+        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds` 
     }
 }
 
@@ -673,8 +673,8 @@ const populateComebackKid = () => {
     
     if (winner.name === isComebackKid().sort((a, b) => b.score - a.score)[0].name) {
         return 
-    }else if (comebackKidDownBy > 15) {
-        comebackKidText.textContent = `Comeback Kid: ${winner.name} was down by ${comebackKidDownBy} after ${halfWayPoint()} targets, then came back to win it all`
+    }else if (comebackKidDownBy > 10) {
+        comebackKidText.innerHTML = `<span class="fw-700">Comeback Kid:</span> ${winner.name} was down by ${comebackKidDownBy} after ${halfWayPoint()} targets, then came back to win it all`
     }
 }
 
