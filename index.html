@@ -8,7 +8,7 @@
 </head>
 <body>
     <main>
-        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par" id="new-round" >
+        <section class="new-round" aria-labelledby="new-round-header" aria-describedby="new-round-par" id="new-round">
             <div class="new-round__container">
                 <div class="new-round__img">🏹</div>
                 <h1 class="new-round-header | neutral-text">BULLSEYE LEDGER</h1>
@@ -44,11 +44,11 @@
         <section class="in-game" id="in-game" hidden>
 
             <div class="in-game__container">
+                <div class="in-game__backdrop" hidden></div>
                 <div class="in-game__target-container">
-                    <div class="highlighter"></div>
                     <div class="in-game__target-number-container">
                         
-                        <h1 class="in-game__target-number">Target # <span class="target#" id="target-number-span"></span></h1>
+                        <h1 class="in-game__target-number | dark-text">Target # <span class="target#" id="target-number-span"></span></h1>
                         <button type="button" class="in-game__target-expand-button" id="target-expand-btn"><img src="./images/down-arrow-6402.png" alt="" width="16"></button>
                     </div>
                     <ol class="in-game__target-select-ol" id="target-list">
@@ -62,31 +62,21 @@
                 </div>
 
                 <div class="in-game__yardage-container">
-                    <label class="in-game__yardage-label" for="yard-input" >Distance to target:</label>
-                    <div class="in-game__yardage-input"><input type="text" inputmode="numeric" name="yard-input" id="yard-input"><label for="yard-input">Yards</label></div>
+                    <label class="in-game__yardage-label | neutral-text" for="yard-input" >Distance to target:</label>
+                    <div class="in-game__yardage-input"><input type="text" inputmode="numeric" name="yard-input" id="yard-input"><label class="dark-text" for="yard-input">Yards</label></div>
                     <div class="in-game__yardage-error" id="yardage-error-msg">
                         <p class="in-game__yardage-error-msg">Please enter a distance for this target
                         </p>
                     </div>
                 </div>
                 
-                <div class="in-game__target-score-container" >
+                <div class="in-game__target-score-container | dark-text" >
                     <div class="in-game__target-score-row caption">
                         <p class="in-game__target-score-id caption">#</p>
                         <p class="in-game__target-score-player caption">Player</p>
                         <p class="in-game__target-score-score caption">Score</p>
                     </div>
                     <div class="in-game__score-setter" id="score-setter-container">
-                        <!-- <div class="in-game__target-score-row" id="player-1">
-                            <p class="in-game__target-score-id">1</p>
-                            <p class="in-game__target-score-player">Isaac</p>
-                            <div class="in-game__target-score-buttons">
-                                <button type="button" class="in-game__target-score" value="10">10</button>
-                                <button type="button" class="in-game__target-score" value="8">8</button>
-                                <button type="button" class="in-game__target-score" value="5">5</button>
-                                <button type="button" class="in-game__target-score" value="0">0</button>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="in-game__target-score-row closer"></div>
                 </div>

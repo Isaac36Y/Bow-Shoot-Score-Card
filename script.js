@@ -118,6 +118,7 @@ const distanceErroeMessage = document.querySelector('#yardage-error-msg')
 
 const nextTargetButton = document.querySelector('#next-target-btn');
 const previousTargetButton = document.querySelector('#previous-target-btn');
+const confirmPopUp = document.querySelector('#end-confirm');
 const firstEndRoundButton = document.querySelector('#end-round-btn')
 const cancelEndRoundButton = document.querySelector('#confirm-msg-cancel')
 const scorecardButton = document.querySelector('#scorecard-btn');
@@ -126,6 +127,7 @@ const scorecard = document.querySelector('#scorecard');
 const scorecardTotalColumn = document.querySelector('#scorecard-net');
 const scorecardMultipliedColumn = document.querySelector('#scorecard-multiplied')
 const scorecardPlayerContainer = document.querySelector('#scorecard-player-container')
+const backdrop = document.querySelector('.in-game__backdrop');
 
 
 let target = 0;
@@ -158,15 +160,15 @@ const adjustsGapOfScoreBox = (num) => {
 const populateScoreSetterBox = () => {
     players.forEach(player => {
         scoreSetterBox.innerHTML += `
-            <div class="in-game__target-score-row" id="player-${player.id}">
+            <div class="in-game__target-score-row neutral-text" id="player-${player.id}">
                 <p class="in-game__target-score-id">${player.id}</p>
                 <p class="in-game__target-score-player">${player.name}</p>
                 <div class="in-game__target-score-buttons">
-                    <button type="button" class="in-game__target-score" value="10">10</button>
-                    <button type="button" class="in-game__target-score" value="8">8</button>
-                    <button type="button" class="in-game__target-score" value="5">5</button>
-                    <button type="button" class="in-game__target-score" value="3">3</button>
-                    <button type="button" class="in-game__target-score" value="0">0</button>
+                    <button type="button" class="in-game__target-score neutral-text" value="10">10</button>
+                    <button type="button" class="in-game__target-score neutral-text" value="8">8</button>
+                    <button type="button" class="in-game__target-score neutral-text" value="5">5</button>
+                    <button type="button" class="in-game__target-score neutral-text" value="3">3</button>
+                    <button type="button" class="in-game__target-score neutral-text" value="0">0</button>
                 </div>
             </div>
         `
@@ -233,7 +235,18 @@ const showTargetListToggle = () => {
     }
 }
 
-/* scorecard toggle */
+/* popup toggles */
+
+const openBackdrop = () => {
+    if (scorecard.hasAttribute('open') || confirmPopUp.style.display === 'flex') {
+        backdrop.removeAttribute('hidden')
+    }
+}
+
+const togglesEndRoundPopUp = () => {
+    confirmPopUp.style.display === 'flex' ? confirmPopUp.style.display = 'none' : confirmPopUp.style.display = 'flex';
+    openBackdrop()
+}
 
 const toggleScorecard = () => {
     const open = scorecard.hasAttribute('open');
@@ -242,6 +255,7 @@ const toggleScorecard = () => {
     }else {
         scorecard.removeAttribute('open')
     }
+    openBackdrop()
 }
 
 const noDistanceError = (error) => {
@@ -495,7 +509,7 @@ startRoundButton.addEventListener('click', () => {
         addPlayerToScorecard()
         addTarget() 
         changesScreenToStartRound()
-        adjustsGapOfScoreBox(numberOfPlayersAdded)
+        adjustsGapOfScoreBox(childrenOfAddPlayerTable.length)
     }
     
 })
@@ -516,13 +530,19 @@ scorecardButton.addEventListener('click', () => {
 })
 
 firstEndRoundButton.addEventListener('click', () => {
-    const confirmPopUp = document.querySelector('#end-confirm');
-    confirmPopUp.style.display = 'flex'
+    togglesEndRoundPopUp()
 })
 
 cancelEndRoundButton.addEventListener('click', () => {
-    const confirmPopUp = document.querySelector('#end-confirm');
-    confirmPopUp.style.display = 'none'
+    togglesEndRoundPopUp()
+})
+
+backdrop.addEventListener('click', () => {
+    if (scorecard.hasAttribute('open') || confirmPopUp.style.display === 'flex') {
+        scorecard.removeAttribute('open');
+        confirmPopUp.style.display = 'none'
+        backdrop.setAttribute('hidden', '')
+    }
 })
 
 /* Round Summary */
