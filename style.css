@@ -841,6 +841,31 @@ input:checked + .slider:before {
 
 }
 
+/* score style toggle */
+
+.round-summary__results-style-container {
+  background-color: rgba(247, 237, 227, 0.614);
+  margin-block-end: 2rem;
+  padding: 0.2rem;
+  border-radius: 1rem;
+  display: flex;
+  
+}
+
+.round-summary__results-style-net-button, .round-summary__results-style-multiplied-button {
+  padding-inline: 1rem;
+  border-radius: 1rem;
+}
+
+.round-summary__results-style-net-button {
+  background-color: var(--color-neautral-dark);
+  color: var(--color-neutral);
+}
+.round-summary__results-style-multiplied-button {
+  background-color: transparent;
+  color: var(--color-neautral-dark)
+}
+
 /* podium */
 
 .round-summary__podium {

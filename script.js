@@ -13,6 +13,7 @@ const distanceMode = document.querySelector('#distance-mode-checkbox')
 
 const players = [];
 let playersInOrder
+let playersInOrderByMultiplied
 
 let multiplierOn;
 
@@ -209,6 +210,7 @@ const handlesIfMultiplierMode = () => {
     if (multiplierOn) {
         players.forEach(player => {
             player.multipliedScores = {}
+            player.multipliedTotal
         })
     }
 
@@ -281,7 +283,7 @@ const createsScore = () => {
         
     })
 }
-
+/* create functions might be poitnless */
 const createDistance = () => {
     distances[target] = 0
 } 
@@ -304,6 +306,9 @@ const updateScore = (btn) => {
 }
 
 const putsPlayersInOrder = () =>  playersInOrder = [...players].sort((a, b) => b.total - a.total);
+
+const putsPlayersInOrderMultiplied = () => playersInOrderByMultiplied = [...players].sort((a, b) => b.multipliedTotal - a.multipliedTotal);
+
 
 const highlightSelectedScore = (btn) => {
     const buttonsContainer = btn.closest('.in-game__target-score-buttons')
@@ -383,8 +388,10 @@ const updateTotalScorecardScores = () => {
         multipliedTotalRows.forEach(row => {
             const rowName = row.getAttribute('id').split('').slice(0, -11).join('').replace('-', ' ').trim();
             const playersData = players.filter(player => player.name === rowName)
+            const multipliedTotal = +Object.values(playersData[0].multipliedScores).reduce((accumulator, currentValue) => accumulator + currentValue, 0).toFixed(1)
             
-            row.textContent = +Object.values(playersData[0].multipliedScores).reduce((accumulator, currentValue) => accumulator + currentValue, 0).toFixed(1)
+            row.textContent = multipliedTotal
+            playersData[0].multipliedTotal = multipliedTotal
         })
     }
 }
@@ -481,6 +488,7 @@ distanceInput.addEventListener('change', () => {
     const selectedButtons = scoreSetterBox.querySelectorAll('.in-game__target-score.selected')
     updateDistance()
     updateDistanceToScorecard()
+    putsPlayersInOrderMultiplied()
     selectedButtons.forEach(button => {
         updateScore(button)
     })
@@ -496,7 +504,9 @@ scoreSetterBox.addEventListener('click', (e) => {
     updatePlayerScoreToScorecard(button)
     updateTotalScorecardScores()
     putsPlayersInOrder()
+    putsPlayersInOrderMultiplied()
     console.log(playersInOrder)
+    console.log(playersInOrderByMultiplied)
 
 })
 
@@ -550,6 +560,8 @@ cancelEndRoundButton.addEventListener('click', () => {
 
 const roundSummary = document.querySelector('#round-summary')
 const endRound = document.querySelector('#confirm-msg-confirm');
+const showNetResults = document.querySelector('#show-net-results');
+const showMultipliedResults = document.querySelector('#show-multiplied-results');
 
 
 
@@ -560,31 +572,34 @@ const halfWayPoint = () => {
 
 
 
-const populatePodium = () => {
+const populatePodium = (order) => {
     const podium1 = document.querySelector('#podium-1 p');
     const podium2 = document.querySelector('#podium-2 p');
     const podium3 = document.querySelector('#podium-3 p');
     let spliceLength
     
-    (playersInOrder.length < 3) ? spliceLength = playersInOrder.length : spliceLength = 3
+    (order.length < 3) ? spliceLength = order.length : spliceLength = 3
 
-    const topThree = [...playersInOrder].splice(0, spliceLength);
+        const topThree = [...order].splice(0, spliceLength);
 
-    podium1.textContent = topThree[0].name;
-    if (spliceLength === 2) {
-        podium2.textContent = topThree[1].name;
-    }else if (spliceLength == 3) {
-        podium2.textContent = topThree[1].name;
-        podium3.textContent = topThree[2].name;
-    }
+        podium1.textContent = topThree[0].name;
+        if (spliceLength === 2) {
+            podium2.textContent = topThree[1].name;
+        }else if (spliceLength == 3) {
+            podium2.textContent = topThree[1].name;
+            podium3.textContent = topThree[2].name;
+        }
 }
 
 
-const populateResultsTable = () => {
+const populateResultsTable = (order) => {
     const resultsTable = document.querySelector('#results-table');
 
-    playersInOrder.forEach(player => {
+    resultsTable.innerHTML = ''
+    order.forEach(player => {
         const amountOfDivs = document.querySelectorAll('.round-summary__results-row').length
+        const total = order === playersInOrderByMultiplied ? player.multipliedTotal : player.total
+
         let place
         if (amountOfDivs === 0) {
             place = '1st'
@@ -598,10 +613,9 @@ const populateResultsTable = () => {
             <div class="round-summary__results-row neutral-text">
                 <p class="round-summary__results-place">${place}</p>
                 <p class="round-summary__results-name">${player.name}</p>
-                <p class="round-summary__results-score">${player.total}</p>
+                <p class="round-summary__results-score">${total}</p>
             </div>
-        `
-        
+        ` 
     })
 }
 
@@ -647,11 +661,11 @@ const findsAndPopulatesLongestShot = () => {
     const highestScore = scoresFromLongest[0].score
     const ifTie = scoresFromLongest.filter(each => each.score === highestScore)
     if (players.length === 1) {
-        longestShotText.textContent = `Your longest shot of the day was ${longestDistance}yrds and you scored a ${scoresFromLongest.score}`
+        longestShotText.textContent = `Your longest shot of the day was ${longestDistance}yrds and you scored a ${scoresFromLongest.score}.`
     }else if (ifTie.length > 1) {
-        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} and ${scoresFromLongest[1].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds` 
+        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} and ${scoresFromLongest[1].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds.` 
     }else {
-        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds` 
+        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds.` 
     }
 }
 
@@ -675,13 +689,13 @@ const populateComebackKid = () => {
     if (winner.name === isComebackKid().sort((a, b) => b.score - a.score)[0].name) {
         return 
     }else if (comebackKidDownBy > 10) {
-        comebackKidText.innerHTML = `<span class="fw-700">Comeback Kid:</span> ${winner.name} was down by ${comebackKidDownBy} after ${halfWayPoint()} targets, then came back to win it all`
+        comebackKidText.innerHTML = `<span class="fw-700">Comeback Kid:</span> ${winner.name} was down by ${comebackKidDownBy} points after ${halfWayPoint()} targets, then came back to win it all.`
     }
 }
 
 endRound.addEventListener('click', () => {
-    populatePodium()
-    populateResultsTable()
+    populatePodium(playersInOrder)
+    populateResultsTable(playersInOrder)
     populateMosts()
     findsAndPopulatesLongestShot()
     populateComebackKid()
@@ -689,6 +703,20 @@ endRound.addEventListener('click', () => {
     roundSummary.removeAttribute('hidden')
 })
 
-/* 
-    make two seperate backdrops for scorecard and endGame 
- */
+showMultipliedResults.addEventListener('click', () => {
+    populatePodium(playersInOrderByMultiplied);
+    populateResultsTable(playersInOrderByMultiplied)
+    showMultipliedResults.style.backgroundColor = 'var(--color-neautral-dark)';
+    showMultipliedResults.style.color = 'var(--color-neutral)';
+    showNetResults.style.backgroundColor = 'transparent';
+    showNetResults.style.color = 'var(--color-neautral-dark)'
+})
+
+showNetResults.addEventListener('click', () => {
+    populatePodium(playersInOrder);
+    populateResultsTable(playersInOrder)
+    showMultipliedResults.style.backgroundColor = 'transparent';
+    showMultipliedResults.style.color = 'var(--color-neautral-dark)';
+    showNetResults.style.backgroundColor = 'var(--color-neautral-dark)';
+    showNetResults.style.color = 'var(--color-neutral)'
+})
