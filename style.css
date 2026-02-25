@@ -314,9 +314,9 @@ input:checked + .slider:before {
   transform: translateX(20px);
 }
 
-/* start round button */
+/* start round button and finish round*/
 
-.new-round__start-round {
+.new-round__start-round, .round-summary__finish-button {
   padding: 0.5rem 2.5rem;
   margin-block-start: 1rem;
   border-radius: 2rem;
@@ -332,7 +332,7 @@ input:checked + .slider:before {
   
 }
 
-.new-round__start-round::after  {
+.new-round__start-round::after, .round-summary__finish-button::after  {
   content: "";
   position: absolute;
   top: 0;
@@ -347,6 +347,12 @@ input:checked + .slider:before {
     rgba(98, 191, 100, 0) 100%
   );
   animation: shine 2s infinite linear; /* Apply the animation */
+}
+
+.round-summary__finish-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Keyframes for the animation */
@@ -849,7 +855,6 @@ input:checked + .slider:before {
   padding: 0.2rem;
   border-radius: 1rem;
   display: flex;
-  
 }
 
 .round-summary__results-style-net-button, .round-summary__results-style-multiplied-button {

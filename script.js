@@ -28,6 +28,11 @@ let state = {
 let playersInOrder
 let playersInOrderByMultiplied
 
+const saveState = (save) => {
+    const serializedState = JSON.stringify(state)
+    localStorage.setItem(save, serializedState)
+}
+
 const setScreen = () => {
     if (state.screen === "newRound") {
         newRound.removeAttribute('hidden');
@@ -358,7 +363,8 @@ const updateDistanceToScorecard = () => {
 
 const updatePlayerScoreToScorecard = (row) => {
     state.players.forEach((player, index) => {
-        const playerRow = scorecardPlayerContainer.querySelector(`#${player.name}`)
+        const playersName = player.name.split(' ').join('-')
+        const playerRow = scorecardPlayerContainer.querySelector(`#${playersName}`)
         const scorecardPlayerCol = playerRow.querySelectorAll('.in-game__scorecard-number-player')
 
         scorecardPlayerCol.forEach(column => {
@@ -465,8 +471,6 @@ const selectsNextTarget = () => {
         updateScoreByTarget()
         updateDistanceByTarget()
     }
-    console.log(storedStateString)
-    
 }
 /* try to make these into one function in the future */
 const selectsPreviousTarget = () => {
@@ -497,8 +501,7 @@ distanceInput.addEventListener('change', () => {
     })
     updateTotalScorecardScores()
     noDistanceError(false)
-    const serializedState = JSON.stringify(state)
-    localStorage.setItem('appState', serializedState)
+    saveState('appState')
 })
 
 scoreSetterBox.addEventListener('click', (e) => {
@@ -509,9 +512,7 @@ scoreSetterBox.addEventListener('click', (e) => {
     putsPlayersInOrder()
     putsPlayersInOrderMultiplied()
     
-    const serializedState = JSON.stringify(state)
-    localStorage.setItem('appState', serializedState)
-    console.log(state)
+    saveState('appState')
 })
 
 startRoundButton.addEventListener('click', () => {
@@ -531,7 +532,6 @@ startRoundButton.addEventListener('click', () => {
         addTarget() 
         adjustsGapOfScoreBox(childrenOfAddPlayerTable.length)
     }
-    console.log(state)
 })
 
 targetList.addEventListener('click', (e) => {
@@ -564,8 +564,11 @@ cancelEndRoundButton.addEventListener('click', () => {
 /* Round Summary */
 
 const endRound = document.querySelector('#confirm-msg-confirm');
+const resultsStyleContainer = document.querySelector('#results-style');
 const showNetResults = document.querySelector('#show-net-results');
 const showMultipliedResults = document.querySelector('#show-multiplied-results');
+const finishRound = document.querySelector('#finish-button')
+
 
 
 
@@ -696,6 +699,7 @@ const populateComebackKid = () => {
 }
 
 endRound.addEventListener('click', () => {
+
     state.screen = "roundSummary"
     setScreen()
     populatePodium(playersInOrder)
@@ -703,6 +707,11 @@ endRound.addEventListener('click', () => {
     populateMosts()
     findsAndPopulatesLongestShot()
     populateComebackKid()
+    
+
+    if (!state.multiplierOn) {
+        resultsStyleContainer.style.display = "none"
+    }
 })
 
 showMultipliedResults.addEventListener('click', () => {
@@ -723,6 +732,12 @@ showNetResults.addEventListener('click', () => {
     showNetResults.style.color = 'var(--color-neutral)'
 })
 
+finishRound.addEventListener('click', () => {
+    saveState((new Date).toDateString())
+    localStorage.removeItem('appState');
+    location.reload()
+})
+
 
 
 
@@ -731,7 +746,6 @@ window.addEventListener('load', () => {
     try {
         state = JSON.parse(storedStateString)
         const childrenOfAddPlayerTable = addPlayerTable.children;
-        console.log(state)
         setScreen()
         addPlayerToScorecard()
         for (let i = 1; i <= state.totalTargets; i++) {
@@ -764,6 +778,3 @@ window.addEventListener('load', () => {
     }
     } 
 }) 
-
-
-/* add target, distance, score to one object in each players. then change the scorecard to populate based off that  */
