@@ -3,6 +3,7 @@
     --color-neutral: rgb(223, 193, 153);
     --color-neautral-dark: #132407;
     --color-neutral-light: #f4ebeb;
+    --color-accent-light: rgb(201, 182, 182);
     --orange500: rgb(255, 150, 84);
 
     --ff-primary: 'Playfair Display', Helvetica, Arial, sans-serif;
@@ -721,6 +722,7 @@ input:checked + .slider:before {
 
 .in-game__scorecard-container {
   width: 95%;
+  
   top: 40%;
   transform: translateY(-50%);
   padding: 0;
@@ -751,7 +753,7 @@ input:checked + .slider:before {
     }
 
     .in-game__scorecard-name p:nth-child(odd) {
-      background-color: rgba(0, 0, 0, 0.25);
+      background-color: var(--color-accent-light)
     }
 
     /* score column */
@@ -776,11 +778,11 @@ input:checked + .slider:before {
     .row p {
       padding-inline: 2rem
     }
-    .in-game__scorecard-row-target p {
-      background-color: rgba(0, 0, 0, 0.25);
+    .in-game__scorecard-row-target p, .in-game__scorecard-row-target {
+      background-color: var(--color-accent-light);
     }
-    .in-game__scorecard-number-score-container p:nth-child(odd) {
-      background-color: rgba(0, 0, 0, 0.25);
+    .in-game__scorecard-number-score-container p:nth-child(odd), .in-game__scorecard-player-score:nth-child(odd) {
+      background-color: var(--color-accent-light)
     }
 
     /* total column */

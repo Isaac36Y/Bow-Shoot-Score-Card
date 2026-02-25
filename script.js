@@ -162,6 +162,7 @@ const scorecardButton = document.querySelector('#scorecard-btn');
 
 const scorecard = document.querySelector('#scorecard');
 const scorecardNameColumn = document.querySelector('#scorecard-name-column')
+const scorecardScoreContainer = document.querySelector('#scorecard-score-container')
 const scorecardTotalColumn = document.querySelector('#scorecard-net');
 const scorecardMultipliedColumn = document.querySelector('#scorecard-multiplied')
 const scorecardPlayerContainer = document.querySelector('#scorecard-player-row')
@@ -226,14 +227,13 @@ const addPlayerToScorecard = () => {
 
 const handlesIfMultiplierMode = () => {
     const scorecarTotalsContainer = document.querySelector('.in-game__scorecard-total')
-    const scorecardNotTotalsContainer = document.querySelector('.in-game__scorecard-score')
 
 
     if (!state.multiplierOn) {
         scorecardMultipliedColumn.style.display = 'none'
         scorecarTotalsContainer.style.gridTemplateColumns = '1fr'
         scorecarTotalsContainer.style.width = '20%'
-        scorecardNotTotalsContainer.style.width = '80%'
+        scorecardScoreContainer.style.width = '60%'
     }
 }
 
