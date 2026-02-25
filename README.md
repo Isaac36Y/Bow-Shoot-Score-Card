@@ -24,13 +24,18 @@
 This app was designed to be an easy tool for tracking scores and getting live score updates with optional game modes to spice up the point system and how you might play. Although this can be used for any archery setting, Bullseye Ledger was initially thought of to make score tracking easier at 3D bow shoots. At every 3D bow shoot I've been to a paper card and a pencil is how score is kept, so the process would be: 
 
 ### originally
-Hike to target -> shoot target -> see what your score was -> set bow down -> write score down -> pick up bow -> repeat for as many targets there are not having any idea whos winning -> add up 30-50 scores at the end of the round to get your total
+Hike to target &rarr; shoot target &rarr; see what your score was &rarr; set bow down &rarr; write score down &rarr; pick up bow &rarr; repeat for as many targets there are not having any idea whos winning &rarr; add up 30-50 scores at the end of the round to get your total
 ### with Bullseye Ledger 
-Hike to targt -> shoot target -> see what your score was -> with bow in one hand, add scores on your phone in the other -> repeat with live scores to add some pressure to the leaders of the group or give some hope to the trailers -> get round insight at the end you'd never spend the time finding on a paper scorecard
+Hike to targt &rarr; shoot target &rarr; see what your score was &rarr; with bow in one hand, add scores on your phone in the other &rarr; repeat with live scores to add some pressure to the leaders of the group or give some hope to the trailers &rarr; get round insight at the end you'd never spend the time finding on a paper scorecard
 
 As fun as 3D bowshoots and archery in general is, game modes are designed to add some excitement to traditional score keeping. Distance Multiplier makes longer shots more important and can turn a 60 yard target into a single, game changing shot
 
-| score   | distance     | Distance Multiplier : Traditional   |
+| Score   | Distance     | Distance Multiplier : Traditional   |
 | :---    |  :----:      |                                ---: |
 | 10      | 60           | 30 points : 10 points               |
 | 10      | 30           | 15 points : 10 points               |
+
+## ✍️ Author 
+I'm [Isaac Young](https://github.com/Isaac36Y) and I created this app to make tracking scores at 3D bowshoots easier for me and my friends. I hope eventually this will be something I put on the app store for all archers to use for easier score tracking and fun side games. Thanks for checking it out!
+
+## 🚀 Usage
