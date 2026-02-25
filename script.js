@@ -612,7 +612,7 @@ const populateResultsTable = (order) => {
             place = '2nd'
         }else if (amountOfDivs === 2) {
             place = '3rd'
-        }else place = `${amountOfDivs}th`
+        }else place = `${amountOfDivs + 1}th`
 
         resultsTable.innerHTML += `
             <div class="round-summary__results-row neutral-text">
@@ -625,8 +625,7 @@ const populateResultsTable = (order) => {
 }
 
 const findsMosts = (num) => {
-
-    const playersTens = []
+    const playersNums = []
     state.players.forEach(player => {
         let tensCount = 0
         player.targets.map(target => {
@@ -634,9 +633,9 @@ const findsMosts = (num) => {
                 tensCount++
             }
         })
-        playersTens.push({name: player.name, amount: tensCount})
+        playersNums.push({name: player.name, amount: tensCount})
     })
-    return playersTens.sort((a, b) => b.amount - a.amount)[0]
+    return playersNums.sort((a, b) => b.amount - a.amount)[0]
 }
 
 const populateMosts = () => {
@@ -652,26 +651,29 @@ const populateMosts = () => {
 }
 
 const findsAndPopulatesLongestShot = () => {
+    /* this can be made much more simple */
     const longestShotText = document.querySelector('#longest-shot p')
-    const longestDistance = Math.max(...Object.values(state.distances))
-    const longestTarget = String(Object.values(state.distances).indexOf(longestDistance) + 1)
+    const longestDistance = Math.max(...state.players[0].targets.map(target => target.distance))
+    const longestTarget = state.players[0].targets.findIndex(target => target.distance === longestDistance) + 1
+    console.log(longestTarget)
     const scoresFromLongest = []
     if (longestDistance < 20) return 
     /* pulls all scores on the longest target */
     state.players.forEach(player => {
-        scoresFromLongest.push({name: player.name, score: player.scores[longestTarget]})
+        scoresFromLongest.push({name: player.name, score: player.targets[longestTarget].score})
     })
+    console.log(scoresFromLongest)
     /* sorts scores from highest to lowest, then checks if there are multiple people with the highest score on the longest target */
     scoresFromLongest.sort((a, b) => b.score - a.score)
     const highestScore = scoresFromLongest[0].score
     const ifTie = scoresFromLongest.filter(each => each.score === highestScore)
     if (state.players.length === 1) {
-        longestShotText.textContent = `Your longest shot of the day was ${longestDistance}yrds and you scored a ${scoresFromLongest.score}.`
+        longestShotText.textContent = `Your longest shot of the day was ${longestDistance}yrds and you scored a ${highestScore}.`
     }else if (ifTie.length > 1) {
-        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} and ${scoresFromLongest[1].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds.` 
+        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} and ${scoresFromLongest[1].name} got a ${highestScore} at ${longestDistance}yrds.` 
     }else {
-        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} got a ${scoresFromLongest[0].score} at ${longestDistance}yrds.` 
-    }
+        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} got a ${highestScore} at ${longestDistance}yrds.` 
+    } 
 }
 
 const isComebackKid = () => {
