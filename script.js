@@ -738,7 +738,7 @@ finishRound.addEventListener('click', () => {
     location.reload()
 })
 
-localStorage.clear()
+
 
 window.addEventListener('load', () => {
    if (storedStateString) {
