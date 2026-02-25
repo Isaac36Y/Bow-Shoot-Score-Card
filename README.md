@@ -1,7 +1,36 @@
-<!-- how can I avoid checking if multiplierOn is true for every function? -->
+# 🏹 Bullseye Ledger
 
-next to update
+## 🌟 Features
 
-- state managemnet clarity. Everything should update the state and the UI should just be a reflection of that
+### v1.0.0
+- Tracks one player -> up to as many players in your group you want tracked 
+- Tracks scores and distance by each target
+- Easy target navigation to edit past of future target details
+- Real time score update in the scorecard 
+- Additional "Distance Multiplier" game mode that will tracks net scores as well as multiplied scores depending on the distance of each target
+- Uses localStorage so app closing doesnt erase the current rounds data
+- Round Summary with players scored in order and Round Highlights (e.g. Most tens in the group, longest target of the round/highest score on that target)
+- Delete round(resets app and deletes all data from that round) or Save round (name round -> saves stats to localStorage for future "Round History" feature -> resets app)
 
-state - players, page, mode, target{target#, distance}
+### v2.0.0 (in progress) 
+- Refactoring Architecture
+- UI polish
+- Scoring key - shows how app recommends counting score
+- "Round History" feature - Look at past round stats 
+- "Second Chance" feature - A players is given a selected amount of 'Second Chance Tokens'  at the begining of the round. If they miss a target they can use a taken for a second shot to get partial points
+- Additional Round Highlights
+
+## ℹ️ Overview
+This app was designed to be an easy tool for tracking scores and getting live score updates with optional game modes to spice up the point system and how you might play. Although this can be used for any archery setting, Bullseye Ledger was initially thought of to make score tracking easier at 3D bow shoots. At every 3D bow shoot I've been to a paper card and a pencil is how score is kept, so the process would be: 
+
+### originally
+Hike to target -> shoot target -> see what your score was -> set bow down -> write score down -> pick up bow -> repeat for as many targets there are not having any idea whos winning -> add up 30-50 scores at the end of the round to get your total
+### with Bullseye Ledger 
+Hike to targt -> shoot target -> see what your score was -> with bow in one hand, add scores on your phone in the other -> repeat with live scores to add some pressure to the leaders of the group or give some hope to the trailers -> get round insight at the end you'd never spend the time finding on a paper scorecard
+
+As fun as 3D bowshoots and archery in general is, game modes are designed to add some excitement to traditional score keeping. Distance Multiplier makes longer shots more important and can turn a 60 yard target into a single, game changing shot
+
+| score   | distance     | Distance Multiplier : Traditional   |
+| :---    |  :----:      |                                ---: |
+| 10      | 60           | 30 points : 10 points               |
+| 10      | 30           | 15 points : 10 points               |
