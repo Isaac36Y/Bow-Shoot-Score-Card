@@ -161,9 +161,10 @@ const cancelEndRoundButton = document.querySelector('#confirm-msg-cancel')
 const scorecardButton = document.querySelector('#scorecard-btn');
 
 const scorecard = document.querySelector('#scorecard');
+const scorecardNameColumn = document.querySelector('#scorecard-name-column')
 const scorecardTotalColumn = document.querySelector('#scorecard-net');
 const scorecardMultipliedColumn = document.querySelector('#scorecard-multiplied')
-const scorecardPlayerContainer = document.querySelector('#scorecard-player-container')
+const scorecardPlayerContainer = document.querySelector('#scorecard-player-row')
 const scorecardBackdrop = document.querySelector('.in-game__backdrop.scorecard');
 
 
@@ -201,11 +202,11 @@ const addPlayerToScorecard = () => {
     state.players.forEach(player => {
         const newName = String(player.name).split(/\s+/).join('-')
 
-        const playerDiv = document.createElement('div');
-        playerDiv.className = 'in-game__scorecard-row-player'
-        playerDiv.id = `${newName}`;
-        playerDiv.innerHTML = `<p class="in-game__scorecard-name-player">${player.name}</p>`
-        scorecardPlayerContainer.appendChild(playerDiv)
+        const playerDiv = document.createElement('p');
+        playerDiv.className = 'in-game__scorecard-name-player'
+        playerDiv.id = newName;
+        playerDiv.textContent = newName
+        scorecardNameColumn.appendChild(playerDiv)
 
         const totalPar = document.createElement('p');
         totalPar.className = 'in-game__scorecard-number-total'
@@ -225,7 +226,7 @@ const addPlayerToScorecard = () => {
 
 const handlesIfMultiplierMode = () => {
     const scorecarTotalsContainer = document.querySelector('.in-game__scorecard-total')
-    const scorecardNotTotalsContainer = document.querySelector('.in-game__scorecard-not-total')
+    const scorecardNotTotalsContainer = document.querySelector('.in-game__scorecard-score')
 
 
     if (!state.multiplierOn) {
@@ -306,7 +307,7 @@ const updateScore = (btn) => {
         state.players[+id - 1].multipliedScores[target] = +multipliedScore.toFixed(1)
     }
 
-    updatePlayerScoreToScorecard()
+    updatePlayerScoreToScorecard(state.selectedTarget)
     updateTotalScorecardScores()
     
 }
@@ -328,7 +329,6 @@ const highlightSelectedScore = (btn) => {
 const addColumnsToScorecard = (col) => {
     const targetRow = scorecard.querySelector('#scorecard-target-row');
     const distanceRow = scorecard.querySelector('#scorecard-distance-row');
-    const playersRows = scorecard.querySelectorAll('.in-game__scorecard-row-player')
 
     const targetCol = document.createElement('p');
     targetCol.className = 'in-game__scorecard-number-target';
@@ -340,13 +340,11 @@ const addColumnsToScorecard = (col) => {
     distanceCol.id = `distance-column-${col}`
     distanceRow.appendChild(distanceCol)
 
-    playersRows.forEach(player => {
-        const playerCol = document.createElement('p');
-        playerCol.className = 'in-game__scorecard-number-player';
-        playerCol.id = `player-column-${col}`
-        player.appendChild(playerCol)
-        
-    })
+    const playerCol = document.createElement('div');
+    playerCol.className = 'in-game__scorecard-number-score-container'
+    playerCol.id = `player-column-${col}`
+    scorecardPlayerContainer.appendChild(playerCol) 
+    updatePlayerScoreToScorecard(col)
 }
 
 const updateDistanceToScorecard = () => {
@@ -361,17 +359,21 @@ const updateDistanceToScorecard = () => {
     })
 }
 
-const updatePlayerScoreToScorecard = (row) => {
+const updatePlayerScoreToScorecard = (col) => {
     state.players.forEach((player, index) => {
         const playersName = player.name.split(' ').join('-')
-        const playerRow = scorecardPlayerContainer.querySelector(`#${playersName}`)
-        const scorecardPlayerCol = playerRow.querySelectorAll('.in-game__scorecard-number-player')
-
-        scorecardPlayerCol.forEach(column => {
-            const columnId = column.getAttribute('id').split("").slice(14, 15).join('')
-
-            column.textContent = state.players[index].targets[columnId - 1].score
-        })
+        const playerCol = scorecardPlayerContainer.querySelector(`#player-column-${col}`)
+        const playerRow = playerCol.querySelector(`#${playersName}`)
+        const columnId = col - 1
+        if (playerRow) {
+            playerRow.textContent = state.players[index].targets[columnId].score
+        }else {
+            const playersScore = document.createElement('p');
+            playersScore.className = 'in-game__scorecard-number-score'
+            playersScore.id = player.name.split(' ').join('-')
+            playersScore.textContent = state.players[index].targets[columnId].score
+            playerCol.appendChild(playersScore)
+        }
     })
 }
 
@@ -754,9 +756,10 @@ window.addEventListener('load', () => {
             li.className = 'in-game__target-select';
             li.textContent = i;
             targetList.appendChild(li)
+            
             addColumnsToScorecard(i)
-            updatePlayerScoreToScorecard()
             updateDistanceToScorecard()
+            updatePlayerScoreToScorecard(i)
         }
         handlesIfMultiplierMode()
         populateScoreSetterBox()

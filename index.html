@@ -84,14 +84,16 @@
 
                 <dialog class="in-game__scorecard-container" id="scorecard">
                     <!-- different than how I did it on the tagret-score caption to see which way might work better in the future -->
-                    <div class="in-game__scorecard-not-total">
+                    <div class="in-game__scorecard-name" id="scorecard-name-column">
+                        <p class="in-game__scorecard-name-target">Target</p>
+                        <p class="in-game__scorecard-name-distance">Distance</p>
+                    </div>
+                    <div class="in-game__scorecard-score">
                         <div class="in-game__scorecard-row-target row" id="scorecard-target-row">
-                            <p class="in-game__scorecard-name-target">Target</p>
                         </div>
-                        <div class="in-game__scorecard-row-distance row" id="scorecard-distance-row">
-                            <p class="in-game__scorecard-name-distance">Distance</p>
+                        <div class="in-game__scorecard-row-distance row" id="scorecard-distance-row">  
                         </div>
-                        <div class="in-game__scorecard-player-container" id="scorecard-player-container">
+                        <div class="in-game__scorecard-player-score row" id="scorecard-player-row">
                         </div>
                     </div>
                     <div class="in-game__scorecard-total">
@@ -99,7 +101,7 @@
                             <p class="in-game__scorecard-name-total">Total</p>
                         </div>
                         <div class="in-game__scorecard-multiplied-container" id="scorecard-multiplied">
-                            <p class="in-game__scorecard-multiplier-name">Yards X</p>
+                            <p class="in-game__scorecard-multiplied-name">Yards X</p>
                         </div>
                     </div>
                 </dialog>

@@ -724,83 +724,97 @@ input:checked + .slider:before {
   top: 40%;
   transform: translateY(-50%);
   padding: 0;
-  z-index: 12;
+  z-index: 13;
+  background-color: var(--color-neutral-light);
 }
 
-.in-game__scorecard-not-total {
-  width: 70%;
-}
-
-.in-game__scorecard-not-total, .in-game__scorecard-container, .in-game__scorecard-name-player {
-  overflow: auto;
-}
-.in-game__scorecard-name-player {
-  height: 100%;
-}
-
-.in-game__scorecard-row-target, 
-.in-game__scorecard-row-distance, 
-.in-game__scorecard-row-player,
-.in-game__scorecard-number-total {
-  display: flex;
-  min-width: 100%;
-  width: max-content;
-}
-.in-game__scorecard-row-target, .in-game__scorecard-row-distance {
-  padding-block: 0.5rem
-}
-.in-game__scorecard-row-player, .in-game__scorecard-number-total, .in-game__scorecard-multiplied-total {
-  height: 3rem;
-  align-items: center;
-}
-.in-game__scorecard-row-target {
-  background-color: rgba(0, 0, 0, 0.25);
-}
-.in-game__scorecard-player-container div:nth-child(odd) {
-  background-color: rgba(0, 0, 0, 0.25);
-}
-
-.in-game__scorecard-name-target, .in-game__scorecard-name-distance, .in-game__scorecard-name-player {
-  width: 5rem;
-}
-
-.in-game__scorecard-name-player, .in-game__scorecard-number-total, .in-game__scorecard-multiplied-total,.in-game__scorecard-name-target, .in-game__scorecard-name-distance {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.in-game__scorecard-number-target, .in-game__scorecard-number-distance, .in-game__scorecard-number-player {
+.in-game__scorecard-number-target, .in-game__scorecard-number-distance, .in-game__scorecard-number-score {
   text-align: center;
   width: 3.8rem;
 }
 
-.in-game__scorecard-total {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 30%;
-  background-color: rgb(77, 77, 77);
-  color: white;
-  z-index: 50;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
+    /* name column */
+    .in-game__scorecard-name {
+      position: relative;
+      left:0;
+      top: 0;
+      width: 20%;
+      background-color: transparent;  
+    }
 
-.in-game__scorecard-name-total, .in-game__scorecard-multiplier-name {
-  height: 5rem;
-  text-align: center;
-  padding-block-start: 1.5rem;
-}
-.in-game__scorecard-net-container {
-  border-right: 1px solid black;
-}
+    .in-game__scorecard-name-target, .in-game__scorecard-name-distance, .in-game__scorecard-name-player {
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-right: 1px solid rgba(0, 0, 0, 0.3);
+    }
 
-.in-game__scorecard-multiplied-container, .in-game__scorecard-net-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    .in-game__scorecard-name p:nth-child(odd) {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+
+    /* score column */
+    .in-game__scorecard-score {
+      position: absolute;
+      width: 50%;
+      top: 0;
+      left: 20%;
+      overflow: auto;
+    }
+    .in-game__scorecard-number-target, .in-game__scorecard-number-distance, .in-game__scorecard-number-score {
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-right: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    .row {
+      display: flex;
+    }
+    .row p {
+      padding-inline: 2rem
+    }
+    .in-game__scorecard-row-target p {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+    .in-game__scorecard-number-score-container p:nth-child(odd) {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+
+    /* total column */
+    .in-game__scorecard-total {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 30%;
+      background-color: rgb(77, 77, 77);
+      color: white;
+      z-index: 50;
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+    }
+
+    .in-game__scorecard-multiplied-container {
+      border-left: 1px solid rgba(252, 250, 250, 0.5)
+    }
+
+    .in-game__scorecard-name-total, .in-game__scorecard-multiplied-name {
+      height: 6rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid rgba(252, 250, 250, 0.5);
+    }
+
+    .in-game__scorecard-number-total, .in-game__scorecard-multiplied-total {
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
 
 /* backdrop */
 
