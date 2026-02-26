@@ -569,7 +569,15 @@ const endRound = document.querySelector('#confirm-msg-confirm');
 const resultsStyleContainer = document.querySelector('#results-style');
 const showNetResults = document.querySelector('#show-net-results');
 const showMultipliedResults = document.querySelector('#show-multiplied-results');
-const finishRound = document.querySelector('#finish-button')
+
+
+const saveRound = document.querySelector('#save-round');
+const deleteRound = document.querySelector('#delete-round');
+const saveRoundConfirm = document.querySelector('#save-round-confirm');
+const deleteRoundConfirm = document.querySelector('#delete-round-confirm');
+const saveRoundCancel = document.querySelector('#save-round-cancel');
+const deleteRoundCancel = document.querySelector('#delete-round-cancel');
+const roundNameInput = document.querySelector('#round-name')
 
 
 
@@ -702,6 +710,25 @@ const populateComebackKid = () => {
     }
 }
 
+const saveOrDeletePopUp = (opt) => {
+    const savePopUp = document.querySelector('#confirm-save-round')
+    const deletePopUp = document.querySelector('#confirm-delete-round')
+    const roundSummaryBackdrop = document.querySelector('.round-summary__backdrop');
+
+    if (opt === 'save') {
+        savePopUp.style.display = 'flex'
+        roundSummaryBackdrop.removeAttribute('hidden')
+        
+    }else if (opt === 'delete') {
+        deletePopUp.style.display = 'flex'
+        roundSummaryBackdrop.removeAttribute('hidden')
+    }else if (opt === 'close') {
+        savePopUp.style.display = 'none';
+        deletePopUp.style.display = 'none';
+        roundSummaryBackdrop.setAttribute('hidden', '')
+    }
+}
+
 endRound.addEventListener('click', () => {
 
     state.screen = "roundSummary"
@@ -736,8 +763,35 @@ showNetResults.addEventListener('click', () => {
     showNetResults.style.color = 'var(--color-neutral)'
 })
 
-finishRound.addEventListener('click', () => {
-    saveState((new Date).toDateString())
+
+saveRound.addEventListener('click', () => {
+    saveOrDeletePopUp('save')
+})
+
+deleteRound.addEventListener('click', () => {
+    saveOrDeletePopUp('delete')
+})
+
+saveRoundCancel.addEventListener('click', () => {
+    saveOrDeletePopUp('close')
+})
+
+deleteRoundCancel.addEventListener('click', () => {
+    saveOrDeletePopUp('close')
+})
+
+saveRoundConfirm.addEventListener('click', () => {
+    const roundName = roundNameInput.value.trim()
+    console.log(roundName)
+    if (roundName.length > 1) {
+        saveState(`${roundName}, ${(new Date).toDateString()}`)
+        localStorage.removeItem('appState');
+        location.reload()
+    }
+    
+})
+
+deleteRoundConfirm.addEventListener('click', () => {
     localStorage.removeItem('appState');
     location.reload()
 })
