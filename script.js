@@ -315,7 +315,8 @@ const updateDistanceToScorecard = () => {
         const scorecardPlayerCol = scorecard.querySelectorAll('.in-game__scorecard-number-distance')
 
         scorecardPlayerCol.forEach(column => {
-            const columnId = column.getAttribute('id').split("").slice(16, 17).join('')
+            console.log(column.getAttribute('id').replace('distance-column-', '').trim())
+            const columnId = column.getAttribute('id').replace('distance-column-', '').trim()
 
             column.textContent = state.players[0].targets[columnId - 1].distance ? `${state.players[0].targets[columnId - 1].distance}yrds` : ''
         })
