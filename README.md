@@ -3,14 +3,14 @@
 ## 🌟 Features
 
 ### v1.0.0
-- Tracks one player -> up to as many players in your group you want tracked 
+- Tracks one player - up to as many players in your group you want tracked 
 - Tracks scores and distance by each target
-- Easy target navigation to edit past of future target details
+- Easy target navigation to edit past or future target details
 - Real time score update in the scorecard 
 - Additional "Distance Multiplier" game mode that will tracks net scores as well as multiplied scores depending on the distance of each target
 - Uses localStorage so app closing doesnt erase the current rounds data
 - Round Summary with players scored in order and Round Highlights (e.g. Most tens in the group, longest target of the round/highest score on that target)
-- Delete round(resets app and deletes all data from that round) or Save round (name round -> saves stats to localStorage for future "Round History" feature -> resets app)
+- Delete round(resets app and deletes all data from that round) or Save round (name round &rarr; saves stats to localStorage for future "Round History" feature &rarr; resets app)
 
 ### v2.0.0 (in progress) 
 - Refactoring Architecture

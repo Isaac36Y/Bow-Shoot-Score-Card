@@ -25,6 +25,9 @@ let state = {
     multiplierOn: true
 };
 
+let playersInOrder;
+let playersInOrderByMultiplied; 
+
 const saveState = (save) => {
     const serializedState = JSON.stringify(state)
     localStorage.setItem(save, serializedState)
