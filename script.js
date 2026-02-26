@@ -570,7 +570,6 @@ const resultsStyleContainer = document.querySelector('#results-style');
 const showNetResults = document.querySelector('#show-net-results');
 const showMultipliedResults = document.querySelector('#show-multiplied-results');
 
-
 const saveRound = document.querySelector('#save-round');
 const deleteRound = document.querySelector('#delete-round');
 const saveRoundConfirm = document.querySelector('#save-round-confirm');
@@ -782,7 +781,6 @@ deleteRoundCancel.addEventListener('click', () => {
 
 saveRoundConfirm.addEventListener('click', () => {
     const roundName = roundNameInput.value.trim()
-    console.log(roundName)
     if (roundName.length > 1) {
         saveState(`${roundName}, ${(new Date).toDateString()}`)
         localStorage.removeItem('appState');

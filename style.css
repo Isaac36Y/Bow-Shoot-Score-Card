@@ -222,6 +222,11 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.2rem;
 }
 
+.button-cell {
+  display: flex;
+  justify-content: flex-end;
+  padding-inline-end: 1.5rem;
+}
 .button-cell.add-player button {
   background-color: var(--color-primary);
   background-image: linear-gradient(to bottom, rgb(183, 198, 183), rgb(98, 191, 100) 30%);
@@ -1012,6 +1017,11 @@ input:checked + .slider:before {
   justify-content: center;
   gap: 1rem;
   z-index: 20;
+}
+
+.round-summary__save-name {
+  padding-inline: 1rem;
+  width: 65%;
 }
 
 .round-summary__delete-msg {
