@@ -25,12 +25,13 @@ let state = {
     multiplierOn: true
 };
 
-let playersInOrder
-let playersInOrderByMultiplied
-
 const saveState = (save) => {
     const serializedState = JSON.stringify(state)
     localStorage.setItem(save, serializedState)
+}
+
+const updatePlayerId = () => {
+    state.players.forEach((player, index) => player.id = index + 1)
 }
 
 const setScreen = () => {
@@ -84,10 +85,6 @@ const editPlayer = (el) => {
         <button type="button" class="delete-player-button" onclick="deletePlayer(this)"><img src="./images/delete.png" alt="trash can" width="20"></button>
         <button type="button" class="confirm-player-button | prime-text" onclick="savesPlayer(this)">&#x2713</button>
         `
-}
-
-const updatePlayerId = () => {
-    state.players.forEach((player, index) => player.id = index + 1)
 }
 
 const updatePlayerNumber = () => {
@@ -168,18 +165,8 @@ const scorecardMultipliedColumn = document.querySelector('#scorecard-multiplied'
 const scorecardPlayerContainer = document.querySelector('#scorecard-player-row')
 const scorecardBackdrop = document.querySelector('.in-game__backdrop.scorecard');
 
-
-const adjustsGapOfScoreBox = (num) => {
-    const distanceContainer = document.querySelector('.in-game__yardage-container');
-    const scoreContainer = document.querySelector('.in-game__target-score-container');
-    if (num === 3) {
-        distanceContainer.style.marginBlockStart = '8rem';
-        scoreContainer.style.margin = '2rem auto';
-    }else if (num >= 4) {
-        distanceContainer.style.marginBlockStart = '7.5rem';
-        scoreContainer.style.margin = '1rem auto';
-    }
-}
+let putsPlayersInOrder = () =>  playersInOrder = [...state.players].sort((a, b) => b.total - a.total);
+let putsPlayersInOrderMultiplied = () => playersInOrderByMultiplied = [...state.players].sort((a, b) => b.multipliedTotal - a.multipliedTotal);
 
 const populateScoreSetterBox = () => {
     state.players.forEach(player => {
@@ -225,6 +212,18 @@ const addPlayerToScorecard = () => {
     })
 }
 
+const adjustsGapOfScoreBox = (num) => {
+    const distanceContainer = document.querySelector('.in-game__yardage-container');
+    const scoreContainer = document.querySelector('.in-game__target-score-container');
+    if (num === 3) {
+        distanceContainer.style.marginBlockStart = '8rem';
+        scoreContainer.style.margin = '2rem auto';
+    }else if (num >= 4) {
+        distanceContainer.style.marginBlockStart = '7.5rem';
+        scoreContainer.style.margin = '1rem auto';
+    }
+}
+
 const handlesIfMultiplierMode = () => {
     const scorecarTotalsContainer = document.querySelector('.in-game__scorecard-total')
 
@@ -256,36 +255,6 @@ const showTargetListToggle = () => {
     }
 }
 
-/* popup toggles */
-
-
-const togglesEndRoundPopUp = () => {
-    if (confirmPopUp.style.display === 'flex') {
-        confirmPopUp.style.display = 'none'
-        confirmBackdrop.setAttribute('hidden', '')
-    }else {
-        confirmPopUp.style.display = 'flex';
-        confirmBackdrop.removeAttribute('hidden')
-    }
-}
-
-const toggleScorecard = () => {
-    const open = scorecard.hasAttribute('open');
-    if (!open) {
-        scorecard.setAttribute('open', '')
-        scorecardBackdrop.removeAttribute('hidden')
-    }else {
-        scorecard.removeAttribute('open')
-        scorecardBackdrop.setAttribute('hidden', '')
-    }
-}
-
-const noDistanceError = (error) => {
-    error ? distanceErroeMessage.style.display = 'block' : distanceErroeMessage.style.display = 'none'
-}
-
-
-
 /* controls scoring system */
 
 const updateDistance = () => {
@@ -311,11 +280,6 @@ const updateScore = (btn) => {
     updateTotalScorecardScores()
     
 }
-
-let putsPlayersInOrder = () =>  playersInOrder = [...state.players].sort((a, b) => b.total - a.total);
-
-let putsPlayersInOrderMultiplied = () => playersInOrderByMultiplied = [...state.players].sort((a, b) => b.multipliedTotal - a.multipliedTotal);
-
 
 const highlightSelectedScore = (btn) => {
     const buttonsContainer = btn.closest('.in-game__target-score-buttons')
@@ -348,15 +312,13 @@ const addColumnsToScorecard = (col) => {
 }
 
 const updateDistanceToScorecard = () => {
-    state.players.forEach((player, index) => {
         const scorecardPlayerCol = scorecard.querySelectorAll('.in-game__scorecard-number-distance')
 
         scorecardPlayerCol.forEach(column => {
             const columnId = column.getAttribute('id').split("").slice(16, 17).join('')
 
-            column.textContent = state.players[index].targets[columnId - 1].distance ? `${state.players[index].targets[columnId - 1].distance}yrds` : ''
+            column.textContent = state.players[0].targets[columnId - 1].distance ? `${state.players[0].targets[columnId - 1].distance}yrds` : ''
         })
-    })
 }
 
 const updatePlayerScoreToScorecard = (col) => {
@@ -492,6 +454,34 @@ const selectsPreviousTarget = () => {
     }
 }
 
+/* popup toggles */
+
+const togglesEndRoundPopUp = () => {
+    if (confirmPopUp.style.display === 'flex') {
+        confirmPopUp.style.display = 'none'
+        confirmBackdrop.setAttribute('hidden', '')
+    }else {
+        confirmPopUp.style.display = 'flex';
+        confirmBackdrop.removeAttribute('hidden')
+    }
+}
+
+const toggleScorecard = () => {
+    const open = scorecard.hasAttribute('open');
+    if (!open) {
+        scorecard.setAttribute('open', '')
+        scorecardBackdrop.removeAttribute('hidden')
+    }else {
+        scorecard.removeAttribute('open')
+        scorecardBackdrop.setAttribute('hidden', '')
+    }
+}
+
+const noDistanceError = (error) => {
+    error ? distanceErroeMessage.style.display = 'block' : distanceErroeMessage.style.display = 'none'
+}
+
+/* in game event listeners */
 
 distanceInput.addEventListener('change', () => {
     const selectedButtons = scoreSetterBox.querySelectorAll('.in-game__target-score.selected')
@@ -563,6 +553,47 @@ cancelEndRoundButton.addEventListener('click', () => {
     togglesEndRoundPopUp()
 })
 
+/* saved game check */
+
+window.addEventListener('load', () => {
+   if (storedStateString) {
+    try {
+        state = JSON.parse(storedStateString)
+        const childrenOfAddPlayerTable = addPlayerTable.children;
+        setScreen()
+        addPlayerToScorecard()
+        for (let i = 1; i <= state.totalTargets; i++) {
+            li = document.createElement('li')
+            li.className = 'in-game__target-select';
+            li.textContent = i;
+            targetList.appendChild(li)
+            
+            addColumnsToScorecard(i)
+            updateDistanceToScorecard()
+            updatePlayerScoreToScorecard(i)
+        }
+        handlesIfMultiplierMode()
+        populateScoreSetterBox()
+        selectTarget(targetList.lastChild)
+        adjustsGapOfScoreBox(childrenOfAddPlayerTable.length)
+        updateTotalScorecardScores()
+        putsPlayersInOrder()
+        putsPlayersInOrderMultiplied()
+        } catch (e) {
+            console.log('error parsing stored state', e)
+        }
+    }else {
+        state = {
+        players: [],
+        totalTargets: 0,
+        selectedTarget: 0,
+        distances: {},
+        screen: "newRound",
+        multiplierOn: true
+    }
+    } 
+}) 
+
 /* Round Summary */
 
 const endRound = document.querySelector('#confirm-msg-confirm');
@@ -578,12 +609,33 @@ const saveRoundCancel = document.querySelector('#save-round-cancel');
 const deleteRoundCancel = document.querySelector('#delete-round-cancel');
 const roundNameInput = document.querySelector('#round-name')
 
-
-
-
 const halfWayPoint = () => {
     const totalAmountOfTargets = Object.keys(state.players[0].targets).length
     return Math.floor(totalAmountOfTargets / 2)
+}
+
+const findsMosts = (num) => {
+    const playersNums = []
+    state.players.forEach(player => {
+        let tensCount = 0
+        player.targets.map(target => {
+            if (target.score === num) {
+                tensCount++
+            }
+        })
+        playersNums.push({name: player.name, amount: tensCount})
+    })
+    return playersNums.sort((a, b) => b.amount - a.amount)[0]
+}
+
+const isComebackKid = () => {
+    const halfWayTotals = []
+    state.players.forEach(player => {
+        const halfWayScore = player.targets.map(target => target.score).slice(0, halfWayPoint()).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        halfWayTotals.push({name: player.name, score: halfWayScore})
+    })
+
+    return halfWayTotals
 }
 
 const populatePodium = (order) => {
@@ -633,20 +685,6 @@ const populateResultsTable = (order) => {
     })
 }
 
-const findsMosts = (num) => {
-    const playersNums = []
-    state.players.forEach(player => {
-        let tensCount = 0
-        player.targets.map(target => {
-            if (target.score === num) {
-                tensCount++
-            }
-        })
-        playersNums.push({name: player.name, amount: tensCount})
-    })
-    return playersNums.sort((a, b) => b.amount - a.amount)[0]
-}
-
 const populateMosts = () => {
     const mostTens = document.querySelector('#most-tens p')
     const mostZeros = document.querySelector('#most-zeros p')
@@ -685,16 +723,6 @@ const findsAndPopulatesLongestShot = () => {
     } 
 }
 
-const isComebackKid = () => {
-    const halfWayTotals = []
-    state.players.forEach(player => {
-        const halfWayScore = player.targets.map(target => target.score).slice(0, halfWayPoint()).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-        halfWayTotals.push({name: player.name, score: halfWayScore})
-    })
-
-    return halfWayTotals
-}
-
 const populateComebackKid = () => {
     const comebackKidText = document.querySelector('#comeback-kid p')
     const winner = playersInOrder[0]
@@ -717,19 +745,22 @@ const saveOrDeletePopUp = (opt) => {
     if (opt === 'save') {
         savePopUp.style.display = 'flex'
         roundSummaryBackdrop.removeAttribute('hidden')
-        
+        window.scrollTo(0, 0)
+        document.body.style.overflow = 'hidden'
     }else if (opt === 'delete') {
         deletePopUp.style.display = 'flex'
         roundSummaryBackdrop.removeAttribute('hidden')
+        window.scrollTo(0, 0)
+        document.body.style.overflow = 'hidden'
     }else if (opt === 'close') {
         savePopUp.style.display = 'none';
         deletePopUp.style.display = 'none';
         roundSummaryBackdrop.setAttribute('hidden', '')
+        document.body.style.overflow = 'auto'
     }
 }
 
 endRound.addEventListener('click', () => {
-
     state.screen = "roundSummary"
     setScreen()
     populatePodium(playersInOrder)
@@ -737,7 +768,6 @@ endRound.addEventListener('click', () => {
     populateMosts()
     findsAndPopulatesLongestShot()
     populateComebackKid()
-    
 
     if (!state.multiplierOn) {
         resultsStyleContainer.style.display = "none"
@@ -761,7 +791,6 @@ showNetResults.addEventListener('click', () => {
     showNetResults.style.backgroundColor = 'var(--color-neautral-dark)';
     showNetResults.style.color = 'var(--color-neutral)'
 })
-
 
 saveRound.addEventListener('click', () => {
     saveOrDeletePopUp('save')
@@ -796,41 +825,4 @@ deleteRoundConfirm.addEventListener('click', () => {
 
 
 
-window.addEventListener('load', () => {
-   if (storedStateString) {
-    try {
-        state = JSON.parse(storedStateString)
-        const childrenOfAddPlayerTable = addPlayerTable.children;
-        setScreen()
-        addPlayerToScorecard()
-        for (let i = 1; i <= state.totalTargets; i++) {
-            li = document.createElement('li')
-            li.className = 'in-game__target-select';
-            li.textContent = i;
-            targetList.appendChild(li)
-            
-            addColumnsToScorecard(i)
-            updateDistanceToScorecard()
-            updatePlayerScoreToScorecard(i)
-        }
-        handlesIfMultiplierMode()
-        populateScoreSetterBox()
-        selectTarget(targetList.lastChild)
-        adjustsGapOfScoreBox(childrenOfAddPlayerTable.length)
-        updateTotalScorecardScores()
-        putsPlayersInOrder()
-        putsPlayersInOrderMultiplied()
-        } catch (e) {
-            console.log('error parsing stored state', e)
-        }
-    }else {
-        state = {
-        players: [],
-        totalTargets: 0,
-        selectedTarget: 0,
-        distances: {},
-        screen: "newRound",
-        multiplierOn: true
-    }
-    } 
-}) 
+

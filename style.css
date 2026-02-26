@@ -853,6 +853,7 @@ input:checked + .slider:before {
   left: 0;
   z-index: 11;
   background-color: rgba(0, 0, 0, 0.4);
+  
 }
 
 .in-game__backdrop.end-game {
