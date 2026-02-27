@@ -92,7 +92,8 @@
   }
 }
 
-html, body {
+
+html {
   background: rgba(87, 115, 68, 1)
 }
 
@@ -128,6 +129,10 @@ p {
 
 h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
+}
+
+.new-round, .in-game { 
+  height: 100vh
 }
 
 /* new round */
