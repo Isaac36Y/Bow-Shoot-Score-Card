@@ -13,9 +13,28 @@ const confirmPlayerButton = document.querySelector('.confirm-player-button');
 const deletePlayerButton = document.querySelector('.delete-player-button');
 const editPlayerButton = document.querySelector('#edit-player-button');
 const addPlayerButton = document.querySelector('#add-player-button');
-const distanceMode = document.querySelector('#distance-mode-checkbox')
+const distanceMode = document.querySelector('#distance-mode-checkbox');
 
-const storedStateString = localStorage.getItem('appState')
+
+const findLocalStorage = (regex) => {
+    let matchingItem
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+
+        if (regex.test(key)) {
+            matchingItem = String(key)
+        }
+    }
+    return matchingItem
+}
+
+const storageRegex = /(Feb 28)/g
+
+console.log(findLocalStorage(storageRegex))
+
+const storedStateString = localStorage.getItem(findLocalStorage(storageRegex))
+
+console.log(storedStateString)
 
 let state = {
     players: [],
@@ -559,7 +578,29 @@ cancelEndRoundButton.addEventListener('click', () => {
 
 /* saved game check */
 
-window.addEventListener('load', () => {
+state = JSON.parse(storedStateString)
+        const childrenOfAddPlayerTable = addPlayerTable.children;
+        setScreen()
+        addPlayerToScorecard()
+        for (let i = 1; i <= state.totalTargets; i++) {
+            li = document.createElement('li')
+            li.className = 'in-game__target-select';
+            li.textContent = i;
+            targetList.appendChild(li)
+            
+            addColumnsToScorecard(i)
+            updateDistanceToScorecard()
+            updatePlayerScoreToScorecard(i)
+        }
+        handlesIfMultiplierMode()
+        populateScoreSetterBox()
+        selectTarget(targetList.lastChild)
+        adjustsGapOfScoreBox(childrenOfAddPlayerTable.length)
+        updateTotalScorecardScores()
+        putsPlayersInOrder()
+        putsPlayersInOrderMultiplied()
+
+/* window.addEventListener('load', () => {
    if (storedStateString) {
     try {
         state = JSON.parse(storedStateString)
@@ -597,7 +638,7 @@ window.addEventListener('load', () => {
     }
     } 
 }) 
-
+ */
 /* Round Summary */
 
 const endRound = document.querySelector('#confirm-msg-confirm');
