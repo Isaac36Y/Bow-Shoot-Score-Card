@@ -40,7 +40,4 @@ I'm [Isaac Young](https://github.com/Isaac36Y) and I created this app to make tr
 
 ## 🚀 Usage
 
-<img src="./images/readme-usage-imgs/Screenshot 2026-02-27 at 9.18.06 AM.png" width="250" alt="Start round page of the Bullseye Ledger" />
-<img src="./images/readme-usage-imgs/Screenshot 2026-02-27 at 8.31.11 AM.png" width="250" alt="Updating scores on Bullseye Ledger" />
-<img src="./images/readme-usage-imgs/Screenshot 2026-02-27 at 8.31.18 AM.png" width="250" alt="Scorecard displayed on Bullseye Ledger" />
-<img src="./images/readme-usage-imgs/Screenshot 2026-02-27 at 8.32.50 AM.png" width="250" alt="Round summary pageof the Bullseye Ledger" />
+<img src="./images/readme-usage-imgs/Screenshot 2026-02-27 at 9.18.06 AM.png" width="250" alt="Start round page of the Bullseye Ledger" /> <img src="./images/readme-usage-imgs/Screenshot 2026-02-27 at 8.31.11 AM.png" width="250" alt="Updating scores on Bullseye Ledger" /> <img src="./images/readme-usage-imgs/Screenshot 2026-02-27 at 8.31.18 AM.png" width="250" alt="Scorecard displayed on Bullseye Ledger" /> <img src="./images/readme-usage-imgs/Screenshot 2026-02-27 at 8.32.50 AM.png" width="250" alt="Round summary pageof the Bullseye Ledger" />
