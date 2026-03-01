@@ -580,6 +580,7 @@ cancelEndRoundButton.addEventListener('click', () => {
 
 state = JSON.parse(storedStateString)
         const childrenOfAddPlayerTable = addPlayerTable.children;
+        state.screen = "inGame"
         setScreen()
         addPlayerToScorecard()
         for (let i = 1; i <= state.totalTargets; i++) {
