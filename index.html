@@ -16,7 +16,11 @@
                 <div class="new-round__table-container" id="new-round-table">
                     <h2 class="new-round__table-header | dark-text">
                         Players
+                        <span class="new-round__table-error-msg" id="confirm-player-msg" hidden>Please confirm all players before starting the round</span>
+                        <span class="new-round__table-error-msg" id="no-name-msg" hidden>Please add a name to confirm player</span>
+                        <span class="new-round__table-error-msg" id="same-name-msg" hidden>Two players cannot have the same name</span>
                     </h2>
+                    
                     <div class="new-round__table-body" id="add-player-table">
                     </div>
                     <div class="new-round__add-player" id="add-player">

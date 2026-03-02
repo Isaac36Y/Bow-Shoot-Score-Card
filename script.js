@@ -53,35 +53,43 @@ const setScreen = () => {
     }
 }
 
+const checksIfNameExist = (name) => {
+    return state.players.every(player => player.name !== name)
+}
+
 const savesPlayer = (el) => {
+    const noNameMsg = document.querySelector('#no-name-msg');
+    const nameAlreadyExists = document.querySelector('#same-name-msg')
     const row = el.closest('.new-round__table-row');
     const id = row.querySelector('.id-cell')
     const input = row.querySelector('.name-cell input')
     const name = input.value.trim();
-    const buttons = row.querySelector('.button-cell')
+    const buttons = row.querySelector('.button-cell');
     const nameCell = row.querySelector('.name-cell');
 
-    /* if (player already exist)else if (input has value)  */
     if (state.players[+id.textContent - 1]) {
         nameCell.textContent = name
         buttons.innerHTML = '<button type="button" id="edit-player-button" onclick="editPlayer(this)"><img src="./images/edit.png" alt="trash can" width="20"></button>'
-    }else if (name.length > 0) {
-        nameCell.textContent = name
-        state.multiplierOn 
-        ? state.players.push({ id: (state.players.length + 1), name: name, targets: [], total: undefined, multipliedScores: {}, multipliedTotal: undefined})
-        : state.players.push({ id: (state.players.length + 1), name: name, targets: [], total: undefined})
-        buttons.innerHTML = '<button type="button" id="edit-player-button" onclick="editPlayer(this)"><img src="./images/edit.png" alt="trash can" width="20"></button>'
+    }else if (!checksIfNameExist(name)) {
+        nameAlreadyExists.removeAttribute('hidden');
+    }else if (name.length <= 0) {
+        noNameMsg.removeAttribute('hidden');
     }else {
-        console.log('no name')
-        /* and error effect when name isnt filled out */
+        nameAlreadyExists.setAttribute('hidden', '');
+        noNameMsg.setAttribute('hidden', '');
+        nameCell.textContent = name;
+        state.multiplierOn
+        ? state.players.push({ id: state.players.length + 1, name: name, targets: [], total: undefined, multipliedScores: {}, multipliedTotal: undefined})
+        : state.players.push({ id: state.players.length + 1, name: name, targets: [], total: undefined});
+        buttons.innerHTML = '<button type="button" id="edit-player-button" onclick="editPlayer(this)"><img src="./images/edit.png" alt="trash can" width="20"></button>';
     }
 }
 
 const editPlayer = (el) => {
     const row = el.closest('.new-round__table-row');
     const nameCell = row.querySelector('.name-cell');
-    const name = nameCell.innerText
-    const buttons = row.querySelector('.button-cell')
+    const name = nameCell.innerText;
+    const buttons = row.querySelector('.button-cell');
 
     nameCell.innerHTML = `<input class="added-player__custom" type="text" name="name" placeholder="Name" value="${name}">`;
     buttons.innerHTML = `
@@ -119,21 +127,23 @@ const addsPlayer = () => {
 }
 
 const deletePlayer = (el) => {
-    const row = el.closest('.new-round__table-row')
-    const id = row.querySelector('.id-cell').textContent
-    const indexToRemove = state.players.findIndex(player => player.id === +id)
+    const row = el.closest('.new-round__table-row');
+    const id = row.querySelector('.id-cell').textContent;
+    const indexToRemove = state.players.findIndex(player => player.id === +id);
 
     if (indexToRemove > -1) {
         state.players.splice(indexToRemove, 1) 
     }
     row.remove()
-
     updatePlayerNumber()
 }
 
-
 addPlayerButton.addEventListener('click', () => {
     addsPlayer()
+})
+
+window.addEventListener('click', () => {
+    console.log(state.players)
 })
 
 /* start round functions */
