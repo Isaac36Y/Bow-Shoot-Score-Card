@@ -636,7 +636,9 @@ const findsMosts = (num) => {
         })
         playersNums.push({name: player.name, amount: tensCount})
     })
-    return playersNums.sort((a, b) => b.amount - a.amount)[0]
+
+    playersNums.sort((a, b) => b.amount - a.amount)[0]
+    return playersNums.filter(player => player.amount === playersNums[0].amount)
 }
 
 const isComebackKid = () => {
@@ -657,15 +659,15 @@ const populatePodium = (order) => {
     
     (order.length < 3) ? spliceLength = order.length : spliceLength = 3
 
-        const topThree = [...order].splice(0, spliceLength);
+    const topThree = [...order].splice(0, spliceLength);
 
-        podium1.textContent = topThree[0].name;
-        if (spliceLength === 2) {
-            podium2.textContent = topThree[1].name;
-        }else if (spliceLength == 3) {
-            podium2.textContent = topThree[1].name;
-            podium3.textContent = topThree[2].name;
-        }
+    podium1.textContent = topThree[0].name;
+    if (spliceLength === 2) {
+        podium2.textContent = topThree[1].name;
+    }else if (spliceLength == 3) {
+        podium2.textContent = topThree[1].name;
+        podium3.textContent = topThree[2].name;
+    }
 }
 
 
@@ -703,8 +705,8 @@ const populateMosts = () => {
         mostTens.textContent = findsMosts(10).amount === 0 ? "You didn't get any tens" : `You got ${findsMosts(10).amount} ${findsMosts(10).amount <= 1 ? "10" : "10s"}. Nice Job!`
         mostZeros.textContent = findsMosts(0).amount === 0 ? "You didn't get a single 0! Well done" : `You got ${findsMosts(0).amount} ${findsMosts(10).amount <= 1 ? "0" : "0s"}.`
     }else {
-        mostTens.innerHTML = findsMosts(10).amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `<span class="fw-700">Most 10s in the round:</span> ${findsMosts(10).name} with ${findsMosts(10).amount}.`
-        mostZeros.innerHTML = findsMosts(0).amount === 0 ? "Most 0s in the round: Nobody! Nice shooting everyone" : `<span class="fw-700">Most 0s in the round:</span> ${findsMosts(0).name} with ${findsMosts(0).amount}.`
+        mostTens.innerHTML = findsMosts(10).amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `<span class="fw-700">Most 10s in the round:</span> ${findsMosts(10).map(player => player.name).join(", ")} with ${findsMosts(10)[0].amount}.`
+        mostZeros.innerHTML = findsMosts(0).amount === 0 ? "Most 0s in the round: Nobody! Nice shooting everyone" : `<span class="fw-700">Most 0s in the round:</span> ${findsMosts(0).map(player => player.name).join(", ")} with ${findsMosts(0)[0].amount}.`
     }
 }
 
@@ -720,7 +722,6 @@ const findsAndPopulatesLongestShot = () => {
     state.players.forEach(player => {
         scoresFromLongest.push({name: player.name, score: player.targets[longestTarget].score})
     })
-    console.log(scoresFromLongest)
     /* sorts scores from highest to lowest, then checks if there are multiple people with the highest score on the longest target */
     scoresFromLongest.sort((a, b) => b.score - a.score)
     const highestScore = scoresFromLongest[0].score
@@ -773,6 +774,7 @@ const saveOrDeletePopUp = (opt) => {
 
 endRound.addEventListener('click', () => {
     state.screen = "roundSummary"
+    console.log(findsMosts(10).map(player => player.name).join(", "))
     setScreen()
     populatePodium(playersInOrder)
     populateResultsTable(playersInOrder)
