@@ -14,6 +14,7 @@ const deletePlayerButton = document.querySelector('.delete-player-button');
 const editPlayerButton = document.querySelector('#edit-player-button');
 const addPlayerButton = document.querySelector('#add-player-button');
 const distanceMode = document.querySelector('#distance-mode-checkbox');
+const confirmAllPlayersMsg = document.querySelector('#confirm-player-msg')
 
 const storedStateString = localStorage.getItem('appState')
 
@@ -83,6 +84,7 @@ const savesPlayer = (el) => {
         : state.players.push({ id: state.players.length + 1, name: name, targets: [], total: undefined});
         buttons.innerHTML = '<button type="button" id="edit-player-button" onclick="editPlayer(this)"><img src="./images/edit.png" alt="trash can" width="20"></button>';
     }
+    confirmAllPlayersMsg.setAttribute('hidden', '')
 }
 
 const editPlayer = (el) => {
@@ -140,10 +142,6 @@ const deletePlayer = (el) => {
 
 addPlayerButton.addEventListener('click', () => {
     addsPlayer()
-})
-
-window.addEventListener('click', () => {
-    console.log(state.players)
 })
 
 /* start round functions */
@@ -328,7 +326,6 @@ const updateDistanceToScorecard = () => {
         const scorecardPlayerCol = scorecard.querySelectorAll('.in-game__scorecard-number-distance')
 
         scorecardPlayerCol.forEach(column => {
-            console.log(column.getAttribute('id').replace('distance-column-', '').trim())
             const columnId = column.getAttribute('id').replace('distance-column-', '').trim()
 
             column.textContent = state.players[0].targets[columnId - 1].distance ? `${state.players[0].targets[columnId - 1].distance}yrds` : ''
@@ -526,9 +523,9 @@ startRoundButton.addEventListener('click', () => {
     const childrenOfAddPlayerTable = addPlayerTable.children;
 
     distanceMode.checked ? state.multiplierOn = true : state.multiplierOn = false
-    console.log(childrenOfAddPlayerTable)
-    if (childrenOfAddPlayerTable.length !== state.players.length || state.players.length === 0) {
-        console.log("add players")
+    if (childrenOfAddPlayerTable.length !== state.players.length) {
+        confirmAllPlayersMsg.removeAttribute('hidden');
+    }else if (state.players.length === 0) {
         return
     }else {
         setScreen()
