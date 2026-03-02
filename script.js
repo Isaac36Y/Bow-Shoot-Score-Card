@@ -715,8 +715,8 @@ const findsAndPopulatesLongestShot = () => {
     const longestShotText = document.querySelector('#longest-shot p')
     const longestDistance = Math.max(...state.players[0].targets.map(target => target.distance))
     const longestTarget = state.players[0].targets.findIndex(target => target.distance === longestDistance) + 1
-    console.log(longestTarget)
     const scoresFromLongest = []
+
     if (longestDistance < 20) return 
     /* pulls all scores on the longest target */
     state.players.forEach(player => {
@@ -774,7 +774,6 @@ const saveOrDeletePopUp = (opt) => {
 
 endRound.addEventListener('click', () => {
     state.screen = "roundSummary"
-    console.log(findsMosts(10).map(player => player.name).join(", "))
     setScreen()
     populatePodium(playersInOrder)
     populateResultsTable(playersInOrder)
