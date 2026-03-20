@@ -55,7 +55,7 @@ const setScreen = () => {
 }
 
 const checksIfNameExist = (name) => {
-    return state.players.every(player => player.name !== name)
+    return state.players.every(player => player.name.trim() !== name.trim())
 }
 
 const savesPlayer = (el) => {
@@ -82,7 +82,7 @@ const savesPlayer = (el) => {
         state.multiplierOn
         ? state.players.push({ id: state.players.length + 1, name: name, targets: [], total: undefined, multipliedScores: {}, multipliedTotal: undefined})
         : state.players.push({ id: state.players.length + 1, name: name, targets: [], total: undefined});
-        buttons.innerHTML = '<button type="button" id="edit-player-button" onclick="editPlayer(this)"><img src="./images/edit.png" alt="trash can" width="20"></button>';
+        buttons.innerHTML = '<button type="button" id="edit-player-btn"><img src="./images/edit.png" alt="trash can" width="20"></button>';
     }
     confirmAllPlayersMsg.setAttribute('hidden', '')
 }
