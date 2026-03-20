@@ -702,11 +702,11 @@ const populateMosts = () => {
     const mostTens = document.querySelector('#most-tens p')
     const mostZeros = document.querySelector('#most-zeros p')
     if (state.players.length === 1) {
-        mostTens.textContent = findsMosts(10).amount === 0 ? "You didn't get any tens" : `You got ${findsMosts(10).amount} ${findsMosts(10).amount <= 1 ? "10" : "10s"}. Nice Job!`
-        mostZeros.textContent = findsMosts(0).amount === 0 ? "You didn't get a single 0! Well done" : `You got ${findsMosts(0).amount} ${findsMosts(10).amount <= 1 ? "0" : "0s"}.`
+        mostTens.textContent = findsMosts(10)[0].amount === 0 ? "You didn't get any tens" : `You got ${findsMosts(10)[0].amount} ${findsMosts(10)[0].amount <= 1 ? "10" : "10s"}. Nice Job!`
+        mostZeros.textContent = findsMosts(0)[0].amount === 0 ? "You didn't get a single 0! Well done" : `You got ${findsMosts(0)[0].amount} ${findsMosts(10)[0].amount <= 1 ? "0" : "0s"}.`
     }else {
-        mostTens.innerHTML = findsMosts(10).amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `<span class="fw-700">Most 10s in the round:</span> ${findsMosts(10).map(player => player.name).join(", ")} with ${findsMosts(10)[0].amount}.`
-        mostZeros.innerHTML = findsMosts(0).amount === 0 ? "Most 0s in the round: Nobody! Nice shooting everyone" : `<span class="fw-700">Most 0s in the round:</span> ${findsMosts(0).map(player => player.name).join(", ")} with ${findsMosts(0)[0].amount}.`
+        mostTens.innerHTML = findsMosts(10)[0].amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `<span class="fw-700">Most 10s in the round:</span> ${findsMosts(10).map(player => player.name).join(", ")} with ${findsMosts(10)[0].amount}.`
+        mostZeros.innerHTML = findsMosts(0)[0].amount === 0 ? "Most 0s in the round: Nobody! Nice shooting everyone" : `<span class="fw-700">Most 0s in the round:</span> ${findsMosts(0).map(player => player.name).join(", ")} with ${findsMosts(0)[0].amount}.`
     }
 }
 
@@ -714,7 +714,7 @@ const findsAndPopulatesLongestShot = () => {
     /* this can be made much more simple */
     const longestShotText = document.querySelector('#longest-shot p')
     const longestDistance = Math.max(...state.players[0].targets.map(target => target.distance))
-    const longestTarget = state.players[0].targets.findIndex(target => target.distance === longestDistance) + 1
+    const longestTarget = state.players[0].targets.findIndex(target => target.distance === longestDistance)
     const scoresFromLongest = []
 
     if (longestDistance < 20) return 
@@ -725,11 +725,12 @@ const findsAndPopulatesLongestShot = () => {
     /* sorts scores from highest to lowest, then checks if there are multiple people with the highest score on the longest target */
     scoresFromLongest.sort((a, b) => b.score - a.score)
     const highestScore = scoresFromLongest[0].score
+    console.log(scoresFromLongest)
     const ifTie = scoresFromLongest.filter(each => each.score === highestScore)
     if (state.players.length === 1) {
         longestShotText.textContent = `Your longest shot of the day was ${longestDistance}yrds and you scored a ${highestScore}.`
     }else if (ifTie.length > 1) {
-        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} and ${scoresFromLongest[1].name} got a ${highestScore} at ${longestDistance}yrds.` 
+        longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${ifTie.map(player => player.name).join(", ")} got a ${highestScore} at ${longestDistance}yrds.` 
     }else {
         longestShotText.innerHTML = `<span class="fw-700">Longest shot of the round:</span> ${scoresFromLongest[0].name} got a ${highestScore} at ${longestDistance}yrds.` 
     } 
