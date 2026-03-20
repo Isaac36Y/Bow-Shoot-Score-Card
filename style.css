@@ -871,6 +871,10 @@ input:checked + .slider:before {
 
 /* round summary */
 
+.round-summary {
+  min-height: 100vh;
+}
+
 .round-summary__container {
   display: flex;
   flex-direction: column;

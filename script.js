@@ -424,7 +424,7 @@ const addTarget = () => {
     li.textContent = state.totalTargets;
     targetList.appendChild(li)
     state.players.forEach(player => {
-        player.targets.push({target: state.totalTargets, score: 0, distance: 0})
+        player.targets.push({target: state.totalTargets, score: null, distance: null})
     })
     selectTarget(li)
     addColumnsToScorecard(state.totalTargets)
