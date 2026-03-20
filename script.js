@@ -434,7 +434,7 @@ const selectsNextTarget = () => {
     let items = Array.from(targetList.querySelectorAll('.in-game__target-select'))
     let indexOfSelected = items.findIndex(item => item.classList.contains('selected'))
     
-    if (state.multiplierOn && state.players[0].targets[state.selectedTarget - 1].distance === 0) {
+    if (state.multiplierOn && state.players[0].targets[state.selectedTarget - 1].distance === null) {
         noDistanceError(true)
         return
     }
