@@ -70,7 +70,7 @@ const savesPlayer = (el) => {
 
     if (state.players[+id.textContent - 1]) {
         nameCell.textContent = name
-        buttons.innerHTML = '<button type="button" id="edit-player-button" onclick="editPlayer(this)"><img src="./images/edit.png" alt="trash can" width="20"></button>'
+        buttons.innerHTML = '<button type="button" id="edit-player-btn"><img src="./images/edit.png" alt="trash can" width="20"></button>'
     }else if (!checksIfNameExist(name)) {
         nameAlreadyExists.removeAttribute('hidden');
     }else if (name.length <= 0) {
@@ -95,8 +95,8 @@ const editPlayer = (el) => {
 
     nameCell.innerHTML = `<input class="added-player__custom" type="text" name="name" placeholder="Name" value="${name}">`;
     buttons.innerHTML = `
-        <button type="button" class="delete-player-button" onclick="deletePlayer(this)"><img src="./images/delete.png" alt="trash can" width="20"></button>
-        <button type="button" class="confirm-player-button | prime-text" onclick="savesPlayer(this)">&#x2713</button>
+        <button type="button" class="delete-player-button" id="delete-player-btn"><img src="./images/delete.png" alt="trash can" width="20"></button>
+        <button type="button" class="confirm-player-button | prime-text" id="confirm-player-btn">&#x2713</button>
         `
 }
 
@@ -118,8 +118,8 @@ const addsPlayer = () => {
         <p class="id-cell montserrat"></p>
         <div class="name-cell montserrat"><input class="added-player__custom" type="text" name="name" placeholder="Name"></div>
         <div class="button-cell">
-            <button type="button" class="delete-player-button" onclick="deletePlayer(this)"><img src="./images/delete.png" alt="trash can" width="20"></button>
-            <button type="button" class="confirm-player-button" onclick="savesPlayer(this)">&#x2713</button>
+            <button type="button" class="delete-player-button" id="delete-player-btn"><img src="./images/delete.png" alt="trash can" width="20"></button>
+            <button type="button" class="confirm-player-button" id="confirm-player-btn">&#x2713</button>
         </div>
     </div>
     `
@@ -516,6 +516,23 @@ scoreSetterBox.addEventListener('click', (e) => {
     putsPlayersInOrderMultiplied()
     
     saveState('appState')
+})
+
+table.addEventListener('click', (e) => {
+    const deleteBtn = e.target.closest('#delete-player-btn')
+    const confirmBtn = e.target.closest('#confirm-player-btn')
+    const editBtn = e.target.closest('#edit-player-btn')
+
+    if (!deleteBtn && !confirmBtn && !editBtn) return
+
+
+    if (deleteBtn) {
+        deletePlayer(deleteBtn)
+    }else if (confirmBtn) {
+        savesPlayer(confirmBtn)
+    }else if (editBtn) {
+        editPlayer(editBtn)
+    }
 })
 
 startRoundButton.addEventListener('click', () => {
