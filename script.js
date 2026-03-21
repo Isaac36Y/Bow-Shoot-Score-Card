@@ -182,7 +182,7 @@ let putsPlayersInOrderMultiplied = () => playersInOrderByMultiplied = [...state.
 const populateScoreSetterBox = () => {
     state.players.forEach(player => {
         const playerEl = `
-            <div class="in-game__target-score-row neutral-text" id="player-${player.id}">
+            <div class="in-game__target-score-row neutral-text" id="player-${player.id}" data-player-id="${player.id}">
                 <p class="in-game__target-score-id montserrat">${player.id}</p>
                 <p class="in-game__target-score-player montserrat">${player.name}</p>
                 <div class="in-game__target-score-buttons">
@@ -277,7 +277,7 @@ const updateDistance = () => {
 /* update functions update the data inside the object every time a new value is given on that target to each score/distance */
 const updateScore = (btn) => {
     const player = btn.closest('.in-game__target-score-row')
-    const id = player.getAttribute('id').split("").slice(7, 8).join('')
+    const id = player.dataset.playerId
     const target = state.selectedTarget - 1
     state.players[+id - 1].targets[target].score = +btn.value
 
