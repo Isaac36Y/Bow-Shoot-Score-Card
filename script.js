@@ -1,3 +1,5 @@
+'use strict';
+
 /* New Round */
 const newRound = document.querySelector('#new-round');
 const inGame = document.querySelector('#in-game');
@@ -70,7 +72,7 @@ const savesPlayer = (el) => {
 
     if (state.players[+id.textContent - 1]) {
         nameCell.textContent = name
-        buttons.innerHTML = '<button type="button" id="edit-player-btn"><img src="./images/edit.png" alt="trash can" width="20"></button>'
+        buttons.innerHTML = '<button type="button" class="edit-player-button"><img src="./images/edit.png" alt="trash can" width="20"></button>'
     }else if (!checksIfNameExist(name)) {
         nameAlreadyExists.removeAttribute('hidden');
     }else if (name.length <= 0) {
@@ -82,7 +84,7 @@ const savesPlayer = (el) => {
         state.multiplierOn
         ? state.players.push({ id: state.players.length + 1, name: name, targets: [], total: undefined, multipliedScores: {}, multipliedTotal: undefined})
         : state.players.push({ id: state.players.length + 1, name: name, targets: [], total: undefined});
-        buttons.innerHTML = '<button type="button" id="edit-player-btn"><img src="./images/edit.png" alt="trash can" width="20"></button>';
+        buttons.innerHTML = '<button type="button" class="edit-player-button"><img src="./images/edit.png" alt="trash can" width="20"></button>';
     }
     confirmAllPlayersMsg.setAttribute('hidden', '')
 }
@@ -95,15 +97,15 @@ const editPlayer = (el) => {
 
     nameCell.innerHTML = `<input class="added-player__custom" type="text" name="name" placeholder="Name" value="${name}">`;
     buttons.innerHTML = `
-        <button type="button" class="delete-player-button" id="delete-player-btn"><img src="./images/delete.png" alt="trash can" width="20"></button>
-        <button type="button" class="confirm-player-button | prime-text" id="confirm-player-btn">&#x2713</button>
+        <button type="button" class="delete-player-button"><img src="./images/delete.png" alt="trash can" width="20"></button>
+        <button type="button" class="confirm-player-button | prime-text">&#x2713</button>
         `
 }
 
 const updatePlayerNumber = () => {
     const addedPlayers = document.querySelectorAll('.new-round__table-row');
     addedPlayers.forEach((player, index) => {
-        id = player.querySelector('.id-cell');
+        const id = player.querySelector('.id-cell');
         if (id) {
             id.textContent = index + 1
         }
@@ -118,8 +120,8 @@ const addsPlayer = () => {
         <p class="id-cell montserrat"></p>
         <div class="name-cell montserrat"><input class="added-player__custom" type="text" name="name" placeholder="Name"></div>
         <div class="button-cell">
-            <button type="button" class="delete-player-button" id="delete-player-btn"><img src="./images/delete.png" alt="trash can" width="20"></button>
-            <button type="button" class="confirm-player-button" id="confirm-player-btn">&#x2713</button>
+            <button type="button" class="delete-player-button"><img src="./images/delete.png" alt="trash can" width="20"></button>
+            <button type="button" class="confirm-player-button">&#x2713</button>
         </div>
     </div>
     `
@@ -140,9 +142,7 @@ const deletePlayer = (el) => {
     updatePlayerNumber()
 }
 
-addPlayerButton.addEventListener('click', () => {
-    addsPlayer()
-})
+addPlayerButton.addEventListener('click', addsPlayer)
 
 /* start round functions */
 
@@ -181,7 +181,7 @@ let putsPlayersInOrderMultiplied = () => playersInOrderByMultiplied = [...state.
 
 const populateScoreSetterBox = () => {
     state.players.forEach(player => {
-        scoreSetterBox.innerHTML += `
+        const playerEl = `
             <div class="in-game__target-score-row neutral-text" id="player-${player.id}">
                 <p class="in-game__target-score-id montserrat">${player.id}</p>
                 <p class="in-game__target-score-player montserrat">${player.name}</p>
@@ -194,6 +194,7 @@ const populateScoreSetterBox = () => {
                 </div>
             </div>
         `
+        scoreSetterBox.insertAdjacentHTML("beforeend", playerEl)
     })
 }
 
@@ -455,7 +456,7 @@ const selectsPreviousTarget = () => {
 
     if (indexOfSelected === 0) {
         return 
-    }else if (state.multiplierOn && state.players[0].targets[state.selectedTarget - 1].distance === 0) {
+    }else if (state.multiplierOn && state.players[0].targets[state.selectedTarget - 1].distance === null) {
             noDistanceError(true)
             return
     }else {
@@ -519,9 +520,9 @@ scoreSetterBox.addEventListener('click', (e) => {
 })
 
 table.addEventListener('click', (e) => {
-    const deleteBtn = e.target.closest('#delete-player-btn')
-    const confirmBtn = e.target.closest('#confirm-player-btn')
-    const editBtn = e.target.closest('#edit-player-btn')
+    const deleteBtn = e.target.closest('.delete-player-button')
+    const confirmBtn = e.target.closest('.confirm-player-button')
+    const editBtn = e.target.closest('.edit-player-button')
 
     if (!deleteBtn && !confirmBtn && !editBtn) return
 
@@ -557,29 +558,18 @@ startRoundButton.addEventListener('click', () => {
 targetList.addEventListener('click', (e) => {
     const li = e.target.closest('.in-game__target-select')
     if (!li || !targetList.contains(li)) return
-    target = +li.textContent
     selectTarget(li)
 })
 
-targetExpandButton.addEventListener('click', () => {
-    showTargetListToggle()
-})
+targetExpandButton.addEventListener('click', showTargetListToggle)
 
-scorecardButton.addEventListener('click', () => {
-    toggleScorecard()
-})
+scorecardButton.addEventListener('click', toggleScorecard)
 
-scorecardBackdrop.addEventListener('click', () => {
-    toggleScorecard()
-})
+scorecardBackdrop.addEventListener('click', toggleScorecard)
 
-firstEndRoundButton.addEventListener('click', () => {
-    togglesEndRoundPopUp()
-})
+firstEndRoundButton.addEventListener('click', togglesEndRoundPopUp)
 
-cancelEndRoundButton.addEventListener('click', () => {
-    togglesEndRoundPopUp()
-})
+cancelEndRoundButton.addEventListener('click', togglesEndRoundPopUp)
 
 /* saved game check */
 
@@ -591,7 +581,7 @@ window.addEventListener('load', () => {
         setScreen()
         addPlayerToScorecard()
         for (let i = 1; i <= state.totalTargets; i++) {
-            li = document.createElement('li')
+            const li = document.createElement('li')
             li.className = 'in-game__target-select';
             li.textContent = i;
             targetList.appendChild(li)
@@ -742,7 +732,6 @@ const findsAndPopulatesLongestShot = () => {
     /* sorts scores from highest to lowest, then checks if there are multiple people with the highest score on the longest target */
     scoresFromLongest.sort((a, b) => b.score - a.score)
     const highestScore = scoresFromLongest[0].score
-    console.log(scoresFromLongest)
     const ifTie = scoresFromLongest.filter(each => each.score === highestScore)
     if (state.players.length === 1) {
         longestShotText.textContent = `Your longest shot of the day was ${longestDistance}yrds and you scored a ${highestScore}.`
