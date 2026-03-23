@@ -406,6 +406,12 @@ const updateScoreByTarget = () => {
 
 const selectTarget = (el) => {
     let items = targetList.querySelectorAll('.in-game__target-select');
+    
+    if (state.multiplierOn && state.players[0].targets[state.selectedTarget - 1].distance === null) {
+        noDistanceError(true)
+        return
+    }
+
     items.forEach(item => item.classList.remove('selected'));
 
     state.selectedTarget = +el.textContent
