@@ -688,8 +688,8 @@ const isPlayersScorecardEl = (player) => {
     player.targets.forEach(target => {
         if (target.score !== null) {
            el += `<div>
-                        <p class="round-summary__details-round-scorecard-target">${target.target}</p>
-                        <p class="round-summary__details-round-scorecar-score">${target.score}</p>
+                        <p class="round-summary__details-round-scorecard-target">#${target.target}</p>
+                        <p class="round-summary__details-round-scorecar-score fw-700">${target.score}</p>
                     </div>` 
         }
     })
@@ -718,8 +718,7 @@ const populateResultsTable = (order) => {
     order.forEach(player => {
         const amountOfDivs = document.querySelectorAll('.round-summary__results-row').length
         const total = order === playersInOrderByMultiplied ? player.multipliedTotal : player.total
-        console.log(player)
-        console.log(isPlayerScoreBreakdownEl(player))
+        
         let place
         if (amountOfDivs === 0) {
             place = '1st'
@@ -738,10 +737,10 @@ const populateResultsTable = (order) => {
                 <p class="round-summary__results-score">${total}</p>
             </summary>
             <div>
-                <div class="round-summary__details-score-breakdown montserrat neutral-text">
+                <div class="round-summary__details-score-breakdown dark-text montserrat">
                     ${isPlayerScoreBreakdownEl(player)}
                 </div>
-                <div class="round-summary__details-round-scorecard neutral-text montsrrat">
+                <div class="round-summary__details-round-scorecard dark-text montsrrat">
                     ${isPlayersScorecardEl(player)}
                 </div>
             </div>
