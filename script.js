@@ -683,6 +683,33 @@ const populatePodium = (order) => {
     }
 }
 
+const isPlayersScorecardEl = (player) => {
+    let el = ``
+    player.targets.forEach(target => {
+        if (target.score !== null) {
+           el += `<div>
+                        <p class="round-summary__details-round-scorecard-target">${target.target}</p>
+                        <p class="round-summary__details-round-scorecar-score">${target.score}</p>
+                    </div>` 
+        }
+    })
+    return el
+}
+
+const isPlayerScoreBreakdownEl = (player) => {
+    const scoreEl = scoreSetterBox.querySelectorAll('.in-game__target-score');
+
+    let scoreValues = []
+    scoreEl.forEach(el => scoreValues.push(el.getAttribute('value')))
+
+    let el = ''
+    scoreValues.forEach(value => {
+        const amount = player.targets.filter(target => target.score === +value)
+        el += `<p class="round-summary__details-score-breakdown-score">${value}s: <span class="fw-700">${amount.length}</span></p>`
+    })
+    return el
+}
+
 
 const populateResultsTable = (order) => {
     const resultsTable = document.querySelector('#results-table');
@@ -691,7 +718,8 @@ const populateResultsTable = (order) => {
     order.forEach(player => {
         const amountOfDivs = document.querySelectorAll('.round-summary__results-row').length
         const total = order === playersInOrderByMultiplied ? player.multipliedTotal : player.total
-
+        console.log(player)
+        console.log(isPlayerScoreBreakdownEl(player))
         let place
         if (amountOfDivs === 0) {
             place = '1st'
@@ -700,7 +728,7 @@ const populateResultsTable = (order) => {
         }else if (amountOfDivs === 2) {
             place = '3rd'
         }else place = `${amountOfDivs + 1}th`
-
+        
         resultsTable.innerHTML += `
         <details class="round-summary__details  montserrat ">
             <summary class="round-summary__details-summary neutral-text">
@@ -711,53 +739,10 @@ const populateResultsTable = (order) => {
             </summary>
             <div>
                 <div class="round-summary__details-score-breakdown montserrat neutral-text">
-                    <p class="round-summary__details-score-breakdown-score">10s: <span class="fw-700">7</span></p>
-                    <p class="round-summary__details-score-breakdown-score">8s: 12</p>
-                    <p class="round-summary__details-score-breakdown-score">5s: 11</p>
-                    <p class="round-summary__details-score-breakdown-score">3s: 8</p>
-                    <p class="round-summary__details-score-breakdown-score">0s: 2</p>
+                    ${isPlayerScoreBreakdownEl(player)}
                 </div>
                 <div class="round-summary__details-round-scorecard neutral-text montsrrat">
-                    <div>
-                        <p class="round-summary__details-round-scorecard-target">1</p>
-                        <p class="round-summary__details-round-scorecar-score">8</p>
-                    </div>
-                    <div>
-                        <p class="round-summary__details-round-scorecard-target">1</p>
-                        <p class="round-summary__details-round-scorecar-score">8</p>
-                    </div>
-                    <div>
-                        <p class="round-summary__details-round-scorecard-target">1</p>
-                        <p class="round-summary__details-round-scorecar-score">8</p>
-                    </div>
-                    <div>
-                        <p class="round-summary__details-round-scorecard-target">1</p>
-                        <p class="round-summary__details-round-scorecar-score">8</p>
-                    </div>
-                    <div>
-                        <p class="round-summary__details-round-scorecard-target">1</p>
-                        <p class="round-summary__details-round-scorecar-score">8</p>
-                    </div>
-                    <div>
-                        <p class="round-summary__details-round-scorecard-target">1</p>
-                        <p class="round-summary__details-round-scorecar-score">8</p>
-                    </div>
-                    <div>
-                        <p class="round-summary__details-round-scorecard-target">1</p>
-                        <p class="round-summary__details-round-scorecar-score">8</p>
-                    </div>
-                    <div>
-                        <p class="round-summary__details-round-scorecard-target">1</p>
-                        <p class="round-summary__details-round-scorecar-score">8</p>
-                    </div>
-                    <div>
-                        <p class="round-summary__details-round-scorecard-target">1</p>
-                        <p class="round-summary__details-round-scorecar-score">8</p>
-                    </div>
-                    <div>
-                        <p class="round-summary__details-round-scorecard-target">1</p>
-                        <p class="round-summary__details-round-scorecar-score">8</p>
-                    </div>
+                    ${isPlayersScorecardEl(player)}
                 </div>
             </div>
         </details>
