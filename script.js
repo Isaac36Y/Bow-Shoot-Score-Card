@@ -381,7 +381,7 @@ const updateTotalScorecardScores = () => {
 /* updateByTarget functions bring show the current score in the UI based off data from the objects. create/update/updateByTarget functions may be able to get combine in the
 future but for now they work good alone and might work best alone. */
 const updateDistanceByTarget = () => {
-    if (!state.players[0].targets[state.selectedTarget - 1].distance) {
+    if (state.players[0].targets[state.selectedTarget - 1].distance === null) {
         distanceInput.value = ''
     }else {
         distanceInput.value = state.players[0].targets[state.selectedTarget - 1].distance
@@ -392,7 +392,7 @@ const updateDistanceByTarget = () => {
 const updateScoreByTarget = () => {
     const buttons = document.querySelectorAll('.in-game__target-score');
     state.players.forEach(player => {
-        if (!player.targets[state.selectedTarget - 1].score) {
+        if (player.targets[state.selectedTarget - 1].score === null) {
             buttons.forEach(button => button.classList.remove('selected'))
             return
         }
