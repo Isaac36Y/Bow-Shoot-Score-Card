@@ -702,11 +702,65 @@ const populateResultsTable = (order) => {
         }else place = `${amountOfDivs + 1}th`
 
         resultsTable.innerHTML += `
-            <div class="round-summary__results-row neutral-text">
+        <details class="round-summary__details  montserrat ">
+            <summary class="round-summary__details-summary neutral-text">
+                <p class="round-summary__results-marker">&#9658;</p>
                 <p class="round-summary__results-place">${place}</p>
                 <p class="round-summary__results-name">${player.name}</p>
                 <p class="round-summary__results-score">${total}</p>
+            </summary>
+            <div>
+                <div class="round-summary__details-score-breakdown montserrat neutral-text">
+                    <p class="round-summary__details-score-breakdown-score">10s: <span class="fw-700">7</span></p>
+                    <p class="round-summary__details-score-breakdown-score">8s: 12</p>
+                    <p class="round-summary__details-score-breakdown-score">5s: 11</p>
+                    <p class="round-summary__details-score-breakdown-score">3s: 8</p>
+                    <p class="round-summary__details-score-breakdown-score">0s: 2</p>
+                </div>
+                <div class="round-summary__details-round-scorecard neutral-text montsrrat">
+                    <div>
+                        <p class="round-summary__details-round-scorecard-target">1</p>
+                        <p class="round-summary__details-round-scorecar-score">8</p>
+                    </div>
+                    <div>
+                        <p class="round-summary__details-round-scorecard-target">1</p>
+                        <p class="round-summary__details-round-scorecar-score">8</p>
+                    </div>
+                    <div>
+                        <p class="round-summary__details-round-scorecard-target">1</p>
+                        <p class="round-summary__details-round-scorecar-score">8</p>
+                    </div>
+                    <div>
+                        <p class="round-summary__details-round-scorecard-target">1</p>
+                        <p class="round-summary__details-round-scorecar-score">8</p>
+                    </div>
+                    <div>
+                        <p class="round-summary__details-round-scorecard-target">1</p>
+                        <p class="round-summary__details-round-scorecar-score">8</p>
+                    </div>
+                    <div>
+                        <p class="round-summary__details-round-scorecard-target">1</p>
+                        <p class="round-summary__details-round-scorecar-score">8</p>
+                    </div>
+                    <div>
+                        <p class="round-summary__details-round-scorecard-target">1</p>
+                        <p class="round-summary__details-round-scorecar-score">8</p>
+                    </div>
+                    <div>
+                        <p class="round-summary__details-round-scorecard-target">1</p>
+                        <p class="round-summary__details-round-scorecar-score">8</p>
+                    </div>
+                    <div>
+                        <p class="round-summary__details-round-scorecard-target">1</p>
+                        <p class="round-summary__details-round-scorecar-score">8</p>
+                    </div>
+                    <div>
+                        <p class="round-summary__details-round-scorecard-target">1</p>
+                        <p class="round-summary__details-round-scorecar-score">8</p>
+                    </div>
+                </div>
             </div>
+        </details>
         ` 
     })
 }
