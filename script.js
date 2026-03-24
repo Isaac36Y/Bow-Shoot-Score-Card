@@ -697,7 +697,8 @@ const isPlayersScorecardEl = (player) => {
 }
 
 const isPlayerScoreBreakdownEl = (player) => {
-    const scoreEl = scoreSetterBox.querySelectorAll('.in-game__target-score');
+    const firstPlayer = scoreSetterBox.querySelector('#player-1')
+    const scoreEl = firstPlayer.querySelectorAll('.in-game__target-score');
 
     let scoreValues = []
     scoreEl.forEach(el => scoreValues.push(el.getAttribute('value')))
@@ -718,7 +719,7 @@ const populateResultsTable = (order) => {
     order.forEach(player => {
         const amountOfDivs = document.querySelectorAll('.round-summary__results-row').length
         const total = order === playersInOrderByMultiplied ? player.multipliedTotal : player.total
-        
+    
         let place
         if (amountOfDivs === 0) {
             place = '1st'
