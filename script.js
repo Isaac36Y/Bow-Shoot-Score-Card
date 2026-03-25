@@ -183,8 +183,10 @@ const populateScoreSetterBox = () => {
     state.players.forEach(player => {
         const playerEl = `
             <div class="in-game__target-score-row neutral-text" id="player-${player.id}" data-player-id="${player.id}">
-                <p class="in-game__target-score-id montserrat">${player.id}</p>
-                <p class="in-game__target-score-player montserrat">${player.name}</p>
+                <div class="in-game__player-ids">
+                    <p class="in-game__target-score-id montserrat">${player.id}</p>
+                    <p class="in-game__target-score-player montserrat fw-700">${player.name}</p>
+                </div>
                 <div class="in-game__target-score-buttons">
                     <button type="button" class="in-game__target-score neutral-text montserrat" value="10">10</button>
                     <button type="button" class="in-game__target-score neutral-text montserrat" value="8">8</button>
@@ -406,8 +408,8 @@ const updateScoreByTarget = () => {
 
 const selectTarget = (el) => {
     let items = targetList.querySelectorAll('.in-game__target-select');
-    
-    if (state.multiplierOn && state.players[0].targets[state.selectedTarget - 1].distance === null) {
+    console.log(state)
+    if (state.selectedTarget > 0 && state.multiplierOn && state.players[0].targets[state.selectedTarget - 1].distance === null) {
         noDistanceError(true)
         return
     }

@@ -555,59 +555,54 @@ input:checked + .slider:before {
   width: 0;
 }
 
-.in-game__target-score-row.caption {
-  background-color: var(--color-neutral-light);
+.in-game__target-score-row.start {
   border-radius: 0.5rem 0.5rem 0 0;
 }
-.in-game__target-score-row.closer {
-  background-color: var(--color-neutral-light);
+.in-game__target-score-row.end {
   border-radius: 0 0 0.5rem 0.5rem;
+}
+.in-game__target-score-row.end, .in-game__target-score-row.start {
+  background-color: var(--color-neutral-light);
   height: 1.5rem;
 }
 
-.in-game__target-score-row:not(.caption, .closer) {
+.in-game__target-score-row:not(.start, .end) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   border: 2px solid #a94d19;
   border-radius: 0.5rem;
-
-}
-
-.in-game__target-score-row {
-  display: grid;
-  grid-template-columns: 1fr 3fr 5fr;
-  align-items: center;
-  text-align: center;
   padding-block: 0.5rem;
   font-size: 1.3rem;
 }
 
-.in-game__target-score-player:not(.caption) {
-  border-left: 1px solid var(--blue600);
-  border-right: 1px solid var(--blue600);
-  /* fixed height so border can go all the way up since rows have a padding */
-  height: calc(100% + 1rem); 
+.in-game__player-ids {
   display: flex;
   align-items: center;
-  justify-content: center;
-  letter-spacing: 0.1rem;
+  gap: 2rem;
+  padding-inline: 1rem;
 }
-.in-game__target-score-id:not(.caption) {
+
+.in-game__target-score-player {
+  letter-spacing: 0.2rem;
+  font-size: 1.5rem;
+}
+
+.in-game__target-score-id {
   font-size: 0.9rem;
-  padding-block-start: 0.2rem;
+  padding-block-start: 0.1rem;
 }
 
 .in-game__target-score-buttons {
-  display: flex;
-  /* gap: 0.5rem; */
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 0.3rem;
+  padding-inline: 0.5rem;
 }
 
 .in-game__target-score {
-  width: 2.2rem;
-  height: 2.2rem;
-  border-radius: 5rem;
   background-color: #0b1603;
+  border-radius: 0.5rem;
   border: 2px solid transparent;
   
 }
