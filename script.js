@@ -186,6 +186,7 @@ const populateScoreSetterBox = () => {
                 <div class="in-game__player-ids">
                     <p class="in-game__target-score-id montserrat">${player.id}</p>
                     <p class="in-game__target-score-player montserrat fw-700">${player.name}</p>
+                    <p class="in-game__player-score montserrat ">Score: <span>0</span></p>
                 </div>
                 <div class="in-game__target-score-buttons">
                     <button type="button" class="in-game__target-score neutral-text montserrat" value="10">10</button>
@@ -233,7 +234,7 @@ const adjustsGapOfScoreBox = (num) => {
         distanceContainer.style.marginBlockStart = '8rem';
         scoreContainer.style.margin = '2rem auto';
     }else if (num >= 4) {
-        distanceContainer.style.marginBlockStart = '7.5rem';
+        distanceContainer.style.marginBlockStart = '6rem';
         scoreContainer.style.margin = '1rem auto';
     }
 }
@@ -408,7 +409,7 @@ const updateScoreByTarget = () => {
 
 const selectTarget = (el) => {
     let items = targetList.querySelectorAll('.in-game__target-select');
-    console.log(state)
+
     if (state.selectedTarget > 0 && state.multiplierOn && state.players[0].targets[state.selectedTarget - 1].distance === null) {
         noDistanceError(true)
         return
@@ -585,7 +586,6 @@ window.addEventListener('load', () => {
    if (storedStateString) {
     try {
         state = JSON.parse(storedStateString)
-        const childrenOfAddPlayerTable = addPlayerTable.children;
         setScreen()
         addPlayerToScorecard()
         for (let i = 1; i <= state.totalTargets; i++) {
@@ -601,7 +601,7 @@ window.addEventListener('load', () => {
         handlesIfMultiplierMode()
         populateScoreSetterBox()
         selectTarget(targetList.lastChild)
-        adjustsGapOfScoreBox(childrenOfAddPlayerTable.length)
+        adjustsGapOfScoreBox(state.players.length)
         updateTotalScorecardScores()
         putsPlayersInOrder()
         putsPlayersInOrderMultiplied()
