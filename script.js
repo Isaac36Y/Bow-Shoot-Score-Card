@@ -153,8 +153,8 @@ const targetList = document.querySelector('#target-list');
 const targetListItems = document.querySelectorAll('.in-game__target-select');
 const currentTarget = document.querySelector('#target-number-span');
 const targetExpandButton = document.querySelector('#target-expand-btn');
-const targetsContainer = document.querySelector('.in-game__target-container');
-const targetsList = document.querySelector('.in-game__target-select-ol');
+const targetsContainer = document.querySelector('.in-game__target-selector');
+const targetsList = document.querySelector('.in-game__target-selector-ol');
 
 const distanceInput = document.querySelector('#yard-input')
 const scoreSetterBox = document.querySelector('#score-setter-container');
@@ -163,7 +163,7 @@ const distanceErroeMessage = document.querySelector('#yardage-error-msg')
 const nextTargetButton = document.querySelector('#next-target-btn');
 const previousTargetButton = document.querySelector('#previous-target-btn');
 const confirmPopUp = document.querySelector('#end-confirm');
-const confirmBackdrop = document.querySelector('.in-game__backdrop.end-game');
+const confirmBackdrop = document.querySelector('.backdrop.end-game');
 const firstEndRoundButton = document.querySelector('#end-round-btn')
 const cancelEndRoundButton = document.querySelector('#confirm-msg-cancel')
 const scorecardButton = document.querySelector('#scorecard-btn');
@@ -174,7 +174,7 @@ const scorecardScoreContainer = document.querySelector('#scorecard-score-contain
 const scorecardTotalColumn = document.querySelector('#scorecard-net');
 const scorecardMultipliedColumn = document.querySelector('#scorecard-multiplied')
 const scorecardPlayerContainer = document.querySelector('#scorecard-player-row')
-const scorecardBackdrop = document.querySelector('.in-game__backdrop.scorecard');
+const scorecardBackdrop = document.querySelector('.backdrop.scorecard');
 
 let putsPlayersInOrder = () =>  playersInOrder = [...state.players].sort((a, b) => b.total - a.total);
 let putsPlayersInOrderMultiplied = () => playersInOrderByMultiplied = [...state.players].sort((a, b) => b.multipliedTotal - a.multipliedTotal);
@@ -189,11 +189,11 @@ const populateScoreSetterBox = () => {
                     <p class="in-game__player-score montserrat">Score: <span class="fw-700">${player.total}</span></p>
                 </div>
                 <div class="in-game__target-score-buttons">
-                    <button type="button" class="in-game__target-score neutral-text montserrat" value="10">10</button>
-                    <button type="button" class="in-game__target-score neutral-text montserrat" value="8">8</button>
-                    <button type="button" class="in-game__target-score neutral-text montserrat" value="5">5</button>
-                    <button type="button" class="in-game__target-score neutral-text montserrat" value="3">3</button>
-                    <button type="button" class="in-game__target-score neutral-text montserrat" value="0">0</button>
+                    <button type="button" class="in-game__target-score-btn neutral-text montserrat" value="10">10</button>
+                    <button type="button" class="in-game__target-score-btn neutral-text montserrat" value="8">8</button>
+                    <button type="button" class="in-game__target-score-btn neutral-text montserrat" value="5">5</button>
+                    <button type="button" class="in-game__target-score-btn neutral-text montserrat" value="3">3</button>
+                    <button type="button" class="in-game__target-score-btn neutral-text montserrat" value="0">0</button>
                 </div>
             </div>
         `
@@ -228,7 +228,7 @@ const addPlayerToScorecard = () => {
 }
 
 const adjustsGapOfScoreBox = (num) => {
-    const distanceContainer = document.querySelector('.in-game__yardage-container');
+    const distanceContainer = document.querySelector('.in-game__yardage');
     const scoreContainer = document.querySelector('.in-game__target-score-container');
     if (num === 3) {
         distanceContainer.style.marginBlockStart = '8rem';
@@ -298,7 +298,7 @@ const updateScore = (btn) => {
 
 const highlightSelectedScore = (btn) => {
     const buttonsContainer = btn.closest('.in-game__target-score-buttons')
-    const buttons = buttonsContainer.querySelectorAll('.in-game__target-score');
+    const buttons = buttonsContainer.querySelectorAll('.in-game__target-score-btn');
     buttons.forEach(button => {
         button.classList.remove('selected')
     })
@@ -391,7 +391,7 @@ const updateDistanceByTarget = () => {
 
 /* I am proud of this one */
 const updateScoreByTarget = () => {
-    const buttons = document.querySelectorAll('.in-game__target-score');
+    const buttons = document.querySelectorAll('.in-game__target-score-btn');
     state.players.forEach(player => {
         if (player.targets[state.selectedTarget - 1].score === null) {
             buttons.forEach(button => button.classList.remove('selected'))
@@ -409,8 +409,9 @@ const updateTotalScoreToPlayerRow = (el) => {
     const playerScoreEl = player.querySelector('.in-game__player-score span')
 
     playerScoreEl.innerText = state.players[playerId - 1].total
-    console.log(playerId)
+    console.log(console.log(playersInOrder))
 }
+
 
 /* add/changes targets */
 
@@ -512,7 +513,7 @@ const noDistanceError = (error) => {
 /* in game event listeners */
 
 distanceInput.addEventListener('change', () => {
-    const selectedButtons = scoreSetterBox.querySelectorAll('.in-game__target-score.selected')
+    const selectedButtons = scoreSetterBox.querySelectorAll('.in-game__target-score-btn.selected')
     updateDistance()
     updateDistanceToScorecard()
     putsPlayersInOrderMultiplied()
@@ -525,7 +526,7 @@ distanceInput.addEventListener('change', () => {
 })
 
 scoreSetterBox.addEventListener('click', (e) => {
-    const button = e.target.closest('.in-game__target-score')
+    const button = e.target.closest('.in-game__target-score-btn')
     if (!button) return
     updateScore(button)
     highlightSelectedScore(button)
@@ -541,7 +542,6 @@ table.addEventListener('click', (e) => {
     const editBtn = e.target.closest('.edit-player-button')
 
     if (!deleteBtn && !confirmBtn && !editBtn) return
-
 
     if (deleteBtn) {
         deletePlayer(deleteBtn)
@@ -607,6 +607,7 @@ window.addEventListener('load', () => {
         }
         handlesIfMultiplierMode()
         populateScoreSetterBox()
+
         selectTarget(targetList.lastChild)
         adjustsGapOfScoreBox(state.players.length)
         updateTotalScorecardScores()

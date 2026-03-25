@@ -1,0 +1,58 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+*:not(dialog) {
+  margin: 0;
+  padding: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+
+html {
+  background: rgba(87, 115, 68, 1);
+  interpolate-size: allow-keywords;
+}
+
+body {
+  background: linear-gradient(180deg,rgba(87, 115, 68, 1) 0%, rgba(47, 69, 33, 1) 14%, rgba(37, 57, 24, 1) 31%, rgba(29, 47, 16, 1) 48%, rgba(19, 36, 7, 1) 100%);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--ff-primary);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+button {
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+.new-round, .in-game{ 
+  height: 100vh
+}

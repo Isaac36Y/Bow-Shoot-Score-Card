@@ -1,0 +1,60 @@
+.in-game__yardage {
+    margin-block-start: 9rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+
+    &-label {
+        font-size: 1.3rem;
+    }
+    &-input {
+        position: relative;
+
+        input {
+            text-align: end;
+            padding-inline-end: 3.4rem;
+            width: 6.5rem;
+            vertical-align: bottom;
+            border: 1px solid transparent;
+            border-radius: 0.3rem;
+            background-color: var(--color-neutral-light);
+            box-shadow: 0 0.3rem 1rem 0 rgba(0, 0, 0, 0.5);
+        }
+        label { 
+            position: absolute;
+            left: 3.5rem;
+            top: 0.1rem;
+        }
+    }
+
+    &-error {
+        display: none;
+        position: absolute;
+        top: 3rem;
+        right: 1rem;
+        background-color: white;
+        width: 15rem;
+        padding: 0.5rem;
+        text-align: center;
+    }
+    &-error:before {
+        content: '';
+        position: absolute;
+        bottom: 100%;
+        right: 4rem;
+        border-width: 10px;
+        border-style: solid;
+        border-color: transparent transparent white transparent;
+    }
+}
+
+
+
+
+
+
+
+
+
+

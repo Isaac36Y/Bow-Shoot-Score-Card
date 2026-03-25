@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dist/style.css">
     <title>Bow Shoot Score Card</title>
 </head>
 <body>
@@ -13,7 +13,7 @@
                 <div class="new-round__img">🏹</div>
                 <h1 class="new-round-header | neutral-text">BULLSEYE LEDGER</h1>
                 <p id="new-round-par"><span class="neutral-text montserrat">SIMPLE SCORING.</span><span class="neutral-text montserrat">INSTANT RESULTS.</span></p>
-                <div class="new-round__table-container" id="new-round-table">
+                <div class="new-round__table" id="new-round-table">
                     <h2 class="new-round__table-header | dark-text">
                         Players
                         <span class="new-round__table-error-msg" id="confirm-player-msg" hidden>Please confirm all players before starting the round</span>
@@ -23,7 +23,7 @@
                     
                     <div class="new-round__table-body" id="add-player-table">
                     </div>
-                    <div class="new-round__add-player" id="add-player">
+                    <div class="new-round__table-add-player" id="add-player">
                             <div><!-- placeholder for id cells --></div>
                             <div class="name-cell add-player | light-text">Add player</div>
                             <div class="button-cell add-player">                
@@ -33,9 +33,9 @@
                             </div>
                         </div>
                 </div>
-                <div class="new-round__mode-change-container">
+                <div class="new-round__mode-change">
                     <p class="new-round__mode-change-par | neutral-text">Distance Multiplier</p>
-                    <div class="switch-container">
+                    <div class="new-round__mode-change-switch">
                         <label class="switch">
                             <input type="checkbox" id="distance-mode-checkbox" checked>
                             <span class="slider"></span>
@@ -48,25 +48,19 @@
         <section class="in-game" id="in-game" hidden>
 
             <div class="in-game__container">
-                <div class="in-game__backdrop scorecard" hidden></div>
-                <div class="in-game__backdrop end-game" hidden></div>
-                <div class="in-game__target-container">
-                    <div class="in-game__target-number-container">
+                <div class="backdrop scorecard" hidden></div>
+                <div class="backdrop end-game" hidden></div>
+                <div class="in-game__target-selector">
+                    <div class="in-game__target-selector-head">
                         
-                        <h1 class="in-game__target-number | dark-text">Target # <span class="target#" id="target-number-span"></span></h1>
-                        <button type="button" class="in-game__target-expand-button" id="target-expand-btn"><img src="./images/arrow-down-3101_64.png" alt="" id="target-arrow-toggle" width="16"></button>
+                        <h1 class="in-game__target-selector-head-desc | dark-text">Target # <span class="target#" id="target-number-span"></span></h1>
+                        <button type="button" class="in-game__target-selector-head-button" id="target-expand-btn"><img src="./images/arrow-down-3101_64.png" alt="" id="target-arrow-toggle" width="16"></button>
                     </div>
-                    <ol class="in-game__target-select-ol" id="target-list">
-                        <!-- <li class="in-game__target-select selected">1</li>
-                        <li class="in-game__target-select">2</li>
-                        <li class="in-game__target-select">3</li>
-                        <li class="in-game__target-select">4</li>
-                        <li class="in-game__target-select">5</li> -->
+                    <ol class="in-game__target-selector-ol" id="target-list">
                     </ol>
-                    
                 </div>
 
-                <div class="in-game__yardage-container">
+                <div class="in-game__yardage">
                     <label class="in-game__yardage-label | neutral-text montserrat" for="yard-input" >Distance to target:</label>
                     <div class="in-game__yardage-input"><input class="montserrat" type="text" inputmode="numeric" name="yard-input" id="yard-input"><label class="dark-text montserrat" for="yard-input">Yards</label></div>
                     <div class="in-game__yardage-error" id="yardage-error-msg">
@@ -75,13 +69,10 @@
                     </div>
                 </div>
                 
-                <div class="in-game__target-score-container | dark-text" >
+                <div class="in-game__target-score | dark-text" >
                     <div class="in-game__target-score-row start">
-                        <!-- <p class="in-game__target-score-id caption">#</p>
-                        <p class="in-game__target-score-player caption">Player</p>
-                        <p class="in-game__target-score-score caption">Score</p> -->
                     </div>
-                    <div class="in-game__score-setter" id="score-setter-container">
+                    <div class="in-game__target-score-setter" id="score-setter-container">
                     </div>
                     <div class="in-game__target-score-row end"></div>
                 </div>
@@ -110,26 +101,26 @@
                     </div>
                 </dialog>
 
-                <div class="in-game__confirm-end-container" id="end-confirm">
+                <div class="in-game__confirm-end" id="end-confirm">
                     <p class="in-game__confirm-end-message">Are you sure you want to end the round?</p>
                     <div class="in-game__confirm-end-buttons">
                         <button class="in-game__cornfirm-end-cancel" id="confirm-msg-cancel">Cancel</button>
                         <button class="in-game__confirm-end-confirm" id="confirm-msg-confirm">End Round</button>
                     </div>
                 </div>
-                <div class="in-game__footer-container">
-                    <button type="button" class="in-game__previous-target" onclick="selectsPreviousTarget()">
+                <div class="in-game__footer">
+                    <button type="button" class="in-game__footer-previous-target" onclick="selectsPreviousTarget()">
                         <img src="./images/previous-arrow.png" alt="">
                         <p class="neutral-text">Previous Target</p>
                     </button>
-                    <button type="button" class="in-game__scorecard-toggle" id="scorecard-btn">
+                    <button type="button" class="in-game__footer-scorecard-toggle" id="scorecard-btn">
                         <img src="./images/scorecard_transparent.png" alt="" width="100">
                         <!-- <p class="neutral-text">Scorecard</p> -->
                     </button>
-                    <button type="button" class="in-game__end-game" id="end-round-btn">
+                    <button type="button" class="in-game__footer-end-game" id="end-round-btn">
                         <p class="neutral-text">END ROUND</p>
                     </button>
-                    <button type="button" class="in-game__next-target" onclick="selectsNextTarget()">
+                    <button type="button" class="in-game__footer-next-target" onclick="selectsNextTarget()">
                         <img src="./images/next-arrow.png" alt="">
                         <p class="neutral-text">Next Target</p>
                     </button>

@@ -1,0 +1,63 @@
+.in-game__target-selector {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    height: 4.5rem;
+    transition: height 0.5s ease-in-out;
+    background-color: var(--color-neutral-light);
+    box-shadow: 0 0.5rem 2rem 0.2rem rgba(0, 0, 0, 0.5);
+    z-index: 10;
+
+    &.open {
+        height: 10rem;
+    }
+    &-head {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        line-height: 3rem;
+        &-desc {
+            padding-block: 0.8rem;
+            font-size: 2.5rem;
+        }
+        &-button {
+            font-size: 3rem;
+        }
+    }
+
+    &-ol {
+        list-style: none;
+        font-size: 3rem;
+        font-weight: 700;
+        display: none;
+        align-items: center;
+        gap: 3rem;
+        padding-inline: 1rem;
+        width: 100%;
+        border-top: 1px solid black;
+        overflow-y: hidden;
+        overflow-x: auto;
+        background-color: transparent;
+
+        .in-game__target-select {
+            color: #13240790;
+        }
+        .in-game__target-select.selected {
+            font-size: 4rem;
+            color: var(--color-neautral-dark)
+        }
+
+    }
+    &-ol::-webkit-scrollbar {
+        display: none;
+        width: 0;
+    }
+}
+
+
+
+
+

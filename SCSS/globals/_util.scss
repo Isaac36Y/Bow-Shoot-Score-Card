@@ -1,0 +1,39 @@
+.neutral-text {
+  color: var(--color-neutral);
+}
+.prime-text {
+  color: var(--color-primary)
+}
+.dark-text {
+  color: var(--color-neautral-dark)
+}
+.light-text {
+  color: var(--color-neutral-light)
+}
+
+.playfair {
+  font-family: var(--ff-primary);
+}
+
+.montserrat {
+  font-family: var(--ff-secondary);
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+
+.backdrop, .round-summary__backdrop {
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 11;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  .end-game {
+    z-index: 19
+  }
+}

@@ -1,0 +1,108 @@
+.in-game__footer {
+    width: 95%;
+    margin-block-end: 2rem;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: 4fr 5fr 5fr 4fr;
+    border-radius: 5rem;
+    background-color: var(--color-neautral-dark);
+    background: linear-gradient(180deg,rgba(87, 115, 68, 1) 0%, rgba(47, 69, 33, 1) 14%, rgba(37, 57, 24, 1) 31%, rgba(29, 47, 16, 1) 48%, rgba(19, 36, 7, 1) 100%);
+    box-shadow: 0 0.5rem 1rem 0.1rem rgba(0, 0, 0, 0.5);
+    z-index: 15;
+
+    &-previous-target, &-next-target, &-scorecard-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    }
+
+    &-previous-target, &-next-target {
+        color: black;
+        font-size: 1rem;
+        line-height: 1;
+        position: relative;
+        height: 4.5rem
+    }
+
+    &-next-target {
+        img {
+            position: absolute;
+            top: -1rem
+        }
+        p {
+            position: absolute;
+            top: 2rem;
+            width: 80%;
+        }
+    }
+    &-previous-target {
+        img {
+            position: absolute;
+            top: -1rem
+        }
+        p {
+            position: absolute;
+            top: 2rem;
+        }
+    }
+
+    &-scorecard-toggle {
+        border-left: 2px solid rgba(223, 193, 153, 0.5);  
+        p {
+            line-height: 0.5;
+        }  
+    }
+
+    &-end-game {
+        border: 3px inset var(--color-neutral);
+        font-weight: 700;
+        padding-inline: 0.5rem;
+        p {
+            padding-inline: 0.2rem;
+        }
+    }
+}
+
+/* confirm end round pop up */
+
+.in-game__confirm-end {
+    position: absolute;
+    left: 50%;
+    bottom: 3rem;
+    transform: translateX(-50%);
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    width: 80%;
+    padding: 1rem 2rem;
+    text-align: center;
+    background-color: white;
+    color: black;
+    z-index: 20;
+    
+    &-buttons {
+        display: flex;
+        justify-content: space-around;
+        button {
+            padding: 0.5rem 1rem;
+        }
+        .in-game__cornfirm-end-cancel {
+            background-color: rgba(128, 128, 128, 0.84);
+            color: black;
+        }
+        .in-game__confirm-end-confirm {
+            background-color: rgb(151, 0, 0);
+            color: rgb(253, 227, 227);
+        }
+    }
+
+}
+
+
+
+
+
