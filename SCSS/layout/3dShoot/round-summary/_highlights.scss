@@ -1,0 +1,72 @@
+.round-summary__highlights {
+    div p {
+        text-align: center;
+    }
+}
+
+.round-summary__save, .round-summary__delete {
+    position: absolute;
+    background-color: var(--color-neutral-light);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 10rem;
+    border: 2px solid black;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 20;
+}
+
+.round-summary__save {
+    &-name {
+        padding-inline: 1rem;
+        width: 65%;
+    }
+
+    &-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+
+        .round-summary__save-confirm,
+        .round-summary__delete-or-confirm-cancel {
+            padding-inline: 0.5rem;
+        }
+
+        .round-summary__save-confirm {
+            border: 2px solid var(--color-primary);
+            background-color: var(--color-primary);
+            background-image: linear-gradient(to bottom, rgb(183, 198, 183), rgb(98, 191, 100) 40%);
+            background-color: var(--color-neutral-light);
+        }
+    }
+}
+
+.round-summary__delete {
+    &-msg {
+        text-align: center;
+    }
+
+    &-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+
+        .round-summary__delete-confirm,
+        .round-summary__delete-or-confirm-cancel {
+            padding-inline: 0.5rem;
+        }
+
+        .round-summary__delete-confirm {
+            background-color: maroon;
+        }
+
+        .round-summary__delete-or-confirm-cancel {
+            background-color: var(--color-accent-light);
+        }
+    }
+}
