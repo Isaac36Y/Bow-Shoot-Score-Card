@@ -186,7 +186,7 @@ const populateScoreSetterBox = () => {
                 <div class="in-game__player-ids">
                     <p class="in-game__target-score-id montserrat">${player.id}</p>
                     <p class="in-game__target-score-player montserrat fw-700">${player.name}</p>
-                    <p class="in-game__player-score montserrat ">Score: <span>0</span></p>
+                    <p class="in-game__player-score montserrat">Score: <span class="fw-700">${player.total}</span></p>
                 </div>
                 <div class="in-game__target-score-buttons">
                     <button type="button" class="in-game__target-score neutral-text montserrat" value="10">10</button>
@@ -381,8 +381,6 @@ const updateTotalScorecardScores = () => {
     }
 }
 
-/* updateByTarget functions bring show the current score in the UI based off data from the objects. create/update/updateByTarget functions may be able to get combine in the
-future but for now they work good alone and might work best alone. */
 const updateDistanceByTarget = () => {
     if (state.players[0].targets[state.selectedTarget - 1].distance === null) {
         distanceInput.value = ''
@@ -403,6 +401,15 @@ const updateScoreByTarget = () => {
         const playersScoreButton = playerRow.querySelector(`[value="${player.targets[state.selectedTarget - 1].score}"]`)
         highlightSelectedScore(playersScoreButton)
     })
+}
+
+const updateTotalScoreToPlayerRow = (el) => {
+    const player = el.closest('.in-game__target-score-row')
+    const playerId = player.dataset.playerId
+    const playerScoreEl = player.querySelector('.in-game__player-score span')
+
+    playerScoreEl.innerText = state.players[playerId - 1].total
+    console.log(playerId)
 }
 
 /* add/changes targets */
@@ -524,7 +531,7 @@ scoreSetterBox.addEventListener('click', (e) => {
     highlightSelectedScore(button)
     putsPlayersInOrder()
     putsPlayersInOrderMultiplied()
-    
+    updateTotalScoreToPlayerRow(button)
     saveState('appState')
 })
 
