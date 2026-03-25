@@ -235,7 +235,7 @@ const adjustsGapOfScoreBox = (num) => {
         scoreContainer.style.margin = '2rem auto';
     }else if (num >= 4) {
         distanceContainer.style.marginBlockStart = '6rem';
-        scoreContainer.style.margin = '1rem auto';
+        scoreContainer.style.margin = '1.5rem auto';
     }
 }
 

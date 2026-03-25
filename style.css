@@ -572,7 +572,7 @@ input:checked + .slider:before {
   gap: 0.5rem;
   border: 2px solid #a94d19;
   border-radius: 0.5rem;
-  padding-block: 0.25rem;
+  padding-block: 0.5rem;
   font-size: 1.3rem;
 }
 
@@ -616,7 +616,7 @@ input:checked + .slider:before {
 }
 
 .in-game__target-score {
-  background-color: #0b1603;
+  background-color: rgba(11, 22, 3, 0.5);
   border-radius: 0.5rem;
   border: 2px solid transparent;
   
