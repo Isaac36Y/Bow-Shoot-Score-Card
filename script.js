@@ -120,8 +120,8 @@ const isValidName = (player, name) => {
 
 const pushPlayerToState = (player, name) => {
     updateNameInDOM(player, name)
-
     if (isEditedPlayer(player)) return 
+
     state.multiplierOn
         ? state.players.push({ id: state.players.length + 1, name: name, targets: [], total: 0, multipliedScores: {}, multipliedTotal: 0})
         : state.players.push({ id: state.players.length + 1, name: name, targets: [], total: 0});
@@ -165,6 +165,22 @@ const deletePlayer = (el) => {
     updatePlayerNumber()
 }
 
+table.addEventListener('click', (e) => {
+    const deleteBtn = e.target.closest('.delete-player-button')
+    const confirmBtn = e.target.closest('.confirm-player-button')
+    const editBtn = e.target.closest('.edit-player-button')
+
+    if (!deleteBtn && !confirmBtn && !editBtn) return
+
+    if (deleteBtn) {
+        deletePlayer(deleteBtn)
+    }else if (confirmBtn) {
+        savesPlayer(confirmBtn)
+    }else if (editBtn) {
+        editPlayer(editBtn)
+    }
+})
+
 addPlayerButton.addEventListener('click', addsPlayer)
 
 /* start round functions */
@@ -173,7 +189,6 @@ addPlayerButton.addEventListener('click', addsPlayer)
 const startRoundButton = document.querySelector('#start-round-btn');
 
 const targetList = document.querySelector('#target-list');
-const targetListItems = document.querySelectorAll('.in-game__target-select');
 const currentTarget = document.querySelector('#target-number-span');
 const targetExpandButton = document.querySelector('#target-expand-btn');
 const targetsContainer = document.querySelector('.in-game__target-selector');
@@ -432,7 +447,6 @@ const updateTotalScoreToPlayerRow = (el) => {
     const playerScoreEl = player.querySelector('.in-game__player-score span')
 
     playerScoreEl.innerText = state.players[playerId - 1].total
-    console.log(console.log(playersInOrder))
 }
 
 
@@ -440,11 +454,6 @@ const updateTotalScoreToPlayerRow = (el) => {
 
 const selectTarget = (el) => {
     let items = targetList.querySelectorAll('.in-game__target-select');
-
-    if (state.selectedTarget > 0 && state.multiplierOn && state.players[0].targets[state.selectedTarget - 1].distance === null) {
-        noDistanceError(true)
-        return
-    }
 
     items.forEach(item => item.classList.remove('selected'));
 
@@ -559,22 +568,6 @@ scoreSetterBox.addEventListener('click', (e) => {
     saveState('appState')
 })
 
-table.addEventListener('click', (e) => {
-    const deleteBtn = e.target.closest('.delete-player-button')
-    const confirmBtn = e.target.closest('.confirm-player-button')
-    const editBtn = e.target.closest('.edit-player-button')
-
-    if (!deleteBtn && !confirmBtn && !editBtn) return
-
-    if (deleteBtn) {
-        deletePlayer(deleteBtn)
-    }else if (confirmBtn) {
-        savesPlayer(confirmBtn)
-    }else if (editBtn) {
-        editPlayer(editBtn)
-    }
-})
-
 startRoundButton.addEventListener('click', () => {
     state.screen = "inGame"
     const childrenOfAddPlayerTable = addPlayerTable.children;
@@ -630,8 +623,7 @@ window.addEventListener('load', () => {
         }
         handlesIfMultiplierMode()
         populateScoreSetterBox()
-
-        selectTarget(targetList.lastChild)
+        selectTarget(targetList.querySelectorAll('.in-game__target-select')[state.selectedTarget - 1])
         adjustsGapOfScoreBox(state.players.length)
         updateTotalScorecardScores()
         putsPlayersInOrder()
