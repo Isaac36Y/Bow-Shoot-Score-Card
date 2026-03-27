@@ -78,8 +78,18 @@ const updatesStatePlayerId = () => {
     state.players.forEach((player, index) => player.id = index + 1)
 }
 
-const savesPlayer = (el) => {
+const getPlayerRow = (el) => {
     const row = el.closest('.new-round__table-row');
+    return {
+        row,
+        id: row.querySelector('.id-cell'),
+        nameCell: row.querySelector('.name-cell'),
+        buttons: row.querySelector('.button-cell')
+    }
+}
+
+const savesPlayer = (el) => {
+    const { row } = getPlayerRow(el)
     const input = row.querySelector('.name-cell input');
     const name = input.value.trim();
 
@@ -124,8 +134,7 @@ const isEditedPlayer = (player) => {
 }
 
 const updateNameInDOM = (player, name) => {
-    const buttons = player.querySelector('.button-cell');
-    const nameCell = player.querySelector('.name-cell');
+    const { nameCell, buttons } = getPlayerRow(player)
 
     nameCell.textContent = name;
     buttons.innerHTML = '<button type="button" class="edit-player-button"><img src="./images/edit.png" alt="trash can" width="20"></button>';
@@ -134,10 +143,8 @@ const updateNameInDOM = (player, name) => {
 
 
 const editPlayer = (el) => {
-    const row = el.closest('.new-round__table-row');
-    const nameCell = row.querySelector('.name-cell');
+    const { nameCell, buttons } = getPlayerRow(el);
     const name = nameCell.innerText;
-    const buttons = row.querySelector('.button-cell');
 
     nameCell.innerHTML = `<input class="added-player__custom" type="text" name="name" placeholder="Name" value="${name}">`;
     buttons.innerHTML = `
@@ -148,9 +155,8 @@ const editPlayer = (el) => {
 
 
 const deletePlayer = (el) => {
-    const row = el.closest('.new-round__table-row');
-    const id = row.querySelector('.id-cell').textContent;
-    const indexToRemove = state.players.findIndex(player => player.id === +id);
+    const { row, id } = getPlayerRow(el)
+    const indexToRemove = state.players.findIndex(player => player.id === +id.textContent);
 
     if (indexToRemove > -1) {
         state.players.splice(indexToRemove, 1) 
