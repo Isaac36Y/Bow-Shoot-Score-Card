@@ -1,9 +1,7 @@
 'use strict';
 
 /* New Round */
-const newRound = document.querySelector('#new-round');
-const inGame = document.querySelector('#in-game');
-const roundSummary = document.querySelector('#round-summary');
+const pages = document.querySelectorAll('._3d-page')
 
 
 const table = document.querySelector('#new-round-table');
@@ -36,24 +34,18 @@ const saveState = (save) => {
     localStorage.setItem(save, serializedState)
 }
 
-const updatePlayerId = () => {
+const updatesStatePlayerId = () => {
     state.players.forEach((player, index) => player.id = index + 1)
 }
 
-const setScreen = () => {
-    if (state.screen === "newRound") {
-        newRound.removeAttribute('hidden');
-        inGame.setAttribute('hidden', '');
-        roundSummary.setAttribute('hidden', '')
-    }else if (state.screen === "inGame") {
-        inGame.removeAttribute('hidden');
-        newRound.setAttribute('hidden', '');
-        roundSummary.setAttribute('hidden', '')
-    }else if (state.screen === "roundSummary") {
-        roundSummary.removeAttribute('hidden');
-        newRound.setAttribute('hidden', '');
-        inGame.setAttribute('hidden', '')
-    }
+const setsScreen = () => {
+    const pageToOpen = document.querySelector(`#${state.screen}`)
+
+    pages.forEach(page => {
+        page.setAttribute('hidden', '')
+    })
+    
+    pageToOpen.removeAttribute('hidden')
 }
 
 const checksIfNameExist = (name) => {
@@ -82,8 +74,8 @@ const savesPlayer = (el) => {
         noNameMsg.setAttribute('hidden', '');
         nameCell.textContent = name;
         state.multiplierOn
-        ? state.players.push({ id: state.players.length + 1, name: name, targets: [], total: undefined, multipliedScores: {}, multipliedTotal: undefined})
-        : state.players.push({ id: state.players.length + 1, name: name, targets: [], total: undefined});
+        ? state.players.push({ id: state.players.length + 1, name: name, targets: [], total: 0, multipliedScores: {}, multipliedTotal: 0})
+        : state.players.push({ id: state.players.length + 1, name: name, targets: [], total: 0});
         buttons.innerHTML = '<button type="button" class="edit-player-button"><img src="./images/edit.png" alt="trash can" width="20"></button>';
     }
     confirmAllPlayersMsg.setAttribute('hidden', '')
@@ -111,7 +103,7 @@ const updatePlayerNumber = () => {
         }
 
     })
-    updatePlayerId()
+    updatesStatePlayerId()
 }
 
 const addsPlayer = () => {
@@ -562,7 +554,7 @@ startRoundButton.addEventListener('click', () => {
     }else if (state.players.length === 0) {
         return
     }else {
-        setScreen()
+        setsScreen()
         handlesIfMultiplierMode()
         populateScoreSetterBox()
         addPlayerToScorecard()
@@ -593,7 +585,7 @@ window.addEventListener('load', () => {
    if (storedStateString) {
     try {
         state = JSON.parse(storedStateString)
-        setScreen()
+        setsScreen()
         addPlayerToScorecard()
         for (let i = 1; i <= state.totalTargets; i++) {
             const li = document.createElement('li')
@@ -836,7 +828,7 @@ const saveOrDeletePopUp = (opt) => {
 
 endRound.addEventListener('click', () => {
     state.screen = "roundSummary"
-    setScreen()
+    setsScreen()
     populatePodium(playersInOrder)
     populateResultsTable(playersInOrder)
     populateMosts()
