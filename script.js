@@ -6,7 +6,9 @@ const pages = document.querySelectorAll('._3d-page')
 
 const table = document.querySelector('#new-round-table');
 const addPlayerRow = document.querySelector('#add-player')
-const addPlayerTable = document.querySelector('#add-player-table')
+const addPlayerTable = document.querySelector('#add-player-table');
+const noNameMsg = document.querySelector('#no-name-msg');
+const nameAlreadyExists = document.querySelector('#same-name-msg');
 
 
 const confirmPlayerButton = document.querySelector('.confirm-player-button');
@@ -34,10 +36,6 @@ const saveState = (save) => {
     localStorage.setItem(save, serializedState)
 }
 
-const updatesStatePlayerId = () => {
-    state.players.forEach((player, index) => player.id = index + 1)
-}
-
 const setsScreen = () => {
     const pageToOpen = document.querySelector(`#${state.screen}`)
 
@@ -46,64 +44,6 @@ const setsScreen = () => {
     })
     
     pageToOpen.removeAttribute('hidden')
-}
-
-const checksIfNameExist = (name) => {
-    return state.players.every(player => player.name.trim() !== name.trim())
-}
-
-const savesPlayer = (el) => {
-    const noNameMsg = document.querySelector('#no-name-msg');
-    const nameAlreadyExists = document.querySelector('#same-name-msg')
-    const row = el.closest('.new-round__table-row');
-    const id = row.querySelector('.id-cell')
-    const input = row.querySelector('.name-cell input')
-    const name = input.value.trim();
-    const buttons = row.querySelector('.button-cell');
-    const nameCell = row.querySelector('.name-cell');
-
-    if (state.players[+id.textContent - 1]) {
-        nameCell.textContent = name
-        buttons.innerHTML = '<button type="button" class="edit-player-button"><img src="./images/edit.png" alt="trash can" width="20"></button>'
-    }else if (!checksIfNameExist(name)) {
-        nameAlreadyExists.removeAttribute('hidden');
-    }else if (name.length <= 0) {
-        noNameMsg.removeAttribute('hidden');
-    }else {
-        nameAlreadyExists.setAttribute('hidden', '');
-        noNameMsg.setAttribute('hidden', '');
-        nameCell.textContent = name;
-        state.multiplierOn
-        ? state.players.push({ id: state.players.length + 1, name: name, targets: [], total: 0, multipliedScores: {}, multipliedTotal: 0})
-        : state.players.push({ id: state.players.length + 1, name: name, targets: [], total: 0});
-        buttons.innerHTML = '<button type="button" class="edit-player-button"><img src="./images/edit.png" alt="trash can" width="20"></button>';
-    }
-    confirmAllPlayersMsg.setAttribute('hidden', '')
-}
-
-const editPlayer = (el) => {
-    const row = el.closest('.new-round__table-row');
-    const nameCell = row.querySelector('.name-cell');
-    const name = nameCell.innerText;
-    const buttons = row.querySelector('.button-cell');
-
-    nameCell.innerHTML = `<input class="added-player__custom" type="text" name="name" placeholder="Name" value="${name}">`;
-    buttons.innerHTML = `
-        <button type="button" class="delete-player-button"><img src="./images/delete.png" alt="trash can" width="20"></button>
-        <button type="button" class="confirm-player-button | prime-text">&#x2713</button>
-        `
-}
-
-const updatePlayerNumber = () => {
-    const addedPlayers = document.querySelectorAll('.new-round__table-row');
-    addedPlayers.forEach((player, index) => {
-        const id = player.querySelector('.id-cell');
-        if (id) {
-            id.textContent = index + 1
-        }
-
-    })
-    updatesStatePlayerId()
 }
 
 const addsPlayer = () => {
@@ -121,6 +61,91 @@ const addsPlayer = () => {
     addPlayerTable.innerHTML += newPlayer
     updatePlayerNumber()
 }
+
+const updatePlayerNumber = () => {
+    const addedPlayers = document.querySelectorAll('.new-round__table-row');
+    addedPlayers.forEach((player, index) => {
+        const id = player.querySelector('.id-cell');
+        if (id) {
+            id.textContent = index + 1
+        }
+
+    })
+    updatesStatePlayerId()
+}
+
+const updatesStatePlayerId = () => {
+    state.players.forEach((player, index) => player.id = index + 1)
+}
+
+const savesPlayer = (el) => {
+    const row = el.closest('.new-round__table-row');
+    const input = row.querySelector('.name-cell input');
+    const name = input.value.trim();
+
+    if (isValidName(row, name)) pushPlayerToState(row, name)
+
+    confirmAllPlayersMsg.setAttribute('hidden', '')
+}
+
+const isValidName = (player, name) => {
+    const nameIsEmpty = name.length <= 0;
+    const nameExists = state.players.some(player => player.name.trim() === name.trim());
+
+    nameAlreadyExists.setAttribute('hidden', '');
+    noNameMsg.setAttribute('hidden', '');
+
+    if (!isEditedPlayer(player) && nameExists) {
+       nameAlreadyExists.removeAttribute('hidden');
+       return false
+    }
+    if (nameIsEmpty) {
+       noNameMsg.removeAttribute('hidden');
+       return false
+    }
+
+     return true
+    
+}
+
+const pushPlayerToState = (player, name) => {
+    updateNameInDOM(player, name)
+
+    if (isEditedPlayer(player)) return 
+    state.multiplierOn
+        ? state.players.push({ id: state.players.length + 1, name: name, targets: [], total: 0, multipliedScores: {}, multipliedTotal: 0})
+        : state.players.push({ id: state.players.length + 1, name: name, targets: [], total: 0});
+}
+
+const isEditedPlayer = (player) => {
+    const id = player.querySelector('.id-cell')
+
+    return state.players[+id.textContent - 1] ? true : false
+}
+
+const updateNameInDOM = (player, name) => {
+    const buttons = player.querySelector('.button-cell');
+    const nameCell = player.querySelector('.name-cell');
+
+    nameCell.textContent = name;
+    buttons.innerHTML = '<button type="button" class="edit-player-button"><img src="./images/edit.png" alt="trash can" width="20"></button>';
+}
+
+
+
+const editPlayer = (el) => {
+    const row = el.closest('.new-round__table-row');
+    const nameCell = row.querySelector('.name-cell');
+    const name = nameCell.innerText;
+    const buttons = row.querySelector('.button-cell');
+
+    nameCell.innerHTML = `<input class="added-player__custom" type="text" name="name" placeholder="Name" value="${name}">`;
+    buttons.innerHTML = `
+        <button type="button" class="delete-player-button"><img src="./images/delete.png" alt="trash can" width="20"></button>
+        <button type="button" class="confirm-player-button | prime-text">&#x2713</button>
+        `
+}
+
 
 const deletePlayer = (el) => {
     const row = el.closest('.new-round__table-row');
