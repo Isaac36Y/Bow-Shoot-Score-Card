@@ -898,5 +898,8 @@ deleteRoundConfirm.addEventListener('click', () => {
 })
 
 
+/* app nav */
+
+const appNav = document.querySelector('#app-nav')
 
 
