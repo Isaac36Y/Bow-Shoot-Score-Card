@@ -211,8 +211,8 @@ const scorecardMultipliedColumn = document.querySelector('#scorecard-multiplied'
 const scorecardPlayerContainer = document.querySelector('#scorecard-player-row')
 const scorecardBackdrop = document.querySelector('.backdrop.scorecard');
 
-let putsPlayersInOrder = () => [...state.players].sort((a, b) => b.total - a.total);
-let putsPlayersInOrderByMultiplied = () => [...state.players].sort((a, b) => b.multipliedTotal - a.multipliedTotal);
+const putsPlayersInOrder = () => [...state.players].sort((a, b) => b.total - a.total);
+const putsPlayersInOrderByMultiplied = () => [...state.players].sort((a, b) => b.multipliedTotal - a.multipliedTotal);
 
 const populateScoreSetterBox = () => {
     state.players.forEach(player => {
@@ -264,7 +264,7 @@ const createsPlayersScorecardEl = (name, type, container) => {
 
 const adjustsGapOfScoreBox = (num) => {
     const distanceContainer = document.querySelector('.in-game__yardage');
-    const scoreContainer = document.querySelector('.in-game__target-score-container');
+    const scoreContainer = document.querySelector('.in-game__target-score');
     if (num === 3) {
         distanceContainer.style.marginBlockStart = '8rem';
         scoreContainer.style.margin = '2rem auto';
@@ -276,7 +276,6 @@ const adjustsGapOfScoreBox = (num) => {
 
 const handlesIfMultiplierMode = () => {
     const scorecarTotalsContainer = document.querySelector('.in-game__scorecard-total')
-
 
     if (!state.multiplierOn) {
         scorecardMultipliedColumn.style.display = 'none'
@@ -307,39 +306,6 @@ const showTargetListToggle = () => {
 
 /* controls scoring system */
 
-const updateDistance = () => {
-    state.players.forEach(player => {
-        player.targets[state.selectedTarget - 1].distance = +distanceInput.value
-    })
-}
-/* update functions update the data inside the object every time a new value is given on that target to each score/distance */
-const updateScore = (btn) => {
-    const player = btn.closest('.in-game__target-score-row')
-    const id = player.dataset.playerId
-    const target = state.selectedTarget - 1
-    state.players[+id - 1].targets[target].score = +btn.value
-
-
-    if (state.multiplierOn) {
-        const multipliedScore = (state.players[0].targets[target].distance < 20) ? +btn.value : +btn.value * (state.players[0].targets[target].distance * 0.05)
-
-        state.players[+id - 1].multipliedScores[target] = +multipliedScore.toFixed(1)
-    }
-
-    updatePlayerScoreToScorecard(state.selectedTarget)
-    updateTotalScorecardScores()
-    
-}
-
-const highlightSelectedScore = (btn) => {
-    const buttonsContainer = btn.closest('.in-game__target-score-buttons')
-    const buttons = buttonsContainer.querySelectorAll('.in-game__target-score-btn');
-    buttons.forEach(button => {
-        button.classList.remove('selected')
-    })
-    btn.classList.add('selected')
-}
-/* too long? should I break it up into smaller functions? */
 const addColumnsToScorecard = (col) => {
     const targetRow = scorecard.querySelector('#scorecard-target-row');
     const distanceRow = scorecard.querySelector('#scorecard-distance-row');
@@ -357,63 +323,95 @@ const addColumnsToScorecard = (col) => {
     const playerCol = document.createElement('div');
     playerCol.className = 'in-game__scorecard-number-score-container'
     playerCol.id = `player-column-${col}`
+    playerCol.innerHTML = addsPlayersScoreElToScorecard(col)
     scorecardPlayerContainer.appendChild(playerCol) 
-    updatePlayerScoreToScorecard(col)
+    
+    
+}
+
+const addsPlayersScoreElToScorecard = (col) => {
+    let html = ''
+    state.players.forEach(player => {
+        html += `<p class="in-game__scorecard-number-score" id="player${player.id}-score-${col}">${player.targets[col - 1].score}</p>`
+    })
+    return html
+}
+
+
+const updateScore = (btn) => {
+    const player = btn.closest('.in-game__target-score-row')
+    const id = player.dataset.playerId;
+    const target = state.selectedTarget
+    const targetIndex = target - 1
+
+    state.players[+id - 1].targets[targetIndex].score = +btn.value
+
+    if (state.multiplierOn) {
+        const multipliedScore = (state.players[0].targets[targetIndex].distance < 20) ? +btn.value : +btn.value * (state.players[0].targets[targetIndex].distance * 0.05)
+
+        state.players[+id - 1].multipliedScores[targetIndex] = +multipliedScore.toFixed(1)
+    }
+
+    updatesTotalsInState(id)
+    updatesPlayerScoreToScorecard(id, target)
+    updatesPlayersTotalScoreToScorecard(id)
+}
+
+const updatesTotalsInState = (id) => {
+    const idIndex = id - 1
+
+    state.players[idIndex].total = state.players[idIndex].targets.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.score
+    }, 0)
+    
+    if (state.multiplierOn) {
+       state.players[idIndex].multipliedTotal = Object.values(state.players[idIndex].multipliedScores).reduce((accumulator, currentValue) => {
+            return accumulator + currentValue
+       }, 0)
+    }
+}
+
+const updatesPlayerScoreToScorecard = (id, target) => {
+    const scoreEl = scorecard.querySelector(`#player${id}-score-${target}`)
+    scoreEl.innerText = state.players[id - 1].targets[target - 1].score
+}
+
+
+const updatesPlayersTotalScoreToScorecard = (id) => {
+    const playerName = state.players[id - 1].name.split(' ').join('-')
+    const playersNetTotalEl = scorecard.querySelector(`#${playerName}-net`);
+    const playersMultipliedTotalEL= scorecardMultipliedColumn.querySelector(`#${playerName}-multiplied`)
+    
+    playersNetTotalEl.innerText = state.players[id - 1].total
+
+    if (state.multiplierOn) {
+        playersMultipliedTotalEL.innerText = state.players[id - 1].multipliedTotal
+    }
+}
+
+const updateDistance = () => {
+    state.players.forEach(player => {
+        player.targets[state.selectedTarget - 1].distance = +distanceInput.value
+    })
+}
+
+const highlightSelectedScore = (btn) => {
+    const buttonsContainer = btn.closest('.in-game__target-score-buttons')
+    const buttons = buttonsContainer.querySelectorAll('.in-game__target-score-btn');
+    buttons.forEach(button => {
+        button.classList.remove('selected')
+    })
+    btn.classList.add('selected')
 }
 
 const updateDistanceToScorecard = () => {
-        const scorecardPlayerCol = scorecard.querySelectorAll('.in-game__scorecard-number-distance')
+    const scorecardPlayerCol = scorecard.querySelectorAll('.in-game__scorecard-number-distance')
 
-        scorecardPlayerCol.forEach(column => {
-            const columnId = column.getAttribute('id').replace('distance-column-', '').trim()
+    scorecardPlayerCol.forEach(column => {
+        const columnId = column.getAttribute('id').replace('distance-column-', '').trim()
 
-            column.textContent = state.players[0].targets[columnId - 1].distance ? `${state.players[0].targets[columnId - 1].distance}yrds` : ''
-        })
-}
-
-const updatePlayerScoreToScorecard = (col) => {
-    state.players.forEach((player, index) => {
-        const playersName = player.name.split(' ').join('-')
-        const playerCol = scorecardPlayerContainer.querySelector(`#player-column-${col}`)
-        const playerRow = playerCol.querySelector(`#${playersName}`)
-        const columnId = col - 1
-        if (playerRow) {
-            playerRow.textContent = state.players[index].targets[columnId].score
-        }else {
-            const playersScore = document.createElement('p');
-            playersScore.className = 'in-game__scorecard-number-score'
-            playersScore.id = player.name.split(' ').join('-')
-            playersScore.textContent = state.players[index].targets[columnId].score
-            playerCol.appendChild(playersScore)
-        }
+        column.textContent = state.players[0].targets[columnId - 1].distance ? `${state.players[0].targets[columnId - 1].distance}yrds` : ''
     })
-}
-
-const updateTotalScorecardScores = () => {
-    const netTotalRows = scorecardTotalColumn.querySelectorAll('.in-game__scorecard-number-total');
-    const multipliedTotalRows = scorecardMultipliedColumn.querySelectorAll('.in-game__scorecard-multiplied-total')
-    /* TRY: add total from players data and use that to update each  */
-    netTotalRows.forEach(row => { 
-        const rowName = row.getAttribute('id').split('').slice(0, -6).join('').replace('-', ' ').trim()
-        const player = state.players.filter(player => player.name === rowName)
-        const totals = player[0].targets
-        .map(target => target.score)
-        .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-        
-        row.textContent = totals
-        player[0].total = totals
-    })
-
-    if (state.multiplierOn) {
-        multipliedTotalRows.forEach(row => {
-            const rowName = row.getAttribute('id').split('').slice(0, -11).join('').replace('-', ' ').trim();
-            const playersData = state.players.filter(player => player.name === rowName)
-            const multipliedTotal = +Object.values(playersData[0].multipliedScores).reduce((accumulator, currentValue) => accumulator + currentValue, 0).toFixed(1)
-            
-            row.textContent = multipliedTotal
-            playersData[0].multipliedTotal = multipliedTotal
-        })
-    }
 }
 
 const updateDistanceByTarget = () => {
@@ -441,6 +439,7 @@ const updateScoreByTarget = () => {
 const updateTotalScoreToPlayerRow = (el) => {
     const player = el.closest('.in-game__target-score-row')
     const playerId = player.dataset.playerId
+    
     const playerScoreEl = player.querySelector('.in-game__player-score span')
 
     playerScoreEl.innerText = state.players[playerId - 1].total
@@ -613,13 +612,15 @@ window.addEventListener('load', () => {
             
             addColumnsToScorecard(i)
             updateDistanceToScorecard()
-            updatePlayerScoreToScorecard(i)
+        }
+        for (let i = 1; i <= state.players.length; i++) {
+            updatesPlayersTotalScoreToScorecard(i)
         }
         handlesIfMultiplierMode()
         populateScoreSetterBox()
         selectTarget(targetList.querySelectorAll('.in-game__target-select')[state.selectedTarget - 1])
         adjustsGapOfScoreBox(state.players.length)
-        updateTotalScorecardScores()
+        //doesnt update scorecard totals
         } catch (e) {
             console.log('error parsing stored state', e)
         }
