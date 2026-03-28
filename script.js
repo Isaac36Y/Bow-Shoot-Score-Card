@@ -240,26 +240,26 @@ const addPlayerToScorecard = () => {
     state.players.forEach(player => {
         const newName = String(player.name).split(/\s+/).join('-')
 
-        const playerDiv = document.createElement('p');
-        playerDiv.className = 'in-game__scorecard-name-player'
-        playerDiv.id = newName;
-        playerDiv.textContent = newName
-        scorecardNameColumn.appendChild(playerDiv)
-
-        const totalPar = document.createElement('p');
-        totalPar.className = 'in-game__scorecard-number-total'
-        totalPar.id = `${newName}-total`
-        totalPar.textContent = '0'
-        scorecardTotalColumn.appendChild(totalPar)
-
+        createsPlayersScorecardEl(newName, 'player', scorecardNameColumn)
+        createsPlayersScorecardEl(newName, 'net', scorecardTotalColumn)
         if (state.multiplierOn) {
-            const multiplierPar = document.createElement('p');
-            multiplierPar.className = 'in-game__scorecard-multiplied-total'
-            multiplierPar.id = `${newName}-multiplied`
-            multiplierPar.textContent = '0'
-            scorecardMultipliedColumn.appendChild(multiplierPar)
+            createsPlayersScorecardEl(newName, 'multiplied', scorecardMultipliedColumn)
         }
     })
+}
+
+const createsPlayersScorecardEl = (name, type, container) => {
+    const el = document.createElement('p');
+    if (type === 'player') {
+        el.className = `in-game__scorecard-name-${type}`;
+        el.id = name
+        el.textContent = name
+    }else {
+        el.className = `in-game__scorecard-total-${type}-score`;
+        el.id = `${name}-${type}`;
+        el.textContent = '0'; 
+    }
+    container.appendChild(el)
 }
 
 const adjustsGapOfScoreBox = (num) => {

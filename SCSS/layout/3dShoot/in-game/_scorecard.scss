@@ -77,23 +77,27 @@
     z-index: 50;
     display: grid;
     grid-template-columns: 2fr 3fr;
+    
+    &-net, &-multiplied {
+        &-name{
+            height: 6rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgba(252, 250, 250, 0.5);
+        }
+        &-score {
+            height: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    
+    &-multiplied {
+        border-left: 1px solid rgba(252, 250, 250, 0.5);
+    }
 }
 
-.in-game__scorecard-multiplied-container {
-    border-left: 1px solid rgba(252, 250, 250, 0.5);
-}
 
-.in-game__scorecard-name-total, .in-game__scorecard-multiplied-name {
-    height: 6rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid rgba(252, 250, 250, 0.5);
-}
 
-.in-game__scorecard-number-total, .in-game__scorecard-multiplied-total {
-    height: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
