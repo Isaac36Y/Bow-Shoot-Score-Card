@@ -28,9 +28,6 @@ let state = {
     multiplierOn: true
 };
 
-let playersInOrder;
-let playersInOrderByMultiplied; 
-
 const saveState = (save) => {
     const serializedState = JSON.stringify(state)
     localStorage.setItem(save, serializedState)
@@ -214,8 +211,8 @@ const scorecardMultipliedColumn = document.querySelector('#scorecard-multiplied'
 const scorecardPlayerContainer = document.querySelector('#scorecard-player-row')
 const scorecardBackdrop = document.querySelector('.backdrop.scorecard');
 
-let putsPlayersInOrder = () =>  playersInOrder = [...state.players].sort((a, b) => b.total - a.total);
-let putsPlayersInOrderMultiplied = () => playersInOrderByMultiplied = [...state.players].sort((a, b) => b.multipliedTotal - a.multipliedTotal);
+let putsPlayersInOrder = () => [...state.players].sort((a, b) => b.total - a.total);
+let putsPlayersInOrderByMultiplied = () => [...state.players].sort((a, b) => b.multipliedTotal - a.multipliedTotal);
 
 const populateScoreSetterBox = () => {
     state.players.forEach(player => {
@@ -548,7 +545,6 @@ distanceInput.addEventListener('change', () => {
     const selectedButtons = scoreSetterBox.querySelectorAll('.in-game__target-score-btn.selected')
     updateDistance()
     updateDistanceToScorecard()
-    putsPlayersInOrderMultiplied()
     selectedButtons.forEach(button => {
         updateScore(button)
     })
@@ -562,8 +558,6 @@ scoreSetterBox.addEventListener('click', (e) => {
     if (!button) return
     updateScore(button)
     highlightSelectedScore(button)
-    putsPlayersInOrder()
-    putsPlayersInOrderMultiplied()
     updateTotalScoreToPlayerRow(button)
     saveState('appState')
 })
@@ -626,8 +620,6 @@ window.addEventListener('load', () => {
         selectTarget(targetList.querySelectorAll('.in-game__target-select')[state.selectedTarget - 1])
         adjustsGapOfScoreBox(state.players.length)
         updateTotalScorecardScores()
-        putsPlayersInOrder()
-        putsPlayersInOrderMultiplied()
         } catch (e) {
             console.log('error parsing stored state', e)
         }
@@ -743,7 +735,7 @@ const populateResultsTable = (order) => {
     resultsTable.innerHTML = ''
     order.forEach(player => {
         const amountOfDivs = document.querySelectorAll('.round-summary__results-row').length
-        const total = order === playersInOrderByMultiplied ? player.multipliedTotal : player.total
+        const total = order === putsPlayersInOrderByMultiplied() ? player.multipliedTotal : player.total
     
         let place
         if (amountOfDivs === 0) {
@@ -814,7 +806,7 @@ const findsAndPopulatesLongestShot = () => {
 
 const populateComebackKid = () => {
     const comebackKidText = document.querySelector('#comeback-kid p')
-    const winner = playersInOrder[0]
+    const winner = putsPlayersInOrder()[0]
     const orderedHalfWayTotals = [...isComebackKid()].sort((a, b) => b.score - a.score)
     const winnerInHalfWayTotals = [...isComebackKid()].filter(obj => obj.name === winner.name)
     const comebackKidDownBy = orderedHalfWayTotals[0].score - winnerInHalfWayTotals[0].score
@@ -852,8 +844,8 @@ const saveOrDeletePopUp = (opt) => {
 endRound.addEventListener('click', () => {
     state.screen = "roundSummary"
     setsScreen()
-    populatePodium(playersInOrder)
-    populateResultsTable(playersInOrder)
+    populatePodium(putsPlayersInOrder())
+    populateResultsTable(putsPlayersInOrder())
     populateMosts()
     findsAndPopulatesLongestShot()
     populateComebackKid()
@@ -864,8 +856,8 @@ endRound.addEventListener('click', () => {
 })
 
 showMultipliedResults.addEventListener('click', () => {
-    populatePodium(playersInOrderByMultiplied);
-    populateResultsTable(playersInOrderByMultiplied)
+    populatePodium(putsPlayersInOrderByMultiplied());
+    populateResultsTable(putsPlayersInOrderByMultiplied())
     showMultipliedResults.style.backgroundColor = 'var(--color-neautral-dark)';
     showMultipliedResults.style.color = 'var(--color-neutral)';
     showNetResults.style.backgroundColor = 'transparent';
@@ -873,8 +865,8 @@ showMultipliedResults.addEventListener('click', () => {
 })
 
 showNetResults.addEventListener('click', () => {
-    populatePodium(playersInOrder);
-    populateResultsTable(playersInOrder)
+    populatePodium(putsPlayersInOrder());
+    populateResultsTable(putsPlayersInOrder());
     showMultipliedResults.style.backgroundColor = 'transparent';
     showMultipliedResults.style.color = 'var(--color-neautral-dark)';
     showNetResults.style.backgroundColor = 'var(--color-neautral-dark)';
