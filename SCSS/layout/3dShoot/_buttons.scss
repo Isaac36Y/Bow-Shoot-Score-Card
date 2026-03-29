@@ -2,7 +2,7 @@
 
 .new-round__start-round,
 .round-summary__save-button {
-  @include button-primary;
+  @include button-primary-big;
 
   &::after {
     @include button-shine;

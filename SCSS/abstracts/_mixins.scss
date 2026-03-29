@@ -9,11 +9,21 @@
 
 @mixin button-primary {
   @include button-base;
-  padding: 0.5rem 2.5rem;
-  font-size: 1.5rem;
   border: 2px solid var(--color-primary);
   background-image: linear-gradient(to bottom, rgb(183, 198, 183), rgb(98, 191, 100) 40%);
   background-color: var(--color-neutral-light);
+}
+
+@mixin button-primary-big {
+  @include button-primary;
+  padding: 0.5rem 2.5rem;
+  font-size: 1.5rem;
+}
+
+@mixin button-primary-small {
+  @include button-primary;
+  padding: 0.4rem 2rem;
+  font-size: 1rem;
 }
 
 @mixin button-secondary {
