@@ -20,7 +20,7 @@
             <button class="app-nav__btn" id="nav-practice">Practice</button>
         </nav> -->
 
-        <div class="feature" id="feature-3d">
+        <div class="feature" id="feature-3d" hidden>
             <section class="new-round _3d-page" aria-labelledby="new-round-header" aria-describedby="new-round-par" id="newRound" >
                 <div class="new-round__container">
                     <div class="new-round__img">🏹</div>
@@ -204,9 +204,41 @@
             </section>
         </div>
         
-        <div class="feature" id="feature-practice">
-            <section class="practice-setup" id="practice-setup">
+        <div class="feature" id="feature-lab">
+            <section class="lab" id="lab-setup">
+                <div class="lab__practice">
+                    <div class="lab__practice-header">
+                        <p class="lab__practice-header-par | dark-text fw-700">PRACTICE</p>
+                    </div>
+                    
+                    <button type="button" class="lab__practice-button" id="start-practice-btn">START ROUND</button>
+                    
+                    <div class="lab__practice-type">
+                        <p>Type of Practice</p>
+                        <div class="lab__practice-type-radio">
+                            <label for="open-practice">Open Practice</label>
+                            <input type="radio" name="open-practice" id="open-practice-radio">               
+                        </div>
+                        <div class="lab__practice-type-radio">
+                            <label for="game-practice">Games</label>
+                            <input type="radio" name="game-practice" id="game-practice-radio">               
+                        </div>
+                        <div class="lab__practice-type-radio">
+                            <label for="random-distance-practice">Random Distance</label>
+                            <input type="radio" name="random-distance-practice" id="random-distance-practice-radio">               
+                        </div>
+                        <div class="lab__practice-type-radio">
+                            <label for="distance-dialer-practice">Distance Dialer</label>
+                            <input type="radio" name="distance-dialer-practice" id="random-distance-practice-radio">            
+                        </div>
+                    </div>
 
+                    <div class="lab__practice-game-mode"></div>
+                    <div class="lab__practice-shots-amount"></div>
+                    <div class="lab__practice-distance"></div>
+                    <div class="lab__practice-scoring-type"></div>
+                </div>
+                
             </section>
         </div>
     </main>

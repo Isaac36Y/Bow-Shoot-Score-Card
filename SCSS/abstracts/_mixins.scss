@@ -1,5 +1,5 @@
 @mixin button-base {
-  margin-block-start: 1rem;
+  /* margin-block-start: 1rem; */
   border-radius: 2rem;
   letter-spacing: 0.1rem;
   position: relative;
@@ -37,4 +37,9 @@
     rgba(98, 191, 100, 0) 100%
   );
   animation: shine 2s infinite linear;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
