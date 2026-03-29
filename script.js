@@ -358,7 +358,7 @@ const updateScore = (btn) => {
 }
 
 const updatesTotalsInState = (id) => {
-    const idIndex = id - 1
+    const idIndex = +id - 1
 
     state.players[idIndex].total = state.players[idIndex].targets.reduce((accumulator, currentValue) => {
         return accumulator + currentValue.score
@@ -373,57 +373,43 @@ const updatesTotalsInState = (id) => {
 
 const updatesPlayerScoreToScorecard = (id, target) => {
     const scoreEl = scorecard.querySelector(`#player${id}-score-${target}`)
-    scoreEl.innerText = state.players[id - 1].targets[target - 1].score
+    scoreEl.innerText = state.players[+id - 1].targets[target - 1].score
 }
 
 
 const updatesPlayersTotalScoreToScorecard = (id) => {
-    const playerName = state.players[id - 1].name.split(' ').join('-')
+    const idIndex = +id - 1
+    const playerName = state.players[idIndex].name.split(' ').join('-')
     const playersNetTotalEl = scorecard.querySelector(`#${playerName}-net`);
     const playersMultipliedTotalEL= scorecardMultipliedColumn.querySelector(`#${playerName}-multiplied`)
     
-    playersNetTotalEl.innerText = state.players[id - 1].total
+    playersNetTotalEl.innerText = state.players[idIndex].total
 
     if (state.multiplierOn) {
-        playersMultipliedTotalEL.innerText = state.players[id - 1].multipliedTotal
+        playersMultipliedTotalEL.innerText = state.players[idIndex].multipliedTotal
     }
 }
 
-const updateDistance = () => {
+const updateDistanceToState = () => {
     state.players.forEach(player => {
         player.targets[state.selectedTarget - 1].distance = +distanceInput.value
     })
 }
 
-const highlightSelectedScore = (btn) => {
-    const buttonsContainer = btn.closest('.in-game__target-score-buttons')
-    const buttons = buttonsContainer.querySelectorAll('.in-game__target-score-btn');
-    buttons.forEach(button => {
-        button.classList.remove('selected')
-    })
-    btn.classList.add('selected')
+const updateDistanceToScorecard = (target) => {
+    const distanceEl = scorecard.querySelector(`#distance-column-${target}`)
+    const distance = state.players[0].targets[target - 1].distance
+    console.log(distance)
+    distanceEl.innerText = distance !== null ? distance : ''
 }
 
-const updateDistanceToScorecard = () => {
-    const scorecardPlayerCol = scorecard.querySelectorAll('.in-game__scorecard-number-distance')
-
-    scorecardPlayerCol.forEach(column => {
-        const columnId = column.getAttribute('id').replace('distance-column-', '').trim()
-
-        column.textContent = state.players[0].targets[columnId - 1].distance ? `${state.players[0].targets[columnId - 1].distance}yrds` : ''
-    })
+const updateDistanceInputByTarget = () => {
+    distanceInput.value = state.players[0].targets[state.selectedTarget - 1].distance === null 
+        ? '' 
+        : distanceInput.value = state.players[0].targets[state.selectedTarget - 1].distance
 }
 
-const updateDistanceByTarget = () => {
-    if (state.players[0].targets[state.selectedTarget - 1].distance === null) {
-        distanceInput.value = ''
-    }else {
-        distanceInput.value = state.players[0].targets[state.selectedTarget - 1].distance
-    }
-}
-
-/* I am proud of this one */
-const updateScoreByTarget = () => {
+const updateScoreButtonsByTarget = () => {
     const buttons = document.querySelectorAll('.in-game__target-score-btn');
     state.players.forEach(player => {
         if (player.targets[state.selectedTarget - 1].score === null) {
@@ -434,6 +420,15 @@ const updateScoreByTarget = () => {
         const playersScoreButton = playerRow.querySelector(`[value="${player.targets[state.selectedTarget - 1].score}"]`)
         highlightSelectedScore(playersScoreButton)
     })
+}
+
+const highlightSelectedScore = (btn) => {
+    const buttonsContainer = btn.closest('.in-game__target-score-buttons')
+    const buttons = buttonsContainer.querySelectorAll('.in-game__target-score-btn');
+    buttons.forEach(button => {
+        button.classList.remove('selected')
+    })
+    btn.classList.add('selected')
 }
 
 const updateTotalScoreToPlayerRow = (el) => {
@@ -457,8 +452,8 @@ const selectTarget = (el) => {
     el.classList.add('selected');
     currentTarget.textContent = state.selectedTarget
 
-    updateScoreByTarget()
-    updateDistanceByTarget()
+    updateScoreButtonsByTarget()
+    updateDistanceInputByTarget(state.selectedTarget)
 }
 
 const addTarget = () => {
@@ -489,8 +484,8 @@ const selectsNextTarget = () => {
         addTarget()
     }else {
         selectTarget(items[indexOfSelected + 1])
-        updateScoreByTarget()
-        updateDistanceByTarget()
+        updateScoreButtonsByTarget()
+        updateDistanceInputByTarget()
     }
 }
 /* try to make these into one function in the future */
@@ -506,8 +501,8 @@ const selectsPreviousTarget = () => {
             return
     }else {
         selectTarget(items[indexOfSelected - 1])
-        updateScoreByTarget()
-        updateDistanceByTarget()
+        updateScoreButtonsByTarget()
+        updateDistanceInputByTarget()
     }
 }
 
@@ -542,12 +537,12 @@ const noDistanceError = (error) => {
 
 distanceInput.addEventListener('change', () => {
     const selectedButtons = scoreSetterBox.querySelectorAll('.in-game__target-score-btn.selected')
-    updateDistance()
-    updateDistanceToScorecard()
+    updateDistanceToState()
+    updateDistanceToScorecard(state.selectedTarget)
     selectedButtons.forEach(button => {
         updateScore(button)
     })
-    updateTotalScorecardScores()
+    if (state.multiplierOn) state.players.forEach(player => updatesPlayersTotalScoreToScorecard(player.id))
     noDistanceError(false)
     saveState('appState')
 })
@@ -586,6 +581,10 @@ targetList.addEventListener('click', (e) => {
     selectTarget(li)
 })
 
+nextTargetButton.addEventListener('click', selectsNextTarget)
+
+previousTargetButton.addEventListener('click', selectsPreviousTarget)
+
 targetExpandButton.addEventListener('click', showTargetListToggle)
 
 scorecardButton.addEventListener('click', toggleScorecard)
@@ -611,7 +610,7 @@ window.addEventListener('load', () => {
             targetList.appendChild(li)
             
             addColumnsToScorecard(i)
-            updateDistanceToScorecard()
+            updateDistanceToScorecard(i)
         }
         for (let i = 1; i <= state.players.length; i++) {
             updatesPlayersTotalScoreToScorecard(i)
@@ -620,7 +619,7 @@ window.addEventListener('load', () => {
         populateScoreSetterBox()
         selectTarget(targetList.querySelectorAll('.in-game__target-select')[state.selectedTarget - 1])
         adjustsGapOfScoreBox(state.players.length)
-        //doesnt update scorecard totals
+        
         } catch (e) {
             console.log('error parsing stored state', e)
         }
@@ -656,7 +655,7 @@ const halfWayPoint = () => {
     return Math.floor(totalAmountOfTargets / 2)
 }
 
-const findsMosts = (num) => {
+const findsMost = (num) => {
     const playersNums = []
     state.players.forEach(player => {
         let tensCount = 0
@@ -668,7 +667,7 @@ const findsMosts = (num) => {
         playersNums.push({name: player.name, amount: tensCount})
     })
 
-    playersNums.sort((a, b) => b.amount - a.amount)[0]
+    playersNums.sort((a, b) => b.amount - a.amount)
     return playersNums.filter(player => player.amount === playersNums[0].amount)
 }
 
@@ -690,7 +689,7 @@ const populatePodium = (order) => {
     
     (order.length < 3) ? spliceLength = order.length : spliceLength = 3
 
-    const topThree = [...order].splice(0, spliceLength);
+    const topThree = [...order].slice(0, spliceLength);
 
     podium1.textContent = topThree[0].name;
     if (spliceLength === 2) {
@@ -716,7 +715,7 @@ const isPlayersScorecardEl = (player) => {
 
 const isPlayerScoreBreakdownEl = (player) => {
     const firstPlayer = scoreSetterBox.querySelector('#player-1')
-    const scoreEl = firstPlayer.querySelectorAll('.in-game__target-score');
+    const scoreEl = firstPlayer.querySelectorAll('.in-game__target-score-btn');
 
     let scoreValues = []
     scoreEl.forEach(el => scoreValues.push(el.getAttribute('value')))
@@ -730,13 +729,13 @@ const isPlayerScoreBreakdownEl = (player) => {
 }
 
 
-const populateResultsTable = (order) => {
+const populateResultsTable = (order, type = 'net') => {
     const resultsTable = document.querySelector('#results-table');
 
     resultsTable.innerHTML = ''
     order.forEach(player => {
         const amountOfDivs = document.querySelectorAll('.round-summary__results-row').length
-        const total = order === putsPlayersInOrderByMultiplied() ? player.multipliedTotal : player.total
+        const total = type === 'multiplied' ? player.multipliedTotal : player.total
     
         let place
         if (amountOfDivs === 0) {
@@ -769,14 +768,17 @@ const populateResultsTable = (order) => {
 }
 
 const populateMosts = () => {
-    const mostTens = document.querySelector('#most-tens p')
-    const mostZeros = document.querySelector('#most-zeros p')
+    const mostTensEl = document.querySelector('#most-tens p')
+    const mostZerosEl = document.querySelector('#most-zeros p')
+    const tensArr = findsMost(10)
+    const zerosArr = findsMost(0)
+    console.log(tensArr, zerosArr)
     if (state.players.length === 1) {
-        mostTens.textContent = findsMosts(10)[0].amount === 0 ? "You didn't get any tens" : `You got ${findsMosts(10)[0].amount} ${findsMosts(10)[0].amount <= 1 ? "10" : "10s"}. Nice Job!`
-        mostZeros.textContent = findsMosts(0)[0].amount === 0 ? "You didn't get a single 0! Well done" : `You got ${findsMosts(0)[0].amount} ${findsMosts(10)[0].amount <= 1 ? "0" : "0s"}.`
+        mostTensEl.textContent = tensArr[0].amount === 0 ? "You didn't get any tens" : `You got ${tensArr[0].amount} ${tensArr[0].amount <= 1} ? "10" : "10s"}. Nice Job!`
+        mostZerosEl.textContent = zerosArr[0].amount === 0 ? "You didn't get a single 0! Well done" : `You got ${zerosArr[0].amount} ${zerosArr[0].amount <= 1 ? "0" : "0s"}.`
     }else {
-        mostTens.innerHTML = findsMosts(10)[0].amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `<span class="fw-700">Most 10s in the round:</span> ${findsMosts(10).map(player => player.name).join(", ")} with ${findsMosts(10)[0].amount}.`
-        mostZeros.innerHTML = findsMosts(0)[0].amount === 0 ? "Most 0s in the round: Nobody! Nice shooting everyone" : `<span class="fw-700">Most 0s in the round:</span> ${findsMosts(0).map(player => player.name).join(", ")} with ${findsMosts(0)[0].amount}.`
+        mostTensEl.innerHTML = tensArr[0].amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `<span class="fw-700">Most 10s in the round:</span> ${tensArr.map(player => player.name).join(", ")} with ${tensArr[0].amount}.`
+        mostZerosEl.innerHTML = zerosArr[0].amount === 0 ? "Most 0s in the round: Nobody! Nice shooting everyone" : `<span class="fw-700">Most 0s in the round:</span> ${zerosArr.map(player => player.name).join(", ")} with ${zerosArr[0].amount}.`
     }
 }
 
@@ -808,11 +810,12 @@ const findsAndPopulatesLongestShot = () => {
 const populateComebackKid = () => {
     const comebackKidText = document.querySelector('#comeback-kid p')
     const winner = putsPlayersInOrder()[0]
-    const orderedHalfWayTotals = [...isComebackKid()].sort((a, b) => b.score - a.score)
-    const winnerInHalfWayTotals = [...isComebackKid()].filter(obj => obj.name === winner.name)
+    const halfWayTotals = isComebackKid()
+    const orderedHalfWayTotals = [...halfWayTotals].sort((a, b) => b.score - a.score)
+    const winnerInHalfWayTotals = [...halfWayTotals].filter(obj => obj.name === winner.name)
     const comebackKidDownBy = orderedHalfWayTotals[0].score - winnerInHalfWayTotals[0].score
     
-    if (winner.name === isComebackKid().sort((a, b) => b.score - a.score)[0].name) {
+    if (winner.name === orderedHalfWayTotals[0].name) {
         return 
     }else if (comebackKidDownBy > 10) {
         comebackKidText.innerHTML = `<span class="fw-700">Comeback Kid:</span> ${winner.name} was down by ${comebackKidDownBy} points after ${halfWayPoint()} targets, then came back to win it all.`
@@ -846,7 +849,7 @@ endRound.addEventListener('click', () => {
     state.screen = "roundSummary"
     setsScreen()
     populatePodium(putsPlayersInOrder())
-    populateResultsTable(putsPlayersInOrder())
+    populateResultsTable(putsPlayersInOrder(), 'net')
     populateMosts()
     findsAndPopulatesLongestShot()
     populateComebackKid()
@@ -858,7 +861,7 @@ endRound.addEventListener('click', () => {
 
 showMultipliedResults.addEventListener('click', () => {
     populatePodium(putsPlayersInOrderByMultiplied());
-    populateResultsTable(putsPlayersInOrderByMultiplied())
+    populateResultsTable(putsPlayersInOrderByMultiplied(), 'multiplied')
     showMultipliedResults.style.backgroundColor = 'var(--color-neautral-dark)';
     showMultipliedResults.style.color = 'var(--color-neutral)';
     showNetResults.style.backgroundColor = 'transparent';
@@ -867,7 +870,7 @@ showMultipliedResults.addEventListener('click', () => {
 
 showNetResults.addEventListener('click', () => {
     populatePodium(putsPlayersInOrder());
-    populateResultsTable(putsPlayersInOrder());
+    populateResultsTable(putsPlayersInOrder(), 'net');
     showMultipliedResults.style.backgroundColor = 'transparent';
     showMultipliedResults.style.color = 'var(--color-neautral-dark)';
     showNetResults.style.backgroundColor = 'var(--color-neautral-dark)';
@@ -892,7 +895,7 @@ deleteRoundCancel.addEventListener('click', () => {
 
 saveRoundConfirm.addEventListener('click', () => {
     const roundName = roundNameInput.value.trim()
-    if (roundName.length > 1) {
+    if (roundName.length >= 1) {
         saveState(`${roundName}, ${(new Date).toDateString()}`)
         localStorage.removeItem('appState');
         location.reload()
