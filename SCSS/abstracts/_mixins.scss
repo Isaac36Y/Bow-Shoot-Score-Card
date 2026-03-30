@@ -53,3 +53,37 @@
   0% { left: -100%; }
   100% { left: 100%; }
 }
+
+@mixin radio-input {
+  input[type="radio"] {
+        appearance: none;
+        width: 1.75em; 
+        height: 1.75em;
+        transform: scale(0.7);
+        border: 0.15em solid var(--color-neutral-light); 
+        border-radius: 5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: border 0.3s ease, transform 0.3s ease;
+
+        &::before {
+            content: "";
+            width: 1.25em;
+            height: 1.25em;
+            border-radius: 50%;
+            box-shadow: inset 1em 1em var(--color-neutral-light);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        &:checked {
+            transform: scale(1);
+            border: 0.15em solid var(--color-primary); 
+
+            &::before {
+                transform: scale(1);
+                box-shadow: inset 1em 1em var(--color-primary);
+            }
+        }
+    }
+}

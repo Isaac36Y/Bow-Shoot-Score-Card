@@ -20,7 +20,7 @@
             <button class="app-nav__btn" id="nav-practice">Practice</button>
         </nav> -->
 
-        <div class="feature" id="feature-3d" hidden>
+        <section class="feature" id="feature-3d" hidden>
             <section class="new-round _3d-page" aria-labelledby="new-round-header" aria-describedby="new-round-par" id="newRound" >
                 <div class="new-round__container">
                     <div class="new-round__img">🏹</div>
@@ -202,13 +202,13 @@
                     </div>
                 </div>
             </section>
-        </div>
+        </section>
         
-        <div class="feature" id="feature-lab">
+        <section class="feature" id="feature-lab">
             <section class="lab" id="lab-setup">
                 <div class="lab__practice">
                     <div class="lab__practice-header">
-                        <p class="lab__practice-header-par | dark-text fw-700">PRACTICE</p>
+                        <h2 class="lab__practice-header-par | dark-text fw-700">PRACTICE</h2>
                     </div>
                     
                     <div class="lab__practice-type">
@@ -216,47 +216,52 @@
                         <ul class="lab__practice-type-ul">
                             <li class="lab__practice-type-li">
                                 <input type="radio" name="practice-type" id="open-practice-radio">
-                                <label for="open-practice-radio" class="neutral-text">Open Practice</label>
-                            </li>
-                            <li class="lab__practice-type-li">
-                                <input type="radio" name="practice-type" id="game-practice-radio">
-                                <label for="game-practice-radio" class="neutral-text">Games</label>
+                                <label for="open-practice-radio" class="neutral-text montserrat">Open Practice</label>
                             </li>
                             <li class="lab__practice-type-li">
                                 <input type="radio" name="practice-type" id="random-distance-practice-radio">
-                                <label for="random-distance-practice-radio" class="neutral-text">Random Distance</label>
+                                <label for="random-distance-practice-radio" class="neutral-text montserrat">Random Distance</label>
                             </li>
                             <li class="lab__practice-type-li">
-                                <input type="radio" name="practice-type" id="random-distance-practice-radio">
-                                <label for="distance-dialer-practice-radio" class="neutral-text">Distance Dialer</label>
+                                <input type="radio" name="practice-type" id="distance-dialer-practice-radio">
+                                <label for="distance-dialer-practice-radio" class="neutral-text montserrat">Distance Dialer</label>
                             </li>
                         </ul>
                     </div>
 
                     <div class="lab__practice-setting">
-                        <fieldset class="lab__practice-setting-game-mode" id="lab-game-mode-setting">
-                            <legend class="neutral-text">Game Mode</legend>
-                            <ul>
-                                <li>
-                                    <input type="radio" name="game-mode" id="four-corners-radio">
-                                    <label for="four-corners-radio" class="neutral-text montserrat">Four Corners</label>
-                                    <button class="light-text montserrat" id="four-corners-info-btn">?</button>
+                        <fieldset class="lab__practice-setting-shots-amount" id="lab-shots-amount-setting">
+                            <legend class="dark-text montserrat">Shots <br /> Amount</legend>
+                            <ul class="lab__practice-setting-shots-amount-ul">
+                                <li class="lab__practice-setting-shots-amount-li lab__practice-setting-distance-li__open">
+                                    <input type="radio" id="shots-amount-open" name="shots-amount-input" >
+                                    <label for="shots-amount-open" class="neutral-text montserrat">Open</label>
                                 </li>
-                                <li>
-                                    <input type="radio" name="game-mode" id="tic-tac-toe-radio">
-                                    <label for="tic-tac-toe-radio" class="neutral-text montserrat">Tic-Tac-Toe</label>
-                                    <button class="light-text montserrat" id="tic-tac-toe-info-btn">?</button>
+                                <li class="lab__practice-setting-shots-amount-li lab__practice-setting-distance-li__custom">
+                                    <label for="shots-amount-custom" class="neutral-text montserrat">Custom:</label>
+                                    <input type="number" id="shots-amount-custom" name="shots-amount-input">
                                 </li>
                             </ul>
                         </fieldset>
-                        <fieldset/fieldset class="lab__practice-setting-shots-amount" id="lab-shots-amount-setting">
-                            <legend class="neutral-text">Shots Amount</legend>
+                    
+                        <fieldset class="lab__practice-setting-distance" id="lab-distance-setting">
+                            <legend class="dark-text montserrat">Set <br /> Distance</legend>
+                            <ul class="lab__practice-setting-distance-ul">
+                                <li class="lab__practice-setting-distance-li lab__practice-setting-distance-li__open">
+                                    <input type="radio" id="distance-open">
+                                    <label for="distance-open" class="neutral-text montserrat">Open</label>
+                                </li>
+                                <li class="lab__practice-setting-distance-li lab__practice-setting-distance-li__custom">
+                                    <label for="distance-custom" class="neutral-text montserrat">Custom:</label>
+                                    <input type="number" id="distance-custom">
+                                </li>
+                            </ul>
                         </fieldset>
-                        <fieldset/fieldset class="lab__practice-setting-distance" id="lab-distance-setting">
-                            <legend class="neutral-text">Set Distance</legend>
-                        </fieldset>
+                        
                         <fieldset class="lab__practice-setting-scoring-system" id="lab-scoring-system-setting">
-                            <legend class="neutral-text">Scoring System</legend>
+                            <legend class="dark-text montserrat">Scoring <br /> System</legend>
+                            <p class="neutral-text fw-700" id="practice-scoring-system-name">BULLSEYE LEDGER</p>
+                            <button type="button" class="dark-text" id="practice-scoring-system-change-btn">CHANGE</button>
                         </fieldset>
                     </div>
 
@@ -264,7 +269,7 @@
                 </div>
                 
             </section>
-        </div>
+        </section>
     </main>
     <script src="script.js"></script>
 </body>
