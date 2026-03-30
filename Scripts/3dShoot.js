@@ -602,6 +602,9 @@ window.addEventListener('load', () => {
             
             addColumnsToScorecard(i)
             updateDistanceToScorecard(i)
+            for (let j = 1; j <= state.players.length; j++) {
+                updatesPlayerScoreToScorecard(j, i)
+            }
         }
         for (let i = 1; i <= state.players.length; i++) {
             updatesPlayersTotalScoreToScorecard(i)
