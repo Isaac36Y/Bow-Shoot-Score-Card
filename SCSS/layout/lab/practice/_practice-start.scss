@@ -75,6 +75,7 @@
 
         &-shots-amount, &-distance, &-scoring-system {
             opacity: 0.1;
+            transition: opacity 0.5s ease;
         }
 
         &-shots-amount, &-distance {
