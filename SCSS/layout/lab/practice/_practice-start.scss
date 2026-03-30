@@ -26,15 +26,6 @@
         }
     }
 
-    &-button {
-        @include button-primary-small;
-
-        
-    }
-    &-button::after {
-        @include button-shine;
-    }
-
     &-type {
         width: 95%;
         
@@ -64,10 +55,12 @@
         grid-template-columns: repeat(3, 1fr);
         
         
+        
 
         fieldset {
             height: 10rem;
             border: none;
+            
             
             &:nth-child(2), &:nth-child(3) {
                 border-left: 1px solid var(--color-neutral-light)
@@ -78,6 +71,10 @@
                 width: 95%;
                 border-radius: 0.5rem 0.5rem 0 0;
             }
+        }
+
+        &-shots-amount, &-distance, &-scoring-system {
+            opacity: 0.1;
         }
 
         &-shots-amount, &-distance {
@@ -120,7 +117,7 @@
         }
 
         &-scoring-system {
-
+            
             p {
                 padding-block: 0.75rem 1.2rem;
             }
@@ -133,8 +130,14 @@
             }
         }
     }
-    
+
     &-button {
+        @include button-primary-small;
         margin-block: 1rem;
+        opacity: 0.1;
+        
+    }
+    &-button::after {
+        @include button-shine;
     }
 }
