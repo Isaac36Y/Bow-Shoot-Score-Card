@@ -211,32 +211,56 @@
                         <p class="lab__practice-header-par | dark-text fw-700">PRACTICE</p>
                     </div>
                     
-                    <button type="button" class="lab__practice-button" id="start-practice-btn">START ROUND</button>
-                    
                     <div class="lab__practice-type">
-                        <p>Type of Practice</p>
-                        <div class="lab__practice-type-radio">
-                            <label for="open-practice">Open Practice</label>
-                            <input type="radio" name="open-practice" id="open-practice-radio">               
-                        </div>
-                        <div class="lab__practice-type-radio">
-                            <label for="game-practice">Games</label>
-                            <input type="radio" name="game-practice" id="game-practice-radio">               
-                        </div>
-                        <div class="lab__practice-type-radio">
-                            <label for="random-distance-practice">Random Distance</label>
-                            <input type="radio" name="random-distance-practice" id="random-distance-practice-radio">               
-                        </div>
-                        <div class="lab__practice-type-radio">
-                            <label for="distance-dialer-practice">Distance Dialer</label>
-                            <input type="radio" name="distance-dialer-practice" id="random-distance-practice-radio">            
-                        </div>
+                        <p class="lab__practice-type-par | neutral-text fw-700">Type of Practice</p>
+                        <ul class="lab__practice-type-ul">
+                            <li class="lab__practice-type-li">
+                                <input type="radio" name="practice-type" id="open-practice-radio">
+                                <label for="open-practice-radio" class="neutral-text">Open Practice</label>
+                            </li>
+                            <li class="lab__practice-type-li">
+                                <input type="radio" name="practice-type" id="game-practice-radio">
+                                <label for="game-practice-radio" class="neutral-text">Games</label>
+                            </li>
+                            <li class="lab__practice-type-li">
+                                <input type="radio" name="practice-type" id="random-distance-practice-radio">
+                                <label for="random-distance-practice-radio" class="neutral-text">Random Distance</label>
+                            </li>
+                            <li class="lab__practice-type-li">
+                                <input type="radio" name="practice-type" id="random-distance-practice-radio">
+                                <label for="distance-dialer-practice-radio" class="neutral-text">Distance Dialer</label>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="lab__practice-game-mode"></div>
-                    <div class="lab__practice-shots-amount"></div>
-                    <div class="lab__practice-distance"></div>
-                    <div class="lab__practice-scoring-type"></div>
+                    <div class="lab__practice-setting">
+                        <fieldset class="lab__practice-setting-game-mode" id="lab-game-mode-setting">
+                            <legend class="neutral-text">Game Mode</legend>
+                            <ul>
+                                <li>
+                                    <input type="radio" name="game-mode" id="four-corners-radio">
+                                    <label for="four-corners-radio" class="neutral-text montserrat">Four Corners</label>
+                                    <button class="light-text montserrat" id="four-corners-info-btn">?</button>
+                                </li>
+                                <li>
+                                    <input type="radio" name="game-mode" id="tic-tac-toe-radio">
+                                    <label for="tic-tac-toe-radio" class="neutral-text montserrat">Tic-Tac-Toe</label>
+                                    <button class="light-text montserrat" id="tic-tac-toe-info-btn">?</button>
+                                </li>
+                            </ul>
+                        </fieldset>
+                        <fieldset/fieldset class="lab__practice-setting-shots-amount" id="lab-shots-amount-setting">
+                            <legend class="neutral-text">Shots Amount</legend>
+                        </fieldset>
+                        <fieldset/fieldset class="lab__practice-setting-distance" id="lab-distance-setting">
+                            <legend class="neutral-text">Set Distance</legend>
+                        </fieldset>
+                        <fieldset class="lab__practice-setting-scoring-system" id="lab-scoring-system-setting">
+                            <legend class="neutral-text">Scoring System</legend>
+                        </fieldset>
+                    </div>
+
+                    <button type="button" class="lab__practice-button" id="start-practice-btn">START ROUND</button>
                 </div>
                 
             </section>

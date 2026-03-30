@@ -1,0 +1,9 @@
+@forward "practice";
+
+.lab {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-block: 1rem;
+}
