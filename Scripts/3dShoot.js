@@ -725,20 +725,19 @@ const isPlayerScoreBreakdownEl = (player) => {
 
 const populateResultsTable = (order, type = 'net') => {
     const resultsTable = document.querySelector('#results-table');
-
+    let place = ''
     resultsTable.innerHTML = ''
-    order.forEach(player => {
-        const amountOfDivs = document.querySelectorAll('.round-summary__results-row').length
+
+    order.forEach((player, index) => {
         const total = type === 'multiplied' ? player.multipliedTotal : player.total
     
-        let place
-        if (amountOfDivs === 0) {
+        if (index === 0) {
             place = '1st'
-        }else if (amountOfDivs === 1) {
+        }else if (index === 1) {
             place = '2nd'
-        }else if (amountOfDivs === 2) {
+        }else if (index === 2) {
             place = '3rd'
-        }else place = `${amountOfDivs + 1}th`
+        }else place = `${index + 1}th`
         
         resultsTable.innerHTML += `
         <details class="round-summary__details  montserrat ">
