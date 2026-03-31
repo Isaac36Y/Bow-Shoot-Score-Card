@@ -731,20 +731,20 @@ const isPlayerScoreBreakdownEl = (player) => {
 
 const populateResultsTable = (order, type = 'net') => {
     const resultsTable = document.querySelector('#results-table');
-
+    let place = ''
     resultsTable.innerHTML = ''
-    order.forEach(player => {
-        const amountOfDivs = document.querySelectorAll('.round-summary__results-row').length
-        const total = type === 'multiplied' ? player.multipliedTotal : player.total
     
-        let place
-        if (amountOfDivs === 0) {
+    order.forEach((player, index) => {
+        const total = type === 'multiplied' ? player.multipliedTotal : player.total
+        
+        
+        if (index === 0) {
             place = '1st'
-        }else if (amountOfDivs === 1) {
+        }else if (index === 1) {
             place = '2nd'
-        }else if (amountOfDivs === 2) {
+        }else if (index === 2) {
             place = '3rd'
-        }else place = `${amountOfDivs + 1}th`
+        }else place = `${index + 1}th`
         
         resultsTable.innerHTML += `
         <details class="round-summary__details  montserrat ">
@@ -774,7 +774,7 @@ const populateMosts = () => {
     const zerosArr = findsMost(0)
     console.log(tensArr, zerosArr)
     if (state.players.length === 1) {
-        mostTensEl.textContent = tensArr[0].amount === 0 ? "You didn't get any tens" : `You got ${tensArr[0].amount} ${tensArr[0].amount <= 1} ? "10" : "10s"}. Nice Job!`
+        mostTensEl.textContent = tensArr[0].amount === 0 ? "You didn't get any tens" : `You got ${tensArr[0].amount} ${tensArr[0].amount <= 1 ? "10" : "10s"}. Nice Job!`
         mostZerosEl.textContent = zerosArr[0].amount === 0 ? "You didn't get a single 0! Well done" : `You got ${zerosArr[0].amount} ${zerosArr[0].amount <= 1 ? "0" : "0s"}.`
     }else {
         mostTensEl.innerHTML = tensArr[0].amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `<span class="fw-700">Most 10s in the round:</span> ${tensArr.map(player => player.name).join(", ")} with ${tensArr[0].amount}.`
