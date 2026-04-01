@@ -229,17 +229,17 @@
                         </ul>
                     </div>
 
-                    <div class="lab__practice-setting">
+                    <div class="lab__practice-setting" id="practice-setting">
                         <fieldset class="lab__practice-setting-shots-amount" id="practice-shots-amount-setting">
                             <legend class="dark-text montserrat">Shots <br /> Amount</legend>
                             <ul class="lab__practice-setting-shots-amount-ul">
-                                <li class="lab__practice-setting-shots-amount-li lab__practice-setting-distance-li__open">
-                                    <input type="radio" id="shots-amount-open" name="shots-amount-input" >
+                                <li class="lab__practice-setting-shots-amount-li lab__practice-setting-shots-amount-li__open">
+                                    <input type="radio" id="shots-amount-open" name="shots-amount-input" disabled >
                                     <label for="shots-amount-open" class="neutral-text montserrat">Open</label>
                                 </li>
-                                <li class="lab__practice-setting-shots-amount-li lab__practice-setting-distance-li__custom">
+                                <li class="lab__practice-setting-shots-amount-li lab__practice-setting-shots-amount-li__custom">
                                     <label for="shots-amount-custom" class="neutral-text montserrat">Custom:</label>
-                                    <input type="number" id="shots-amount-custom" name="shots-amount-input">
+                                    <input type="number" id="shots-amount-custom" name="shots-amount-input" disabled >
                                 </li>
                             </ul>
                         </fieldset>
@@ -248,12 +248,17 @@
                             <legend class="dark-text montserrat">Set <br /> Distance</legend>
                             <ul class="lab__practice-setting-distance-ul">
                                 <li class="lab__practice-setting-distance-li lab__practice-setting-distance-li__open">
-                                    <input type="radio" id="distance-open">
+                                    <input type="radio" id="distance-open" name="distance-radio" disabled >
                                     <label for="distance-open" class="neutral-text montserrat">Open</label>
+                                </li>
+                                <li class="lab__practice-setting-distance-li lab__practice-setting-distance-li__random">
+                                    <input type="radio" id="distance-random" name="distance-radio" disabled >
+                                    <label for="distance-random" class="neutral-text montserrat">Random</label>
                                 </li>
                                 <li class="lab__practice-setting-distance-li lab__practice-setting-distance-li__custom">
                                     <label for="distance-custom" class="neutral-text montserrat">Custom:</label>
-                                    <input type="number" id="distance-custom">
+                                    <input type="number" id="distance-custom" max="99" min="0" disabled >
+                                    <span>yrd</span>
                                 </li>
                             </ul>
                         </fieldset>
@@ -261,7 +266,7 @@
                         <fieldset class="lab__practice-setting-scoring-system" id="practice-scoring-system-setting">
                             <legend class="dark-text montserrat">Scoring <br /> System</legend>
                             <p class="neutral-text fw-700" id="practice-scoring-system-name">BULLSEYE LEDGER</p>
-                            <button type="button" class="dark-text" id="practice-scoring-system-change-btn">CHANGE</button>
+                            <button type="button" class="dark-text" id="practice-scoring-system-change-btn" disabled >CHANGE</button>
                         </fieldset>
                     </div>
 

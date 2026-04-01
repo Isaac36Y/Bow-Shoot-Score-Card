@@ -390,7 +390,6 @@ const updateDistanceToState = () => {
 const updateDistanceToScorecard = (target) => {
     const distanceEl = scorecard.querySelector(`#distance-column-${target}`)
     const distance = state.players[0].targets[target - 1].distance
-    console.log(distance)
     distanceEl.innerText = distance !== null ? `${distance}yrds` : ''
 }
 
