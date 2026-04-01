@@ -6,7 +6,6 @@
     justify-content: center;
     align-items: center;
     gap: 0.75rem;
-    text-align: center;
     width: 90%;
     box-shadow: 1px 0 0 0 var(--color-neutral-light),   /* right */
                -1px 0 0 0 var(--color-neutral-light),   /* left */
@@ -26,133 +25,103 @@
         }
     }
 
-    &-type {
-        width: 95%;
-        
-        &-par { 
-            padding-block-end: 1rem;
-            font-size: 1.2rem; 
-        }
-
-        &-ul {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-
-            li {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 0.5rem;
-
-                @include radio-input;
-            }
-        }
-    }
-
     &-setting {
-        width: 98%;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        opacity: 0.1;
-        
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
         
 
         fieldset {
-            height: 10rem;
-            border: none;
+            border-radius: 0.5rem;
             
-            
-            &:nth-child(2), &:nth-child(3) {
-                border-left: 1px solid var(--color-neutral-light)
-            }
+
             legend { 
                 background-color: var(--color-neutral-light);
-                padding-inline: 0.25rem;
-                width: 95%;
-                border-radius: 0.5rem 0.5rem 0 0;
+                padding-inline: 1rem;
+                border-radius: 0.5rem;
+                margin-inline: 1.5rem;
+                font-size: 1.1rem;
             }
-        }
 
-        &-shots-amount, &-distance, &-scoring-system {
-            
-            transition: opacity 0.5s ease;
         }
 
         &-shots-amount, &-distance {
-            
-            &-ul {
-                display: flex;
-                flex-direction: column;
 
-                label {
-                    font-size: 1.1rem;
-                }
+            &-ul {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-evenly;
+                padding-inline: 1rem;
+                @include radio-input;
                 
             }
 
-            &-li__open, &-li__random {
+            li {
                 display: flex;
-                @include radio-input
+                gap: 0.5rem
             }
 
-            &-li__custom {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 0.25rem;
-
-                label {
-                   
-                   font-size: 0.9rem;
-                }
-
-                input {
-                    width: 80%;
-                }
+            label {
+                font-size: 1.2rem;
             }
+
+            input[type="number"] {
+                width: 4rem;
+            }
+
+            
+                
+            
+            
+        }
+
+        &-shots-amount {
+
+            &-ul {
+                padding-block: 1rem;
+            }
+            
         }
 
         &-distance {
 
             &-ul {
                 gap: 0.5rem;
-                padding: 0.5rem 0.25rem 0;
-            }
-            &-li__open, &-li__random {
-                gap: 0.25rem;
+                padding-block: 0.5rem;
             }
 
-            &-li__custom {
+            &-li__custom { 
                 position: relative;
-            }
 
-            &-li__custom > span {
-                position: absolute;
-                right: 0;
-            }
-
-        }
-
-        &-shots-amount {
-
-            &-ul {
-                gap: 1.5rem;
-                padding: 0.75rem 0.25rem 0;
-            }
-            
-            &-li__open {
-                gap: 0.5rem;
+                span {
+                    position: absolute;
+                    right: 0.2rem;
+                }
             }
         }
 
         &-scoring-system {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            padding-block: 0.5rem;
             
             p {
-                padding-block: 0.75rem 1.2rem;
+                font-size: 1.3rem;
+                width: 50%;
+                padding-block: 0.5rem;
+                text-align: center;
+                line-height: 1.2rem;
+                background-color: rgba(0, 0, 0, 0.263);
+                
             }
             button {
                 letter-spacing: 0.1em;
-                padding-inline: 0.25em;
+                width: 7rem;
+                height: 2.5rem;
                 border: 2px solid var(--color-primary);
                 background-image: linear-gradient(to bottom, rgb(183, 198, 183), rgb(98, 191, 100) 40%);
                 background-color: var(--color-neutral-light);
@@ -161,9 +130,9 @@
     }
 
     &-button {
-        @include button-primary-small;
-        margin-block: 1rem;
-        opacity: 0.1;
+        @include button-primary-big;
+        margin-block-end: 1rem;
+
         
     }
     &-button::after {

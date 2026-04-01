@@ -14,48 +14,6 @@ const distanceOpenInput = document.querySelector('#distance-open');
 const distanceRandomInput = document.querySelector('#distance-random')
 const distanceCustomInput = document.querySelector('#distance-custom');
 
-const toggleOpenPracticeDefaultSetting = () => {
-        ablesInputs()
-        if (shotsAmountCustomInput.value) shotsAmountCustomInput.value = ''
-        shotsAmountOpenInput.checked = true
-        distanceOpenInput.checked = true
-        settingContainer.style.opacity = "1"
-        distanceCustomInput.style.opacity = "1"
-        distanceOpenInput.style.opacity = "1"
-        distanceRandomInput.style.opacity = "1"
-        
-        
-}
-
-const toggleRandomPracticeDefaultSetting = () => {
-        ablesInputs()
-        if (!shotsAmountCustomInput.value) shotsAmountOpenInput.checked = true
-        distanceRandomInput.checked = true
-        distanceCustomInput.value = ''
-        distanceRandomInput.style.opacity = "1"
-        distanceOpenInput.style.opacity = "0.1"
-        distanceOpenInput.setAttribute('disabled', '')
-        distanceCustomInput.style.opacity = "0.1"
-        distanceCustomInput.setAttribute('disabled', '')
-
-        settingContainer.style.opacity = "1"
-}
-
-const toggleDistanceDialerDefaultSetting = () => {
-    ablesInputs()
-    if (!shotsAmountCustomInput.value) shotsAmountOpenInput.checked = true
-    distanceRandomInput.checked = false
-    distanceOpenInput.checked = false
-    distanceCustomInput.style.opacity = "1"
-    distanceOpenInput.style.opacity = "0.1"
-    distanceOpenInput.setAttribute('disabled', '')
-    distanceRandomInput.style.opacity = "0.1"
-    distanceRandomInput.setAttribute('disabled', '')
-    distanceCustomInput.value = '30'
-    settingContainer.style.opacity = "1"
-
-}
-
 const ablesInputs = () => {
     const inputs = settingContainer.querySelectorAll('input')
 
@@ -76,9 +34,7 @@ const preventsTextAndRadio = (el) => {
     el.type === 'radio' ? custom.value = '' : radios.forEach(radio => radio.checked = false)
 }
 
-openPracticeRadio.addEventListener('click', toggleOpenPracticeDefaultSetting)
-randomDistanceRadio.addEventListener('click', toggleRandomPracticeDefaultSetting)
-distanceDialerRadio.addEventListener('click', toggleDistanceDialerDefaultSetting)
+
 distanceCustomInput.addEventListener('input', limitsToTwoDigits)
 
 settingContainer.addEventListener('input', (e) => {
