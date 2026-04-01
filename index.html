@@ -205,7 +205,7 @@
         </section>
         
         <section class="feature" id="feature-lab" >
-            <section class="lab" id="lab-setup">
+            <section class="lab" id="lab-setup" style="display: none;">
                 <div class="lab__practice">
                     <div class="lab__practice-header">
                         <h2 class="lab__practice-header-par | dark-text fw-700">PRACTICE</h2>
@@ -257,6 +257,45 @@
                     <button type="button" class="lab__practice-button" id="start-practice-btn">START ROUND</button>
                 </div>
                 
+            </section>
+            <section class="practice" id="inPractice">
+                <div class="practice__shots">
+                    <h2 class="practice__shots-header dark-text">
+                        Shots Taken: <span id="practice-total-shots-span">17</span>
+                    </h2>
+                    <dl class="practice__shots-table">
+                        <div class="practice__shots-table-col">
+                            <dt class="practice__shots-table-col-shot">#1</dt>
+                            <dd class="practice__shots-table-col-score">10</dd>
+                        </div>
+                        <div class="practice__shots-table-col">
+                            <dt class="practice__shots-table-col-shot">#2</dt>
+                            <dd class="practice__shots-table-col-score">8</dd>
+                        </div>
+                        <div class="practice__shots-table-col">
+                            <dt class="practice__shots-table-col-shot">#3</dt>
+                            <dd class="practice__shots-table-col-score">5</dd>
+                        </div>
+                        <div class="practice__shots-table-col">
+                            <dt class="practice__shots-table-col-shot">#4</dt>
+                            <dd class="practice__shots-table-col-score">8</dd>
+                        </div>
+                        <div class="practice__shots-table-col">
+                            <dt class="practice__shots-table-col-shot">#5</dt>
+                            <dd class="practice__shots-table-col-score">10</dd>
+                        </div>
+                    </dl>
+                </div>
+                <div class="practice__distance">
+                    <h2 class="practice__distance-header dark-text">
+                        Distance: <span id="pracice-distance-span">30 yards</span>
+                    </h2>
+                    <p class="practice__distance-for-this light-text">FOR THIS DISTANCE</p>
+                    <div class="practice__distance-stats">
+                        <p class="practice__distance-stats-avg light-text">Average: <span>7.8</span></p>
+                        <p class="practice__distance-stats-total light-text">Total Shots: <span>78</span></p>
+                    </div>
+                </div>
             </section>
         </section>
     </main>

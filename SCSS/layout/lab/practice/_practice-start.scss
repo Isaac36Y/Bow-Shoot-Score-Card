@@ -11,6 +11,7 @@
                -1px 0 0 0 var(--color-neutral-light),   /* left */
                 0 1px 0 0 var(--color-neutral-light); 
     border-radius: 0.5rem;
+    margin-inline: auto;
 
     &-header { 
         width: 100%;

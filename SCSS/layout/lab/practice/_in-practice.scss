@@ -1,0 +1,85 @@
+.practice {
+    gap: 1rem;
+
+    &__shots, &__distance {
+        width: 90%;
+        border: 2px solid var(--color-neutral-light);
+        border-radius: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        &-header {
+            width: 100%;
+            background-color: var(--color-neutral-light);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 0.3rem 0.3rem 0 0;
+        }
+    }
+
+    &__shots {
+        &-table {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1rem;
+            width: 100%; 
+            overflow: auto;
+            -ms-overflow-style: none; 
+            scrollbar-width: none;
+
+        &-table::-webkit-scrollbar {
+            display: none;
+        }
+
+            &-col-shot, &-col-score {
+                width: 3rem;
+                display: flex;
+                justify-content: center;
+                
+            }
+
+            &-col-shot {
+                height: 2.5rem;
+                align-items: flex-start;
+                color: var(--color-neutral-light);
+            }
+
+            &-col-score {
+                align-items: center;
+                height: 3rem;
+                border-radius: 5rem;
+                background-color: rgba(98, 191, 100, 0.3);
+                border: 2px solid var(--color-primary);
+                color: var(--color-neutral-light);
+                box-shadow: 0 0 0.5rem 1px rgba(98, 191, 100, 0.5);
+            }
+        }
+    }
+
+    &__distance {
+
+        &-for-this {
+            width: 100%;
+            border-bottom: 1px solid var(--color-neutral-light);
+            text-align: center;
+        }
+
+        &-stats {
+            display: flex;
+            width: 100%;
+
+            p {
+                width: 50%;
+                display: flex;
+                justify-content: space-evenly;
+            }
+            &-avg {
+                border-right: 1px solid var(--color-neutral-light);
+            }
+
+        }
+    }
+}
+
