@@ -6,7 +6,7 @@ const pages = document.querySelectorAll('._3d-page')
 
 
 const table = document.querySelector('#new-round-table');
-const addPlayerRow = document.querySelector('#add-player')
+const addPlayerRow = document.querySelector('#add-player');
 const addPlayerTable = document.querySelector('#add-player-table');
 const noNameMsg = document.querySelector('#no-name-msg');
 const nameAlreadyExists = document.querySelector('#same-name-msg');
@@ -769,8 +769,8 @@ const populateMosts = () => {
         mostTensEl.textContent = tensArr[0].amount === 0 ? "You didn't get any tens" : `You got ${tensArr[0].amount} ${tensArr[0].amount <= 1} ? "10" : "10s"}. Nice Job!`
         mostZerosEl.textContent = zerosArr[0].amount === 0 ? "You didn't get a single 0! Well done" : `You got ${zerosArr[0].amount} ${zerosArr[0].amount <= 1 ? "0" : "0s"}.`
     }else {
-        mostTensEl.innerHTML = tensArr[0].amount === 0 ? "Most 10s in the round: Nobody. Everyone go home and practice" : `<span class="fw-700">Most 10s in the round:</span> ${tensArr.map(player => player.name).join(", ")} with ${tensArr[0].amount}.`
-        mostZerosEl.innerHTML = zerosArr[0].amount === 0 ? "Most 0s in the round: Nobody! Nice shooting everyone" : `<span class="fw-700">Most 0s in the round:</span> ${zerosArr.map(player => player.name).join(", ")} with ${zerosArr[0].amount}.`
+        mostTensEl.innerHTML = tensArr[0].amount === 0 ? '<span class="fw-700">Most 10s in the round:</span> Nobody. Everyone go home and practice' : `<span class="fw-700">Most 10s in the round:</span> ${tensArr.map(player => player.name).join(", ")} with ${tensArr[0].amount}.`
+        mostZerosEl.innerHTML = zerosArr[0].amount === 0 ? '<span class="fw-700">Most 0s in the round:</span> Nobody! Nice shooting everyone' : `<span class="fw-700">Most 0s in the round:</span> ${zerosArr.map(player => player.name).join(", ")} with ${zerosArr[0].amount}.`
     }
 }
 
