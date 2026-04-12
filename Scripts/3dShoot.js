@@ -356,7 +356,7 @@ const updatesTotalsInState = (id) => {
     if (state.multiplierOn) {
        state.players[idIndex].multipliedTotal = Object.values(state.players[idIndex].multipliedScores).reduce((accumulator, currentValue) => {
             return accumulator + currentValue
-       }, 0)
+       }, 0).toFixed(1)
     }
 }
 
